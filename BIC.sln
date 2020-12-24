@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BIC.Utils", "BIC.Utils", "{
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BIC.Utils", "BIC.Utils\BIC.Utils.csproj", "{1FD4C7B7-7EA9-4F9A-91F6-09FF4AEDD208}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BIC.Interfaces", "BIC.Interfaces\BIC.Interfaces.csproj", "{5B2C1550-32A6-4FE1-80DA-B7F6BCE7D366}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{1FD4C7B7-7EA9-4F9A-91F6-09FF4AEDD208}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1FD4C7B7-7EA9-4F9A-91F6-09FF4AEDD208}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1FD4C7B7-7EA9-4F9A-91F6-09FF4AEDD208}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B2C1550-32A6-4FE1-80DA-B7F6BCE7D366}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B2C1550-32A6-4FE1-80DA-B7F6BCE7D366}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B2C1550-32A6-4FE1-80DA-B7F6BCE7D366}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B2C1550-32A6-4FE1-80DA-B7F6BCE7D366}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
