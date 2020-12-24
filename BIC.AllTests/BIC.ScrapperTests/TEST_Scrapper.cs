@@ -1,10 +1,10 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace BIC.AllTests
+namespace BIC.ScrapperTests
 {
     [TestClass]
-    public class TEST_Extract
+    public class TEST_Scrapper
     {
         [TestMethod]
         public void TestMethod1()
