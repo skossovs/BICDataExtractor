@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\SettingsAttributes.cs" />
     <Compile Include="Logger\LogServiceProvider.cs" />
     <Compile Include="Logger\SimpleLogger.cs" />
     <Compile Include="Monads\Maybe.cs" />

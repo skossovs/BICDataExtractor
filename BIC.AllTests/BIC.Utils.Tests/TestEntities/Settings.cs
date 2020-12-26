@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BIC.Utils.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace BIC.Utils.Tests.TestEntities
 {
+    [AppSettingsXML]
     public class Settings
     {
         private static Settings _singletonSetings;
@@ -21,7 +23,7 @@ namespace BIC.Utils.Tests.TestEntities
         public string   StringProperty        { get; set; }
         public DateTime DateTimeProperty      { get; set; }
         public int      IntegerProperty       { get; set; }
-        // Generic test properties
+        [Generic]
         public string    GenericStringProperty { get; set; }
     }
 }

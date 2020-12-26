@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BIC.Utils.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -8,7 +9,6 @@ using System.Threading.Tasks;
 
 namespace BIC.Utils.Settings
 {
-    // TODO: implement Settings class property initializer from AppSettings.xml file
     public class AppSettingsProcessor
     {
         public class PropertyErrorStatus
@@ -26,9 +26,27 @@ namespace BIC.Utils.Settings
             {
                 Object obj = record.Item2;
                 Assembly a = record.Item1;
-                foreach(var prop in obj.GetType().GetProperties())
+
+                Attribute[] attrs = System.Attribute.GetCustomAttributes(obj.GetType());
+
+                // check if class is attributed for settings
+                if (attrs.Where(atr => atr is AppSettingsXML).FirstOrDefault() is null)
+                    break;
+
+                foreach (var prop in obj.GetType().GetProperties())
                 {
-                    string configPropName = a.GetName().Name + "." + prop.Name;
+                    var propertyAttributes = System.Attribute.GetCustomAttributes(prop);
+
+                    string configPropName;
+                    bool isGeneric = false;
+                    if (propertyAttributes.Where(atr => atr is Generic).FirstOrDefault() is null)
+                        configPropName = a.GetName().Name + "." + prop.Name;
+                    else
+                    {
+                        configPropName = "GENERIC." + prop.Name; // TODO: Const
+                        isGeneric = true;
+                    }
+
                     if(ConfigurationManager.AppSettings.AllKeys.Contains(configPropName))
                     {
                         try
@@ -47,7 +65,19 @@ namespace BIC.Utils.Settings
                         }
                         catch(Exception ex)
                         {
-                            _lstPropertyErrorStatuses.Add(new PropertyErrorStatus() { IsGeneric = false, PropertyAssembly = a.GetName().Name, PropertyName = prop.Name, ErrorMessage = ex.Message });
+                            _lstPropertyErrorStatuses.Add(new PropertyErrorStatus() { IsGeneric = isGeneric, PropertyAssembly = a.GetName().Name, PropertyName = prop.Name, ErrorMessage = ex.Message });
+                        }
+                    }
+                    else
+                    {
+                        // check if this attribute is mandatory
+                        if (!(propertyAttributes.Where(atr => atr is Mandatory).FirstOrDefault() is null))
+                        {
+                            _lstPropertyErrorStatuses.Add(new PropertyErrorStatus() {
+                                  IsGeneric        = isGeneric
+                                , PropertyAssembly = a.GetName().Name
+                                , PropertyName     = prop.Name
+                                , ErrorMessage     = "Missing property setting in App Configuration" });
                         }
                     }
                 }
