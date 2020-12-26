@@ -13,9 +13,9 @@ namespace BIC.Utils.Tests
             Assert.AreEqual(0, errors.Count);
 
             var s = TestEntities.Settings.GetInstance();
-            Assert.IsNotNull(s.StringProperty);
-            Assert.IsNotNull(s.IntegerProperty);
-            Assert.IsNotNull(s.DateTimeProperty);
+            Assert.AreEqual("Value", s.StringProperty);
+            Assert.AreEqual(300,     s.IntegerProperty);
+            Assert.AreEqual(Convert.ToDateTime("2000/12/31"), s.DateTimeProperty);
         }
     }
 }

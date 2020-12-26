@@ -33,7 +33,17 @@ namespace BIC.Utils.Settings
                     {
                         try
                         {
-                            prop.SetValue(obj, ConfigurationManager.AppSettings[configPropName]);
+                            // string value assignment
+                            if (prop.PropertyType.Name == "String")
+                                prop.SetValue(obj, ConfigurationManager.AppSettings[configPropName]);
+                            // integer value assignment
+                            else if (prop.PropertyType.Name == "Int32")
+                                prop.SetValue(obj, Convert.ToInt32(ConfigurationManager.AppSettings[configPropName]));
+                            // datetime value assignment
+                            else if (prop.PropertyType.Name == "DateTime")
+                                prop.SetValue(obj, Convert.ToDateTime(ConfigurationManager.AppSettings[configPropName]));
+                            else
+                                throw new Exception("Prohibited configuration type. The only accepted types are: string, int32 or DateTime in format YYYYMMDD");
                         }
                         catch(Exception ex)
                         {
@@ -53,8 +63,7 @@ namespace BIC.Utils.Settings
                 if (t.Type.IsInterface) continue;
                 if (t.Type.IsAbstract || t.Type.IsGenericType) continue;
                 if (t.Type.Name != "Settings") continue;
-
-                yield return new Tuple<Assembly, Object>(t.Assembly, Activator.CreateInstance(t.Type, true));
+                yield return new Tuple<Assembly, Object>(t.Assembly, t.Type.GetMethod("GetInstance").Invoke(null, null));
             }
         }
     }
