@@ -11,6 +11,7 @@ namespace BIC.Utils.Settings
 {
     public class AppSettingsProcessor
     {
+        private const string GENERIC_KEY = "GENERIC";
         public class PropertyErrorStatus
         {
             public bool   IsGeneric;
@@ -43,7 +44,7 @@ namespace BIC.Utils.Settings
                         configPropName = a.GetName().Name + "." + prop.Name;
                     else
                     {
-                        configPropName = "GENERIC." + prop.Name; // TODO: Const
+                        configPropName = GENERIC_KEY + "." + prop.Name;
                         isGeneric = true;
                     }
 
