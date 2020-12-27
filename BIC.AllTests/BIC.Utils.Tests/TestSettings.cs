@@ -27,5 +27,16 @@ namespace BIC.Utils.Tests
             var s = TestEntities.Settings.GetInstance();
             Assert.AreEqual("Value", s.GenericStringProperty);
         }
+
+        [TestMethod]
+        public void TestPropertiesInitializationForOneLibraryMandatorySetting()
+        {
+            var errors = BIC.Utils.Settings.AppSettingsProcessor.Populate();
+            Assert.AreEqual(0, errors.Count);
+
+            var s = TestEntities.Settings.GetInstance();
+            Assert.AreEqual("Value", s.StringMandatoryProperty);
+        }
+
     }
 }

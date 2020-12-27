@@ -20,10 +20,12 @@ namespace BIC.Utils.Tests.TestEntities
             return _singletonSetings;
         }
 
-        public string   StringProperty        { get; set; }
-        public DateTime DateTimeProperty      { get; set; }
-        public int      IntegerProperty       { get; set; }
+        public string    StringProperty        { get; set; }
+        public DateTime  DateTimeProperty      { get; set; }
+        public int       IntegerProperty       { get; set; }
         [Generic]
         public string    GenericStringProperty { get; set; }
+        [Mandatory]
+        public string    StringMandatoryProperty { get; set; }
     }
 }
