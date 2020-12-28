@@ -48,5 +48,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\BIC.Utils\BIC.Utils.csproj">
+      <Project>{1fd4c7b7-7ea9-4f9a-91f6-09ff4aedd208}</Project>
+      <Name>BIC.Utils</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
