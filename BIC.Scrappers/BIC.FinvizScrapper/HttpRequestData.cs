@@ -17,27 +17,27 @@ namespace BIC.Scrappers.FinvizScrapper
 
 
         public readonly string url = Settings.GetInstance().UrlRoot;
-        public string[] Separators = { "&&?",",,,," }; // should be populated in reverse
+        public string[] Separators = { "&&?",",,,,,=" }; // should be populated in reverse
 
 
         public class Filter
         {
             [AddressAttribute(Order = 0, Group = 1, Template = "exch_{0}")]
             public string Exchange { get; set; }
-            [AddressAttribute(Order = 1, Group = 1, Template = "idx_{0}")]
+            [AddressAttribute(Order = 1, Group = 1, Template = "geo_{0}")]
+            public string Country { get; set; }
+            [AddressAttribute(Order = 2, Group = 1, Template = "idx_{0}")]
             public string Index { get; set; }
-            [AddressAttribute(Order = 2, Group = 1, Template = "sec_{0}")]
-            public string Sector { get; set; }
             [AddressAttribute(Order = 3, Group = 1, Template = "ind_{0}")]
             public string Industry { get; set; }
-            [AddressAttribute(Order = 4, Group = 1, Template = "geo_{0}")]
-            public string Country { get; set; }
+            [AddressAttribute(Order = 4, Group = 1, Template = "sec_{0}")]
+            public string Sector { get; set; }
         }
 
         [AddressAttribute(Order = 0, Group = 0, Template = "v={0}")]
         public string View { get; set; }
 
-        [AddressAttribute(Order = 1, Group = 0, Template = "f={0}")]
+        [AddressAttribute(Order = 1, Group = 0, Template = "f{0}")]
         public Filter Filters { get; set; }
 
         [AddressAttribute(Order = 2, Group = 0, Template = "ft={0}")]
@@ -53,19 +53,20 @@ namespace BIC.Scrappers.FinvizScrapper
 
         private string ProcessAttributes(Object o, StringBuilder sbAdressPart, Stack<char>[] stacks)
         {
+            var t = o.GetType();
             // Loop through all properties
-            foreach (var p in typeof(HttpRequestData)
-                                .GetProperties()
-                                .OrderBy(p => ((AddressAttribute)p.GetCustomAttributes(false)[0]).Order)
-                                .OrderBy(p => ((AddressAttribute)p.GetCustomAttributes(false)[0]).Group))
+            foreach (var p in t
+                               .GetProperties()
+                               .OrderBy(p => ((AddressAttribute)p.GetCustomAttributes(false)[0]).Order)
+                               .OrderBy(p => ((AddressAttribute)p.GetCustomAttributes(false)[0]).Group))
             {
                 var a = (AddressAttribute)p.GetCustomAttributes(false)[0];
-                var t = p.GetType();
+                //var t = p.GetType();
                 var oValue = p.GetValue(o);
                 if (oValue == null) continue;
 
                 var separator = Convert.ToString(stacks[a.Group].Pop());
-                if (t.IsClass)
+                if (p.PropertyType == typeof(System.String))
                 {
                     var segment = string.Format(a.Template, oValue);
                     sbAdressPart.Append(separator + segment);
