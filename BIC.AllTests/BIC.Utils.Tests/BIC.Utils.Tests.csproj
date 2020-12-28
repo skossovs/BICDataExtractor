@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="TestEntities\Settings.cs" />
+    <Compile Include="TestSettingsLoggerFinviz.cs" />
     <Compile Include="TestSettingsLogger.cs" />
     <Compile Include="TestSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -58,6 +59,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\BIC.Scrappers\BIC.FinvizScrapper\BIC.FinvizScrapper.csproj">
+      <Project>{e7ea4eb2-ffea-4a80-9369-5ef7576c628c}</Project>
+      <Name>BIC.FinvizScrapper</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\BIC.Utils\BIC.Utils.csproj">
       <Project>{1fd4c7b7-7ea9-4f9a-91f6-09ff4aedd208}</Project>
       <Name>BIC.Utils</Name>

@@ -9,7 +9,7 @@ namespace BIC.Utils.Tests
         [TestMethod]
         public void TestPropertiesInitializationForOneLibrary()
         {
-            var settings = new Settings.AppSettingsProcessorLogger();
+            var settings = new SettingProcessors.AppSettingsProcessorLogger();
             var result = settings.Populate();
             Assert.IsTrue(result);
 
@@ -22,7 +22,7 @@ namespace BIC.Utils.Tests
         [TestMethod]
         public void TestPropertiesInitializationForOneLibraryGenericSetting()
         {
-            var settings = new Settings.AppSettingsProcessorLogger();
+            var settings = new SettingProcessors.AppSettingsProcessorLogger();
             var result = settings.Populate();
             Assert.IsTrue(result);
 
@@ -33,7 +33,7 @@ namespace BIC.Utils.Tests
         [TestMethod]
         public void TestPropertiesInitializationForOneLibraryMandatorySetting()
         {
-            var settings = new Settings.AppSettingsProcessorLogger();
+            var settings = new SettingProcessors.AppSettingsProcessorLogger();
             var result = settings.Populate();
             Assert.IsTrue(result);
 

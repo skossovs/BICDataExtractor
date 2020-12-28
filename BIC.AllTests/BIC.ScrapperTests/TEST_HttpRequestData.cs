@@ -7,18 +7,18 @@ namespace BIC.ScrapperTests
     [TestClass]
     public class TEST_HttpRequestData
     {
-        [TestInitialize]
-        public void Init()
+        public void SetTheSettings()
         {
-            var settings = new BIC.Utils.Settings.AppSettingsProcessor(); // TODO: rename namespace Settings to something else
+            var settings = new Utils.SettingProcessors.AppSettingsProcessor();
             var result = settings.Populate();
             Assert.IsTrue(result);
         }
         [TestMethod]
         public void TestFinvizDefaultOptions()
         {
-            string expectedAddress = "https://finviz.com/screener.ashx";
+            SetTheSettings();
 
+            string expectedAddress = "https://finviz.com/screener.ashx";
             var generatedAddress = (new HttpRequestData()).GenerateAddressRequest();
 
             Assert.AreEqual(generatedAddress, expectedAddress);

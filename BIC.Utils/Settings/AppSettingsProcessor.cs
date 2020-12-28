@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BIC.Utils.Settings
+namespace BIC.Utils.SettingProcessors
 {
     public class AppSettingsProcessor
     {
