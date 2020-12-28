@@ -1,4 +1,5 @@
 ﻿using BIC.Scrappers.Utils.Attributes;
+using BIC.Utils.Logger;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace BIC.Scrappers.FinvizScrapper
            https://finviz.com/screener.ashx?v=161&f=geo_usa,ind_aerospacedefense,sec_industrials&ft=4
          */
 
-
+        private ILog _logger = LogServiceProvider.Logger;
         public readonly string url = Settings.GetInstance().UrlRoot;
         public string[] Separators = { "&&?",",,,,,=" }; // should be populated in reverse
 
@@ -79,7 +80,7 @@ namespace BIC.Scrappers.FinvizScrapper
                     sbAdressPart.Append(separator + segment);
                 }
             }
-
+            _logger.Debug(@"Processing address part: ""{0}""", sbAdressPart.ToString());
             return sbAdressPart.ToString();
         }
 
