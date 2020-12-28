@@ -42,8 +42,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AllPageScrapper.cs" />
+    <Compile Include="HttpRequestData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\BIC.Utils\BIC.Utils.csproj">
+      <Project>{1fd4c7b7-7ea9-4f9a-91f6-09ff4aedd208}</Project>
+      <Name>BIC.Utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BIC.Scrappers.Utils\BIC.Scrappers.Utils.csproj">
+      <Project>{c4cb8249-5756-4b29-9217-12b8aa7bb38f}</Project>
+      <Name>BIC.Scrappers.Utils</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
