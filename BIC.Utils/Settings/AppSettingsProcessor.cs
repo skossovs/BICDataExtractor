@@ -12,16 +12,34 @@ namespace BIC.Utils.Settings
     public class AppSettingsProcessor
     {
         private const string GENERIC_KEY = "GENERIC";
-        public class PropertyErrorStatus
+        private List<PropertyReadingStatus> _lstPropertyReadingStatuses = new List<PropertyReadingStatus>();
+
+        public class PropertyReadingStatus
         {
             public bool   IsGeneric;
+            public bool   IsSuccessful;
             public string PropertyAssembly;
             public string PropertyName;
+            public string PropertyValue;
             public string ErrorMessage;
         }
-        public static List<PropertyErrorStatus> Populate()
+
+        public List<PropertyReadingStatus> ListPropertyReadingStatuses
         {
-            List<PropertyErrorStatus> _lstPropertyErrorStatuses = new List<PropertyErrorStatus>();
+            get
+            {
+                return _lstPropertyReadingStatuses;
+            }
+        }
+
+        public void StatusReset()
+        {
+            _lstPropertyReadingStatuses.Clear();
+        }
+
+        public virtual bool Populate()
+        {
+            bool result = true;
 
             foreach (var record in GetInstancesOfSettings())
             {
@@ -63,10 +81,28 @@ namespace BIC.Utils.Settings
                                 prop.SetValue(obj, Convert.ToDateTime(ConfigurationManager.AppSettings[configPropName]));
                             else
                                 throw new Exception("Prohibited configuration type. The only accepted types are: string, int32 or DateTime in format YYYYMMDD");
+
+                            _lstPropertyReadingStatuses.Add(new PropertyReadingStatus()
+                            {
+                                IsGeneric = isGeneric,
+                                IsSuccessful = true,
+                                PropertyAssembly = a.GetName().Name,
+                                PropertyName = prop.Name,
+                                PropertyValue = ConfigurationManager.AppSettings[configPropName],
+                                ErrorMessage = null
+                            });
                         }
-                        catch(Exception ex)
+                        catch (Exception ex)
                         {
-                            _lstPropertyErrorStatuses.Add(new PropertyErrorStatus() { IsGeneric = isGeneric, PropertyAssembly = a.GetName().Name, PropertyName = prop.Name, ErrorMessage = ex.Message });
+                            _lstPropertyReadingStatuses.Add(new PropertyReadingStatus()
+                            {
+                                IsGeneric = isGeneric,
+                                IsSuccessful = false,
+                                PropertyAssembly = a.GetName().Name,
+                                PropertyName = prop.Name,
+                                PropertyValue = ConfigurationManager.AppSettings[configPropName],
+                                ErrorMessage = ex.Message
+                            });
                         }
                     }
                     else
@@ -74,17 +110,19 @@ namespace BIC.Utils.Settings
                         // check if this attribute is mandatory
                         if (!(propertyAttributes.Where(atr => atr is Mandatory).FirstOrDefault() is null))
                         {
-                            _lstPropertyErrorStatuses.Add(new PropertyErrorStatus() {
+                            result = false;
+                            _lstPropertyReadingStatuses.Add(new PropertyReadingStatus() {
                                   IsGeneric        = isGeneric
+                                , IsSuccessful     = false
                                 , PropertyAssembly = a.GetName().Name
                                 , PropertyName     = prop.Name
-                                , ErrorMessage     = "Missing property setting in App Configuration" });
+                                , ErrorMessage     = String.Format("Missing mandatory property {0} setting in App Configuration", configPropName) });
                         }
                     }
                 }
             }
 
-            return _lstPropertyErrorStatuses;
+            return result;
         }
 
         private static IEnumerable<Tuple<Assembly, Object>> GetInstancesOfSettings()

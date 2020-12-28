@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="TestEntities\Settings.cs" />
+    <Compile Include="TestSettingsLogger.cs" />
     <Compile Include="TestSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
