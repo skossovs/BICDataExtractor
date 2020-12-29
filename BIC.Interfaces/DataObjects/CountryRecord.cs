@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BIC.Interfaces
+namespace BIC.Foundation.DataObjects
 {
-    public class SectorRecord
+    public class CountryRecord
     {
     }
 }

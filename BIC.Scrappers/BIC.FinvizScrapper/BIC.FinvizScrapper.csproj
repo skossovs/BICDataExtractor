@@ -47,6 +47,10 @@
     <Compile Include="Settings.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\BIC.Interfaces\BIC.Foundation.csproj">
+      <Project>{5b2c1550-32a6-4fe1-80da-b7f6bce7d366}</Project>
+      <Name>BIC.Foundation</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\BIC.Utils\BIC.Utils.csproj">
       <Project>{1fd4c7b7-7ea9-4f9a-91f6-09ff4aedd208}</Project>
       <Name>BIC.Utils</Name>
