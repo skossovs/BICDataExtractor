@@ -45,6 +45,8 @@
     <Compile Include="DataObjects\CountryRecord.cs" />
     <Compile Include="DataObjects\IncomeStatementRecord.cs" />
     <Compile Include="DataObjects\IndustryRecord.cs" />
+    <Compile Include="Interfaces\IPager.cs" />
+    <Compile Include="Interfaces\IPagerScrapper.cs" />
     <Compile Include="Interfaces\IParser.cs" />
     <Compile Include="Interfaces\IScrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
