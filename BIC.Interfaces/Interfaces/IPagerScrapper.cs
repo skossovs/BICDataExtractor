@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace BIC.Foundation.Interfaces
 {
-    interface IPagerScrapper<T> : IScrapper<T>
+    interface IPagerScrapper<T, TRequestParameters> : IScrapper<T> where TRequestParameters : class
     {
-        IEnumerable<T> ScrapFromAllPages(IPager pager);
+        IEnumerable<T> ScrapFromAllPages(IPager<TRequestParameters> pager);
     }
 }

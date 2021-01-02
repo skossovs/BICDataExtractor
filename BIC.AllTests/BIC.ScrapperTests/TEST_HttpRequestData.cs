@@ -18,7 +18,6 @@ namespace BIC.ScrapperTests
             Assert.AreEqual(generatedAddress, expectedAddress);
         }
 
-
         [TestMethod]
         public void TestFinvizAllFiveOptions()
         {
@@ -34,5 +33,32 @@ namespace BIC.ScrapperTests
             Assert.AreEqual(generatedAddress, expectedAddress);
         }
 
+
+        [TestMethod]
+        public void TestFinvizAllFiveOptionsWithParametersClass()
+        {
+            Assert.IsTrue(UtilsForTesting.SetTheSettings(), "Settings initialization failed");
+
+            string expectedAddress = "https://finviz.com/screener.ashx?v=111&f=exch_nyse,geo_usa,idx_sp500,ind_gold,sec_basicmaterials&ft=4";
+
+            var fp = new FinvizParameters()
+            {
+                View       = EView.Overview,
+                FilterView = EFilterView.All,
+                Filters    = new Filters()
+                {
+                    CountrFilter   = "usa",
+                    ExchangeFilter = "nyse",
+                    IndexFilter    = "sp500",
+                    SectorFilter   = "basicmaterials",
+                    IndustryFilter = "gold",
+                }
+            };
+
+            var r = BIC.Scrappers.FinvizScrapper.Conversions.FromFinvizParametersToHttpRequestData(fp);
+            var generatedAddress = r.GenerateAddressRequest();
+
+            Assert.AreEqual(generatedAddress, expectedAddress);
+        }
     }
 }

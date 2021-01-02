@@ -10,9 +10,9 @@ namespace BIC.Foundation.Interfaces
     /// Define page metrics: records per page and how many pages returned
     /// when records per page is not regular or not defined, it is -1
     /// </summary>
-    public interface IPager
+    public interface IPager<TRequestParameters>  where TRequestParameters : class
     {
-        bool DefineMetrics(out int recordsPerPage , out int maxPage);
+        bool DefineMetrics(TRequestParameters p, out int recordsPerPage , out int maxPage);
         IEnumerable<string> GenerateRequestAdresses();
     }
 }

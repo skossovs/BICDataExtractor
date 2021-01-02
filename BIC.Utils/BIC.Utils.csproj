@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\SettingsAttributes.cs" />
+    <Compile Include="Conversions.cs" />
     <Compile Include="Logger\ILog.cs" />
     <Compile Include="Logger\LogServiceProvider.cs" />
     <Compile Include="Logger\SimpleLogger.cs" />

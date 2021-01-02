@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CsQuery, Version=1.3.3.249, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\CsQuery.1.3.4\lib\net40\CsQuery.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -42,11 +45,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AllPageScrapper.cs" />
+    <Compile Include="Conversions.cs" />
     <Compile Include="FinvizPager.cs" />
     <Compile Include="FinvizParameters.cs" />
     <Compile Include="FragmenScrappers\PageMetricScrapper.cs" />
     <Compile Include="HttpRequestData.cs" />
     <Compile Include="LocalDataObjects.cs" />
+    <Compile Include="Parsers\PageParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
   </ItemGroup>
@@ -65,7 +70,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Parsers\" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
