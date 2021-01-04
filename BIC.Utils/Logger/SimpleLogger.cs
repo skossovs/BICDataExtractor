@@ -28,28 +28,40 @@ namespace BIC.Utils.Logger
         public void Info(string message, params object[] p)
         {
             Console.ForegroundColor = ConsoleColor.DarkGreen;
-            Console.WriteLine(_get_prefix("INFO") + message, p);
+            if (p.Count() > 0)
+                Console.WriteLine(_get_prefix("INFO") + message, p);
+            else
+                Console.WriteLine(_get_prefix("INFO") + message);
             Console.ResetColor();
         }
 
         public void Warning(string message, params object[] p)
         {
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine(_get_prefix("WARN") + message, p);
+            if (p.Count() > 0)
+                Console.WriteLine(_get_prefix("WARN") + message, p);
+            else
+                Console.WriteLine(_get_prefix("WARN") + message);
             Console.ResetColor();
         }
 
         public void Debug(string message, params object[] p)
         {
             Console.ForegroundColor = ConsoleColor.DarkGray;
-            Console.WriteLine(_get_prefix("DEBUG") + message, p);
+            if(p.Count() > 0)
+                Console.WriteLine(_get_prefix("DEBUG") + message, p);
+            else
+                Console.WriteLine(_get_prefix("DEBUG") + message);
             Console.ResetColor();
         }
 
         public void Error(string message, params object[] p)
         {
             Console.ForegroundColor = ConsoleColor.DarkRed;
-            Console.WriteLine(_get_prefix("ERROR") + message, p);
+            if (p.Count() > 0)
+                Console.WriteLine(_get_prefix("ERROR") + message, p);
+            else
+                Console.WriteLine(_get_prefix("ERROR") + message);
             Console.ResetColor();
         }
 
