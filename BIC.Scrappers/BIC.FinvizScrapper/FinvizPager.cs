@@ -20,7 +20,7 @@ namespace BIC.Scrappers.FinvizScrapper
 
             var pgmScrapper = new FragmenScrappers.PageMetricScrapper();
             string pageBody = pgmScrapper.FindRawContent(cq.Render());
-            pgmScrapper.CallParsers();
+            pgmScrapper.CallParsers(pageBody);
 
             throw new NotImplementedException();
         }

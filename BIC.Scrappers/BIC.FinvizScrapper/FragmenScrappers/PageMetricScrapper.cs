@@ -1,4 +1,5 @@
 ﻿using BIC.Foundation.Interfaces;
+using BIC.Scrappers.FinvizScrapper.Parsers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,14 +10,19 @@ namespace BIC.Scrappers.FinvizScrapper.FragmenScrappers
 {
     public class PageMetricScrapper : IScrapper<PageMetric>
     {
-        public IEnumerable<PageMetric> CallParsers()
+        public IEnumerable<PageMetric> CallParsers(string parsingFragment)
         {
-            throw new NotImplementedException();
+            var parser = new PageParser();
+            PageMetric pageMetric = parser.ParseObject(parsingFragment);
+            return (new PageMetric[] { pageMetric }).AsEnumerable();
         }
 
         public string FindRawContent(string pageContent)
         {
-            throw new NotImplementedException();
+            //<select id="pageSelect"
+            var cqHelper = new Utils.CQHelper();
+            var cq = cqHelper.InitiateWithContent(pageContent);
+            return cq.Find(@"select[id=""pageSelect""]").Contents().Text();
         }
 
         public IEnumerable<string> SeparateIntoRecordsContent(string rawContent)

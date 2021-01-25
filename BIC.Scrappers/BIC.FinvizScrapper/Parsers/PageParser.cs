@@ -1,4 +1,6 @@
 ﻿using BIC.Foundation.Interfaces;
+using BIC.Utils;
+using BIC.Utils.Monads;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +13,8 @@ namespace BIC.Scrappers.FinvizScrapper.Parsers
     {
         public PageMetric ParseObject(string fragment)
         {
+            // Page 1/1
+//            var result = new PageMetric() { NumberOfPages = fragment.Replace("Page ", "").With(s => s.MapClassToNullable(s1 => s1)) };
             throw new NotImplementedException();
         }
 

@@ -16,6 +16,11 @@ namespace BIC.Scrappers.Utils
         public readonly int TimeDelay = Settings.GetInstance().TimeDelayInSeconds * 1000;
         private readonly ILog _logger = LogServiceProvider.Logger;
 
+
+        public CQ InitiateWithContent(string htmlContent)
+        {
+            return CQ.CreateDocument(htmlContent);
+        }
         public CQ GetData(string url)
         {
             lock (delayLocker)

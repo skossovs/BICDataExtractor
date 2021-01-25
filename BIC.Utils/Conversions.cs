@@ -29,5 +29,13 @@ namespace BIC.Utils
             return ((object)value).Return(t => new int?((int)t), null);
         }
 
+        public static int? StringToInt(this string value)
+        {
+            int r;
+            if (Int32.TryParse(value, out r))
+                return r;
+            else
+                return null;
+        }
     }
 }

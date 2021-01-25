@@ -15,6 +15,6 @@ namespace BIC.Foundation.Interfaces
     {
         string FindRawContent(string pageContent);
         IEnumerable<string> SeparateIntoRecordsContent(string rawContent);
-        IEnumerable<T> CallParsers();
+        IEnumerable<T> CallParsers(string parsingFragment);
     }
 }
