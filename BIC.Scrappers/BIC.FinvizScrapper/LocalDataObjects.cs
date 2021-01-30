@@ -14,7 +14,7 @@ namespace BIC.Scrappers.FinvizScrapper
                 return 20; // fixed for Finviz
             }
         }
-        public int NumberOfPages { get; set; }
+        public int? NumberOfPages { get; set; }
     }
 
     public class FinancialViewRecord

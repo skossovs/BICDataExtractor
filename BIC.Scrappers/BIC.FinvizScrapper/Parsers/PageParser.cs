@@ -1,5 +1,6 @@
 ﻿using BIC.Foundation.Interfaces;
 using BIC.Utils;
+using BIC.Utils.Logger;
 using BIC.Utils.Monads;
 using System;
 using System.Collections.Generic;
@@ -11,11 +12,16 @@ namespace BIC.Scrappers.FinvizScrapper.Parsers
 {
     public class PageParser : IParser<PageMetric>
     {
+        private ILog _logger = LogServiceProvider.Logger;
         public PageMetric ParseObject(string fragment)
         {
             // Page 1/1
-//            var result = new PageMetric() { NumberOfPages = fragment.Replace("Page ", "").With(s => s.MapClassToNullable(s1 => s1)) };
-            throw new NotImplementedException();
+            return new PageMetric()
+            {
+                NumberOfPages = fragment
+                    .Replace("Page ", "")
+                    .StringToInt(s => _logger.Error($"Can't parse page fragment {s}", s)),
+            };
         }
 
         public PageMetric ParseObject(string fragment, ref PageMetric obj)

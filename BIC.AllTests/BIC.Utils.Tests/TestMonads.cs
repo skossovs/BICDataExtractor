@@ -43,5 +43,46 @@ namespace BIC.Utils.Tests
             Assert.IsTrue(sResult.HasValue);
             Assert.AreEqual((Decimal)0.15, sResult);
         }
+
+        [TestMethod]
+        public void CheckStringConversionWithMonadNormalCase()
+        {
+            string sValue = "0.15";
+            var dResult = sValue.StringToDecimal(ex => Assert.Fail(ex.Message));
+
+            Assert.AreEqual(new Decimal(0.15), dResult.Value);
+        }
+        [TestMethod]
+        public void CheckStringConversionWithMonadFailedCase()
+        {
+            string sValue = "0..15";
+            bool passedException = false;
+            var dResult = sValue.StringToDecimal(ex => passedException = (ex != null));
+
+            Assert.IsTrue(passedException);
+            Assert.IsFalse(dResult.HasValue);
+        }
+
+
+        [TestMethod]
+        public void CheckStringGenericConversionWithMonadNormalCase()
+        {
+            string sValue = "15";
+            var dResult = sValue.StringToT(s => Convert.ToInt32(s), ex => Assert.Fail(ex.Message));
+
+            Assert.AreEqual(15, dResult.Value);
+        }
+        [TestMethod]
+        public void CheckStringGenericConversionWithMonadFailedCase()
+        {
+            string sValue = "0.15";
+            bool passedException = false;
+            var dResult = sValue.StringToT(s => Convert.ToInt32(s), ex => passedException = (ex != null));
+
+            Assert.IsTrue(passedException);
+            Assert.IsFalse(dResult.HasValue);
+        }
+
+
     }
 }

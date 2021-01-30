@@ -20,9 +20,19 @@ namespace BIC.Scrappers.FinvizScrapper
 
             var pgmScrapper = new FragmenScrappers.PageMetricScrapper();
             string pageBody = pgmScrapper.FindRawContent(cq.Render());
-            pgmScrapper.CallParsers(pageBody);
+            var pageInfo = pgmScrapper.CallParsers(pageBody);
 
-            throw new NotImplementedException();
+            recordsPerPage = pageInfo.First().RecordsPerPage;
+
+            if (!pageInfo.First().NumberOfPages.HasValue)
+            {
+                recordsPerPage = -1;
+                maxPage        = -1;
+                return false;
+            }
+
+            maxPage = pageInfo.First().NumberOfPages.Value;
+            return true;
         }
 
         public IEnumerable<string> GenerateRequestAdresses()
