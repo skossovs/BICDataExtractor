@@ -56,5 +56,23 @@ namespace BIC.ScrapperTests
 
             _logger.Debug(cq.Find(@"table[bgcolor=""#d3d3d3""]").Contents().Text());
         }
+
+        [TestMethod]
+        public void TestFindingPageMetricsFragment()
+        {
+            Assert.IsTrue(UtilsForTesting.SetTheSettings(), "Settings initialization failed");
+
+            var r = new HttpRequestData();
+            r.View = "111";
+            r.FilterView = "4";
+            r.Filters = new HttpRequestData.Filter() { Sector = "basicmaterials", Industry = "gold", Country = "usa" };
+            var generatedAddress = r.GenerateAddressRequest();
+
+            var allContent = RequestHelper.GetData(generatedAddress);
+            Assert.IsTrue(allContent.Contains("Page 5"));
+
+
+        }
+
     }
 }
