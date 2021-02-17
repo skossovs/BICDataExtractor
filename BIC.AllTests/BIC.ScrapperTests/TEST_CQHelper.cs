@@ -65,7 +65,7 @@ namespace BIC.ScrapperTests
             var r = new HttpRequestData();
             r.View = "111";
             r.FilterView = "4";
-            r.Filters = new HttpRequestData.Filter() { Sector = "basicmaterials", Industry = "gold", Country = "usa" };
+            r.Filters = new HttpRequestData.Filter() { Sector = "basicmaterials", Country = "usa" };
             var generatedAddress = r.GenerateAddressRequest();
 
             var allContent = RequestHelper.GetData(generatedAddress);
