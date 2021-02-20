@@ -70,9 +70,6 @@ namespace BIC.ScrapperTests
 
             var allContent = RequestHelper.GetData(generatedAddress);
             Assert.IsTrue(allContent.Contains("Page 5"));
-
-
         }
-
     }
 }

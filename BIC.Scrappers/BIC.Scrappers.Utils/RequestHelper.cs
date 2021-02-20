@@ -32,7 +32,6 @@ namespace BIC.Scrappers.Utils
             return browser.PageSource;
         }
 
-
         private static bool? _chromeCheckOnce;
         private static bool CheckChrome()
         {

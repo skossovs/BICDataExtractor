@@ -17,9 +17,12 @@ namespace BIC.Scrappers.FinvizScrapper
         public bool DefineMetrics(T requestParameters, out int recordsPerPage, out int maxPage)
         {
             var requestData = Conversions.FromFinvizParametersToHttpRequestData(requestParameters);
-            var url = requestData.GenerateAddressRequest();
-            var cqHelper = new CQHelper();
-            var cq = cqHelper.GetData(url);
+            var url         = requestData.GenerateAddressRequest();
+
+            var htmlContent = RequestHelper.GetData(url);
+            var cqHelper    = new CQHelper();
+            var cq          = cqHelper.InitiateWithContent(htmlContent);
+            //var cq = cqHelper.GetData(url);
 
             var pgmScrapper = new FragmenScrappers.PageMetricScrapper();
 
