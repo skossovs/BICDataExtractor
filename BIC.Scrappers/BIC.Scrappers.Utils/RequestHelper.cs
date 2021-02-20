@@ -13,33 +13,32 @@ namespace BIC.Scrappers.Utils
 {
     public class RequestHelper
     {
-        //public static string GetData(string url)
-        //{
-        //    // WebClient is still convenient
-        //    // Assume UTF8, but detect BOM - could also honor response charset I suppose
-        //    using (var client = new WebClient())
-        //    using (var stream = client.OpenRead(url))
-        //    using (var textReader = new StreamReader(stream, Encoding.UTF8, true))
-        //    {
-        //        return textReader.ReadToEnd();
-        //    }
-        //}
-
-
+        // https://sites.google.com/a/chromium.org/chromedriver/
         public static string GetData(string url)
         {
-            //string fullUrl = "https://en.wikipedia.org/wiki/List_of_programmers";
-            List<string> programmerLinks = new List<string>();
+            if (!CheckChrome())
+                throw new Exception(string.Format("Chrome application is not found at referenced path: {0}", Settings.GetInstance().ChromeLocation));
+
+            var programmerLinks = new List<string>();
 
             var options = new ChromeOptions()
             {
-                BinaryLocation = "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
+                BinaryLocation = Settings.GetInstance().ChromeLocation
             };
-            // TODO: Remove hardcoded paths
+
             options.AddArguments(new List<string>() { "headless", "disable-gpu" });
-            var browser = new ChromeDriver(@"C:\Users\Stan\Documents\GitHub\BICDataExtractor\packages\Selenium.Chrome.WebDriver.88.0.0", options);
+            var browser = new ChromeDriver(AppDomain.CurrentDomain.BaseDirectory, options);
             browser.Navigate().GoToUrl(url);
             return browser.PageSource;
+        }
+
+
+        private static bool? _chromeCheckOnce;
+        private static bool CheckChrome()
+        {
+            if(!_chromeCheckOnce.HasValue)
+                _chromeCheckOnce = File.Exists(Settings.GetInstance().ChromeLocation);
+            return _chromeCheckOnce.Value;
         }
     }
 }

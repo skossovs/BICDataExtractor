@@ -16,5 +16,9 @@ namespace BIC.Scrappers.Utils
         }
         [Mandatory]
         public int TimeDelayInSeconds { get; set; }
+
+        [Mandatory]
+        public string ChromeLocation { get; set; }
+
     }
 }
