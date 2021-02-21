@@ -1,4 +1,5 @@
 ﻿using BIC.Utils.Attributes;
+using BIC.Utils.SettingProcessors;
 
 namespace BIC.Scrappers.Utils
 {
@@ -11,7 +12,11 @@ namespace BIC.Scrappers.Utils
         public static Settings GetInstance()
         {
             if (_singletonSetings == null)
+            {
                 _singletonSetings = new Settings();
+                var settingHelper = new AppSettingsProcessorLogger(); // TODO: base class is needed
+                settingHelper.Populate(_singletonSetings, _singletonSetings.GetType().Assembly);
+            }
             return _singletonSetings;
         }
         [Mandatory]

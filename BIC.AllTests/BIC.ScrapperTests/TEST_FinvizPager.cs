@@ -10,8 +10,6 @@ namespace BIC.ScrapperTests
         [TestMethod]
         public void TestDefineMetrics()
         {
-            Assert.IsTrue(UtilsForTesting.SetTheSettings(), "Settings initialization failed");
-
             var fp = new FinvizParameters()
             {
                 View = EView.Overview,

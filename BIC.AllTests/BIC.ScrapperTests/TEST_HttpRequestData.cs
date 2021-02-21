@@ -10,8 +10,6 @@ namespace BIC.ScrapperTests
         [TestMethod]
         public void TestFinvizDefaultOptions()
         {
-            Assert.IsTrue(UtilsForTesting.SetTheSettings(), "Settings initialization failed");
-
             string expectedAddress = "https://finviz.com/screener.ashx";
             var generatedAddress = (new HttpRequestData()).GenerateAddressRequest();
 
@@ -21,8 +19,6 @@ namespace BIC.ScrapperTests
         [TestMethod]
         public void TestFinvizAllFiveOptions()
         {
-            Assert.IsTrue(UtilsForTesting.SetTheSettings(), "Settings initialization failed");
-
             string expectedAddress = "https://finviz.com/screener.ashx?v=111&f=exch_nyse,geo_usa,idx_sp500,ind_gold,sec_basicmaterials&ft=4";
             var r = new HttpRequestData();
             r.View = "111";
@@ -37,8 +33,6 @@ namespace BIC.ScrapperTests
         [TestMethod]
         public void TestFinvizAllFiveOptionsWithParametersClass()
         {
-            Assert.IsTrue(UtilsForTesting.SetTheSettings(), "Settings initialization failed");
-
             string expectedAddress = "https://finviz.com/screener.ashx?v=111&f=exch_nyse,geo_usa,idx_sp500,ind_gold,sec_basicmaterials&ft=4";
 
             var fp = new FinvizParameters()

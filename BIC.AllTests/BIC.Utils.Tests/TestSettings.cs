@@ -9,10 +9,6 @@ namespace BIC.Utils.Tests
         [TestMethod]
         public void TestPropertiesInitializationForOneLibrary()
         {
-            var settings = new SettingProcessors.AppSettingsProcessor();
-            var result = settings.Populate();
-            Assert.IsTrue(result);
-
             var s = TestEntities.Settings.GetInstance();
             Assert.AreEqual("Value", s.StringProperty);
             Assert.AreEqual(300,     s.IntegerProperty);
@@ -22,10 +18,6 @@ namespace BIC.Utils.Tests
         [TestMethod]
         public void TestPropertiesInitializationForOneLibraryGenericSetting()
         {
-            var settings = new SettingProcessors.AppSettingsProcessor();
-            var result = settings.Populate();
-            Assert.IsTrue(result);
-
             var s = TestEntities.Settings.GetInstance();
             Assert.AreEqual("Value", s.GenericStringProperty);
         }
@@ -33,10 +25,6 @@ namespace BIC.Utils.Tests
         [TestMethod]
         public void TestPropertiesInitializationForOneLibraryMandatorySetting()
         {
-            var settings = new SettingProcessors.AppSettingsProcessor();
-            var result = settings.Populate();
-            Assert.IsTrue(result);
-
             var s = TestEntities.Settings.GetInstance();
             Assert.AreEqual("Value", s.StringMandatoryProperty);
         }

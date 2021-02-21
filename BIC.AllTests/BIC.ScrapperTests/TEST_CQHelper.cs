@@ -18,8 +18,6 @@ namespace BIC.ScrapperTests
         [TestMethod]
         public void TestCq()
         {
-            Assert.IsTrue(UtilsForTesting.SetTheSettings(), "Settings initialization failed");
-
             var cqHelper = new CQHelper();
             var cq = cqHelper.GetData("https://finviz.com/screener.ashx");
             Assert.IsTrue(cq.Elements.Count() > 0, "Returns no elements");
@@ -27,8 +25,6 @@ namespace BIC.ScrapperTests
         [TestMethod]
         public void TestCqWithParameters()
         {
-            Assert.IsTrue(UtilsForTesting.SetTheSettings(), "Settings initialization failed");
-
             var r = new HttpRequestData();
             r.View = "111";
             r.FilterView = "4";
@@ -42,8 +38,6 @@ namespace BIC.ScrapperTests
         [TestMethod]
         public void TestCqWithParametersFindTable()
         {
-            Assert.IsTrue(UtilsForTesting.SetTheSettings(), "Settings initialization failed");
-
             var r = new HttpRequestData();
             r.View = "111";
             r.FilterView = "4";
@@ -60,8 +54,6 @@ namespace BIC.ScrapperTests
         [TestMethod]
         public void TestFindingPageMetricsFragment()
         {
-            Assert.IsTrue(UtilsForTesting.SetTheSettings(), "Settings initialization failed");
-
             var r = new HttpRequestData();
             r.View = "111";
             r.FilterView = "4";

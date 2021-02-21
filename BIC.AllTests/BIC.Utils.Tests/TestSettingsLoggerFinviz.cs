@@ -9,10 +9,6 @@ namespace BIC.Utils.Tests
         [TestMethod]
         public void TestPropertiesInitializationForFinvizLibrary()
         {
-            var settings = new SettingProcessors.AppSettingsProcessorLogger();
-            var result = settings.Populate();
-            Assert.IsTrue(result);
-
             var s = BIC.Scrappers.FinvizScrapper.Settings.GetInstance();
             Assert.AreEqual("https://finviz.com/screener.ashx", s.UrlRoot);
         }

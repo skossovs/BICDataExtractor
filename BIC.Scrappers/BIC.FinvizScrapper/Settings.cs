@@ -1,4 +1,5 @@
 ﻿using BIC.Utils.Attributes;
+using BIC.Utils.SettingProcessors;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,11 @@ namespace BIC.Scrappers.FinvizScrapper
         public static Settings GetInstance()
         {
             if (_singletonSetings == null)
+            {
                 _singletonSetings = new Settings();
+                var settingHelper = new AppSettingsProcessorLogger(); // TODO: base class is needed
+                settingHelper.Populate(_singletonSetings, _singletonSetings.GetType().Assembly);
+            }
             return _singletonSetings;
         }
         [Mandatory]
