@@ -22,6 +22,8 @@ namespace BIC.Scrappers.FinvizScrapper.FragmenScrappers
             //<select id="pageSelect"
             var cqHelper = new Utils.CQHelper();
             var cq = cqHelper.InitiateWithContent(pageContent);
+
+            // TODO: here is the problem
             return cq.Find(@"select[id=""pageSelect""]").Contents().Text();
         }
 
