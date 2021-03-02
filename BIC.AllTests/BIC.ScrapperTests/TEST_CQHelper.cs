@@ -36,7 +36,7 @@ namespace BIC.ScrapperTests
             Assert.IsTrue(cq.Elements.Count() > 0, "Returns no elements");
         }
         [TestMethod]
-        public void TestCqWithParametersFindTable()
+        public void TestCqWithParametersFindTableOnTheFirstPage()
         {
             var r = new HttpRequestData();
             r.View = "111";
@@ -48,7 +48,24 @@ namespace BIC.ScrapperTests
             var cq = cqHelper.GetData(generatedAddress);
             Assert.IsTrue(cq.Elements.Count() > 0, "Returns no elements");
 
-            _logger.Debug(cq.Find(@"table[bgcolor=""#d3d3d3""]").Contents().Text());
+            cq = cq.Find(@"table[bgcolor=""#d3d3d3""]");
+
+            // Find Headers
+            var cqHeaders = cq.Find(@"td[class=""table-top""]");
+            // Display headers
+            foreach (var h in cqHeaders)
+            {
+                _logger.Debug(h.InnerHTML);
+            }
+
+            // Find Rows & Cells
+            var cqRows = cq.Find(@"tr[class$=""-row-cp""]"); // ends with -row-cp
+            foreach (var dRow in cqRows.Contents())
+            {
+                // Extract Cells
+                var cqCells = cqHelper.InitiateWithContent(dRow.Render());
+                _logger.Debug(cqCells.Contents().Text());
+            }
         }
 
         [TestMethod]

@@ -1,2 +1,2 @@
 1. Too many "chromes" keep hanging in memory:
-   taskkill /IM chrome.exe
+   taskkill /F /IM chrome.exe
