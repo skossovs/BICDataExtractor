@@ -24,7 +24,7 @@ namespace BIC.Scrappers.FinvizScrapper
             var cq          = cqHelper.InitiateWithContent(htmlContent);
             //var cq = cqHelper.GetData(url);
 
-            var pgmScrapper = new FragmenScrappers.PageMetricScrapper();
+            var pgmScrapper = new FragmentScrappers.PageMetricScrapper();
 
             var rendered = cq.Render();
             string pageBody = pgmScrapper.FindRawContent(rendered);

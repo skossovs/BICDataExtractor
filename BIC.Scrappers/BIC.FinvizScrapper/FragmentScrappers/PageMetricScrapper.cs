@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BIC.Scrappers.FinvizScrapper.FragmenScrappers
+namespace BIC.Scrappers.FinvizScrapper.FragmentScrappers
 {
     public class PageMetricScrapper : IScrapper<PageMetric>
     {

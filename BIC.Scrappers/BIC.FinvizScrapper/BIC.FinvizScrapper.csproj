@@ -46,9 +46,12 @@
   <ItemGroup>
     <Compile Include="AllPageScrapper.cs" />
     <Compile Include="Conversions.cs" />
+    <Compile Include="DataObjects\FinancialData.cs" />
+    <Compile Include="DataObjects\OverviewData.cs" />
     <Compile Include="FinvizPager.cs" />
     <Compile Include="FinvizParameters.cs" />
-    <Compile Include="FragmenScrappers\PageMetricScrapper.cs" />
+    <Compile Include="FragmentScrappers\HeaderScrapper.cs" />
+    <Compile Include="FragmentScrappers\PageMetricScrapper.cs" />
     <Compile Include="HttpRequestData.cs" />
     <Compile Include="LocalDataObjects.cs" />
     <Compile Include="Parsers\PageParser.cs" />
@@ -72,5 +75,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

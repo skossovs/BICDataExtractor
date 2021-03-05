@@ -28,6 +28,7 @@ namespace BIC.Scrappers.FinvizScrapper.Parsers
 
         public PageMetric ParseObject(string fragment, ref PageMetric obj)
         {
+            // TODO: Design incorrect ??
             throw new NotImplementedException();
         }
     }
