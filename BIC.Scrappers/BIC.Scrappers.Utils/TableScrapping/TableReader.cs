@@ -1,4 +1,6 @@
 ﻿using BIC.Scrappers.Utils.Attributes;
+using BIC.Utils;
+using BIC.Utils.Logger;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +11,10 @@ namespace BIC.Scrappers.Utils.TableScrapping
 {
     public class TableReader<T> where T : class, new()
     {
+        private readonly ILog _logger = LogServiceProvider.Logger;
         private enum AllowedTypes { StringType, IntType, DecimalType, DateType };
+        private readonly char[] EmptyCharacters = new char[] { '-' };
+
         private class Mapping
         {
             public int          ColumnIndex;
@@ -18,6 +23,7 @@ namespace BIC.Scrappers.Utils.TableScrapping
         };
 
         private List<Mapping> _propertyMapping;
+
         public bool MapHeader(string[] headers)
         {
             int propIndex = 0;
@@ -26,13 +32,13 @@ namespace BIC.Scrappers.Utils.TableScrapping
 
             Func<Type, AllowedTypes> typeConvertFunc = (t) =>
             {
-                if (t.Name == "Int32")
+                if (t.FullName.Contains("System.Int32"))
                     return AllowedTypes.IntType;
-                else if (t.Name == "Decimal")
+                else if (t.FullName.Contains("System.Decimal"))
                     return AllowedTypes.DecimalType;
-                else if (t.Name == "DateTime")
+                else if (t.FullName.Contains("System.DateTime"))
                     return AllowedTypes.DateType;
-                else if (t.Name == "String")
+                else if (t.FullName.Contains("System.String"))
                     return AllowedTypes.StringType;
                 else
                     throw new Exception(string.Format("Wrong type {0}", t.Name));
@@ -62,17 +68,20 @@ namespace BIC.Scrappers.Utils.TableScrapping
             {
                 T obj = new T();
                 foreach (var m in _propertyMapping)
-                { // TODO: nullable conversion is needed
+                {
                     switch(m.PropertyType)
                     {
                         case AllowedTypes.DateType:
-                            props[m.PropertyIndex].SetValue(Convert.ToDateTime(obj), record[m.ColumnIndex]);
+                            props[m.PropertyIndex].SetValue(obj, record[m.ColumnIndex].StringToDate(e => _logger.Error(e.Message), EmptyCharacters));
                             break;
                         case AllowedTypes.DecimalType:
-                            props[m.PropertyIndex].SetValue(Convert.ToDecimal(obj), record[m.ColumnIndex]);
+                            if(record[m.ColumnIndex].Contains("%")) // TODO: misplaced responsibility
+                                props[m.PropertyIndex].SetValue(obj, record[m.ColumnIndex].PercentageStringToDecimal(e => _logger.Error(e.Message), EmptyCharacters));
+                            else
+                                props[m.PropertyIndex].SetValue(obj, record[m.ColumnIndex].StringToDecimal(e => _logger.Error(e.Message), EmptyCharacters));
                             break;
                         case AllowedTypes.IntType:
-                            props[m.PropertyIndex].SetValue(Convert.ToInt32(obj), record[m.ColumnIndex]);
+                            props[m.PropertyIndex].SetValue(obj, record[m.ColumnIndex].StringToInt(e => _logger.Error(e.Message), EmptyCharacters));
                             break;
                         case AllowedTypes.StringType:
                             props[m.PropertyIndex].SetValue(obj, record[m.ColumnIndex]);

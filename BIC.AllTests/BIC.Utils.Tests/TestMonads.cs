@@ -63,6 +63,17 @@ namespace BIC.Utils.Tests
             Assert.IsFalse(dResult.HasValue);
         }
 
+        [TestMethod]
+        public void CheckStringConversionWithMonadStringEqualNullCase()
+        {
+            string sValue = null;
+            bool passedException = false;
+
+            var dResult = sValue.StringToDecimal(ex => passedException = (ex != null));
+
+            Assert.IsFalse(passedException);
+            Assert.IsNull(dResult);
+        }
 
         [TestMethod]
         public void CheckStringGenericConversionWithMonadNormalCase()

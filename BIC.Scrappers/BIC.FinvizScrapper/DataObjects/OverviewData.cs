@@ -10,7 +10,7 @@ namespace BIC.Scrappers.FinvizScrapper.DataObjects
     public class OverviewData
     {
         [PropertyMappingAttribute(ColumnNameOnTheSite = "No.")]
-        public int No { get; set; }
+        public int? No { get; set; }
         [PropertyMappingAttribute(ColumnNameOnTheSite = "Ticker")]
         public string Ticker { get; set; }
         [PropertyMappingAttribute(ColumnNameOnTheSite = "Company")]
@@ -22,14 +22,14 @@ namespace BIC.Scrappers.FinvizScrapper.DataObjects
         [PropertyMappingAttribute(ColumnNameOnTheSite = "Country")]
         public string Country { get; set; }
         [PropertyMappingAttribute(ColumnNameOnTheSite = "Market Cap")]
-        public Decimal MarketCap { get; set; }
+        public Decimal? MarketCap { get; set; }
         [PropertyMappingAttribute(ColumnNameOnTheSite = "P/E")]
-        public Decimal PE { get; set; }
+        public Decimal? PE { get; set; }
         [PropertyMappingAttribute(ColumnNameOnTheSite = "Price")]
-        public Decimal Price { get; set; }
+        public Decimal? Price { get; set; }
         [PropertyMappingAttribute(ColumnNameOnTheSite = "Change")]
-        public Decimal PriceChange { get; set; }
+        public Decimal? PriceChange { get; set; }
         [PropertyMappingAttribute(ColumnNameOnTheSite = "Volume")]
-        public Decimal Volume { get; set; }
+        public Decimal? Volume { get; set; }
     }
 }

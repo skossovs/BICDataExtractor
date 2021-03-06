@@ -11,7 +11,7 @@ namespace BIC.Utils
     {
         public static bool IsNullOrEmtpy(this string s)
         {
-            return s.Return(s1 => s1.Trim() == "", false);
+            return s.Return(s1 => s1.Trim() == "", true);
         }
     }
 }
