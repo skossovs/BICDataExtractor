@@ -18,7 +18,7 @@ namespace BIC.Scrappers.FinvizScrapper
 
         private ILog _logger = LogServiceProvider.Logger;
         public readonly string url = Settings.GetInstance().UrlRoot;
-        public string[] Separators = { "&&?",",,,,,=" }; // should be populated in reverse
+        public string[] Separators = { "&&&?",",,,,,=" }; // should be populated in reverse. Attention number of characters in each group should match exactly with Maximum Order
 
 
         public class Filter
@@ -43,6 +43,9 @@ namespace BIC.Scrappers.FinvizScrapper
 
         [AddressAttribute(Order = 2, Group = 0, Template = "ft={0}")]
         public string FilterView { get; set; }
+
+        [AddressAttribute(Order = 3, Group = 0, Template ="r={0}")]
+        public string PageAsR { get; set; }
 
 
         public string GenerateAddressRequest()

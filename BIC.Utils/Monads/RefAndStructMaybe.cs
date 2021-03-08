@@ -43,6 +43,5 @@ namespace BIC.Utils.Monads
                 return new TResult?();
             }
         }
-
     }
 }

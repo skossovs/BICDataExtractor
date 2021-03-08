@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BIC.Utils.Monads;
+using BIC.Utils;
 
 namespace BIC.Scrappers.FinvizScrapper
 {
@@ -24,6 +25,7 @@ namespace BIC.Scrappers.FinvizScrapper
 
             hr.FilterView = (BIC.Utils.Conversions.EnumToIntObj(p.FilterView)).With(e => Convert.ToString(e));
             hr.View = Convert.ToString(BIC.Utils.Conversions.EnumToIntObj(p.View)).With(e => Convert.ToString(e));
+            hr.PageAsR = Convert.ToString(p.PageAsR.IntToString());
 
             return hr;
         }

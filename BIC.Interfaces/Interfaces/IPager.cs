@@ -13,6 +13,6 @@ namespace BIC.Foundation.Interfaces
     public interface IPager<TRequestParameters>  where TRequestParameters : class
     {
         bool DefineMetrics(TRequestParameters p, out int recordsPerPage , out int maxPage);
-        IEnumerable<string> GenerateRequestAdresses();
+        IEnumerable<string> GenerateRequestAdresses(); // TODO: not used method
     }
 }

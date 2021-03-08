@@ -55,6 +55,7 @@
     <Compile Include="HttpRequestData.cs" />
     <Compile Include="LocalDataObjects.cs" />
     <Compile Include="Parsers\PageParser.cs" />
+    <Compile Include="Plan.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
   </ItemGroup>

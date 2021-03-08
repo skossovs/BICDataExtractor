@@ -94,6 +94,21 @@ namespace BIC.Utils.Tests
             Assert.IsFalse(dResult.HasValue);
         }
 
+        [TestMethod]
+        public void CheckIntNullableToStringWithNull()
+        {
+            int? i = null;
+            var s = i.IntToString();
+            Assert.IsNull(s);
+        }
+
+        [TestMethod]
+        public void CheckIntNullableToStringWithSomeValue()
+        {
+            int? i = 1;
+            var s = i.IntToString();
+            Assert.AreEqual("1", s);
+        }
 
     }
 }

@@ -30,6 +30,11 @@ namespace BIC.Utils
             return ((object)value).Return(t => new int?((int)t), null);
         }
 
+        public static string IntToString(this int? value)
+        {
+            return value.MapNullableToClass(v => Convert.ToString(v));
+        }
+
         public static int? StringToInt(this string value, Action<Exception> errorAction)
         {
             return value.TryCatch(s => s.IsNullOrEmtpy() ? new int?() : new int?(Convert.ToInt32(s)), e => errorAction(e));
@@ -58,7 +63,7 @@ namespace BIC.Utils
 
         public static string NullIfEmptyPlace(this string value, char[] emptyPlaceCharacters)
         {
-            if(value.Length > 1)
+            if(value == null || value.Length > 1)
                 return value;
 
             if (value.Length == 0 || emptyPlaceCharacters.Contains(value[0]))

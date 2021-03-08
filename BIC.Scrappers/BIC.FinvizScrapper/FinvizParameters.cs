@@ -41,5 +41,6 @@ namespace BIC.Scrappers.FinvizScrapper
         public EFilterView? FilterView     { get; set; }
         public EView?       View           { get; set; }
         public Filters      Filters        { get; set; }
+        public int?         PageAsR        { get; set; }
     }
 }

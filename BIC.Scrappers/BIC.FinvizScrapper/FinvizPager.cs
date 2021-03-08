@@ -22,7 +22,6 @@ namespace BIC.Scrappers.FinvizScrapper
             var htmlContent = RequestHelper.GetData(url);
             var cqHelper    = new CQHelper();
             var cq          = cqHelper.InitiateWithContent(htmlContent);
-            //var cq = cqHelper.GetData(url);
 
             var pgmScrapper = new FragmentScrappers.PageMetricScrapper();
 
@@ -48,7 +47,7 @@ namespace BIC.Scrappers.FinvizScrapper
 
         public IEnumerable<string> GenerateRequestAdresses()
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException(); // TODO: not used method
         }
     }
 }

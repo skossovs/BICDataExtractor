@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace BIC.Scrappers.Utils.TableScrapping
 {
+    // TODO: rename to Table Array to TypeList Transformer
     public class TableReader<T> where T : class, new()
     {
         private readonly ILog _logger = LogServiceProvider.Logger;
