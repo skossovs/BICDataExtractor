@@ -65,7 +65,7 @@
     <Compile Include="RequestHelper.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="HeaderScrapper.cs" />
-    <Compile Include="TableScrapping\TableReader.cs" />
+    <Compile Include="TableScrapping\TableArrayConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="chromedriver.zip">

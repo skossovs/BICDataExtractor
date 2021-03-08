@@ -33,7 +33,7 @@ namespace BIC.Scrappers.FinvizScrapper
                     return;
                 }
                 // 2.2. Convert string page into List of types
-                var tr = new TableReader<T>();
+                var tr = new TableArrayConverter<T>();
                 if (!tr.MapHeader(header))
                 {
                     _logger.Warning("Failed to map header to class object");

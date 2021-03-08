@@ -44,10 +44,5 @@ namespace BIC.Scrappers.FinvizScrapper
             maxPage = pageInfo.First().NumberOfPages.Value;
             return true;
         }
-
-        public IEnumerable<string> GenerateRequestAdresses()
-        {
-            throw new NotImplementedException(); // TODO: not used method
-        }
     }
 }

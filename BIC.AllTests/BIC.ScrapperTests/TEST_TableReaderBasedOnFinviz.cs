@@ -34,7 +34,7 @@ namespace BIC.ScrapperTests
                 Volume      = 10349081
             };
 
-            var tr = new TableReader<OverviewData>();
+            var tr = new TableArrayConverter<OverviewData>();
             bool headersGenerated = tr.MapHeader(_headers);
             Assert.IsTrue(headersGenerated);
 
