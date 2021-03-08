@@ -19,8 +19,7 @@ namespace BIC.Scrappers.FinvizScrapper
             if (_singletonSetings == null)
             {
                 _singletonSetings = new Settings();
-                var settingHelper = new AppSettingsProcessorLogger(); // TODO: base class is needed
-                settingHelper.Populate(_singletonSetings, _singletonSetings.GetType().Assembly);
+                Provider.PopulateProperties(_singletonSetings);
             }
             return _singletonSetings;
         }
