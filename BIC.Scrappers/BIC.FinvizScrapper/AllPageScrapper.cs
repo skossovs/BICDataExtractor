@@ -17,6 +17,8 @@ namespace BIC.Scrappers.FinvizScrapper
         public void Scrap(FinvizParameters requestParameters)
         {
             var pageMetrics = GetFirstPageMetrics(requestParameters);
+            var allPageData = new List<T>();
+
             for (int i = 1; i < pageMetrics.NumberOfPages; i++)
             {
                 requestParameters.PageAsR = ConvertPageToR(i);
@@ -39,9 +41,20 @@ namespace BIC.Scrappers.FinvizScrapper
                 }
 
                 var data = tr.GenerateDataSet(cells);
+                allPageData.AddRange(data);
             }
-            // 3. Save List of types into file system as json file
 
+            // 3. Save List of types into file system as json file
+            var fileName = FileHelper.ComposeFileName(typeof(T), true, "json");
+            var fullPath = System.IO.Path.Combine(Settings.GetInstance().OutputDirectory, fileName);
+            _logger.Info("Saving data into json file: " + fullPath);
+
+            Exception ex = null;
+            if (!FileHelper.SaveAsJSON(allPageData, fullPath, out ex))
+            {
+                _logger.Error(ex.StackTrace);
+                _logger.Error(ex.Message);
+            }
         }
 
         private PageMetric GetFirstPageMetrics(FinvizParameters requestParameters)

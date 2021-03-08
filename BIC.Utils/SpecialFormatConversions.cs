@@ -16,6 +16,15 @@ namespace BIC.Utils
                 return value.StringToDecimal(errorAction);
 
         }
+        public static Decimal? MillionBillionStringToDecimal(this string value, Action<Exception> errorAction)
+        {
+            if (value.EndsWith("M"))
+                return value.Replace("M", "").StringToDecimal(errorAction) * 1000000;
+            else if (value.EndsWith("B"))
+                return value.Replace("B", "").StringToDecimal(errorAction) * 1000000000;
+            else
+                return value.StringToDecimal(errorAction);
 
+        }
     }
 }
