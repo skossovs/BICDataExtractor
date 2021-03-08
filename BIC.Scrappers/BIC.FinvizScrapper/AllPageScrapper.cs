@@ -68,8 +68,10 @@ namespace BIC.Scrappers.FinvizScrapper
         }
         private bool GetStringTableFromCurrentPage(string generatedAddress, out string[] headers, out IEnumerable<string[]> data)
         {
+            var currentPagehtmlContent = RequestHelper.GetData(generatedAddress);
             var cqHelper = new CQHelper();
-            var cq = cqHelper.GetData(generatedAddress);
+            var cq = cqHelper.InitiateWithContent(currentPagehtmlContent);
+
             if (cq.Elements.Count() == 0)
             {
                 _logger.Warning("Request returns no elements");

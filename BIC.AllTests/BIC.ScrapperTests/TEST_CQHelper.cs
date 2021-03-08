@@ -16,10 +16,12 @@ namespace BIC.ScrapperTests
         private ILog _logger = LogServiceProvider.Logger;
 
         [TestMethod]
-        public void TestCq()
+        public void TestCqFinvizSite()
         {
+            var currentPagehtmlContent = RequestHelper.GetData("https://finviz.com/screener.ashx");
             var cqHelper = new CQHelper();
-            var cq = cqHelper.GetData("https://finviz.com/screener.ashx");
+            var cq = cqHelper.InitiateWithContent(currentPagehtmlContent);
+
             Assert.IsTrue(cq.Elements.Count() > 0, "Returns no elements");
         }
         [TestMethod]
@@ -31,8 +33,10 @@ namespace BIC.ScrapperTests
             r.Filters = new HttpRequestData.Filter() { Sector = "basicmaterials", Industry = "gold", Country = "usa" };
             var generatedAddress = r.GenerateAddressRequest();
 
+            var currentPagehtmlContent = RequestHelper.GetData(generatedAddress);
             var cqHelper = new CQHelper();
-            var cq = cqHelper.GetData(generatedAddress);
+            var cq = cqHelper.InitiateWithContent(currentPagehtmlContent);
+
             Assert.IsTrue(cq.Elements.Count() > 0, "Returns no elements");
         }
         [TestMethod]
@@ -44,8 +48,10 @@ namespace BIC.ScrapperTests
             r.Filters = new HttpRequestData.Filter() { Sector = "basicmaterials", Industry = "gold", Country = "usa" };
             var generatedAddress = r.GenerateAddressRequest();
 
+            var currentPagehtmlContent = RequestHelper.GetData(generatedAddress);
             var cqHelper = new CQHelper();
-            var cq = cqHelper.GetData(generatedAddress);
+            var cq = cqHelper.InitiateWithContent(currentPagehtmlContent);
+
             Assert.IsTrue(cq.Elements.Count() > 0, "Returns no elements");
 
             cq = cq.Find(@"table[bgcolor=""#d3d3d3""]");
