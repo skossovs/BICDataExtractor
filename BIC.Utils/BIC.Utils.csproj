@@ -42,13 +42,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\SettingsAttributes.cs" />
+    <Compile Include="Conversions.cs" />
+    <Compile Include="EmptyPlacesConversions.cs" />
     <Compile Include="Logger\ILog.cs" />
     <Compile Include="Logger\LogServiceProvider.cs" />
     <Compile Include="Logger\SimpleLogger.cs" />
     <Compile Include="Monads\Maybe.cs" />
+    <Compile Include="Monads\RefAndStructMaybe.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings\AppSettingsProcessor.cs" />
     <Compile Include="Settings\AppSettingsProcessorLogger.cs" />
+    <Compile Include="SpecialFormatConversions.cs" />
+    <Compile Include="StatusCheck.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

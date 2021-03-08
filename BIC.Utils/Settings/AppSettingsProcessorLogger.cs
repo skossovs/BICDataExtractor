@@ -2,18 +2,19 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BIC.Utils.Settings
+namespace BIC.Utils.SettingProcessors
 {
     public class AppSettingsProcessorLogger : AppSettingsProcessor
     {
         private readonly static ILog _logger = Logger.LogServiceProvider.Logger;
 
-        public override bool Populate()
+        public override bool Populate(Object settingsObject, Assembly a)
         {
-            bool result = base.Populate();
+            bool result = base.Populate(settingsObject, a);
 
             foreach(var statusRecord in base.ListPropertyReadingStatuses)
             {

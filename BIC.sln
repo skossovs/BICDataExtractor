@@ -10,6 +10,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BIC.Scrappers.Utils", "BIC.Scrappers\BIC.Scrappers.Utils\BIC.Scrappers.Utils.csproj", "{C4CB8249-5756-4B29-9217-12B8AA7BB38F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BIC.AllTests", "BIC.AllTests", "{BCAA643B-611A-41C9-85F8-5B0858FF8F8F}"
+	ProjectSection(SolutionItems) = preProject
+		TroubleShootings.yaml = TroubleShootings.yaml
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BIC.ScrapperTests", "BIC.AllTests\BIC.ScrapperTests\BIC.ScrapperTests.csproj", "{99178D59-28D1-4A67-967C-BD77710BA023}"
 EndProject
@@ -17,7 +20,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BIC.Utils", "BIC.Utils", "{
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BIC.Utils", "BIC.Utils\BIC.Utils.csproj", "{1FD4C7B7-7EA9-4F9A-91F6-09FF4AEDD208}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BIC.Interfaces", "BIC.Interfaces\BIC.Interfaces.csproj", "{5B2C1550-32A6-4FE1-80DA-B7F6BCE7D366}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BIC.Foundation", "BIC.Interfaces\BIC.Foundation.csproj", "{5B2C1550-32A6-4FE1-80DA-B7F6BCE7D366}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BIC.Utils.Tests", "BIC.AllTests\BIC.Utils.Tests\BIC.Utils.Tests.csproj", "{ED09AB61-2EFA-42A9-A96B-DDD8260D106E}"
 EndProject
