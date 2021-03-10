@@ -50,9 +50,9 @@
     <Compile Include="Monads\Maybe.cs" />
     <Compile Include="Monads\RefAndStructMaybe.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Settings\AppSettingsProcessor.cs" />
-    <Compile Include="Settings\AppSettingsProcessorLogger.cs" />
-    <Compile Include="Settings\Provider.cs" />
+    <Compile Include="SettingProcessors\AppSettingsProcessor.cs" />
+    <Compile Include="SettingProcessors\AppSettingsProcessorLogger.cs" />
+    <Compile Include="SettingProcessors\Provider.cs" />
     <Compile Include="SpecialFormatConversions.cs" />
     <Compile Include="StatusCheck.cs" />
   </ItemGroup>
