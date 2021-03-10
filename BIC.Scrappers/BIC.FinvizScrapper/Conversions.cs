@@ -16,7 +16,7 @@ namespace BIC.Scrappers.FinvizScrapper
 
             hr.Filters = new HttpRequestData.Filter()
             {
-                Country  = p.Filters.CountrFilter,
+                Country  = p.Filters.CountryFilter,
                 Exchange = p.Filters.ExchangeFilter,
                 Index    = p.Filters.IndexFilter,
                 Industry = p.Filters.IndustryFilter,

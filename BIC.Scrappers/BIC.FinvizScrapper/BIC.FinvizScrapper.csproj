@@ -48,6 +48,7 @@
     <Compile Include="Conversions.cs" />
     <Compile Include="DataObjects\FinancialData.cs" />
     <Compile Include="DataObjects\OverviewData.cs" />
+    <Compile Include="FinvizFilterComboboxes.cs" />
     <Compile Include="FinvizPager.cs" />
     <Compile Include="FinvizParameters.cs" />
     <Compile Include="FragmentScrappers\HeaderScrapper.cs" />
@@ -73,6 +74,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="FinvizFilterComboboxes.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />

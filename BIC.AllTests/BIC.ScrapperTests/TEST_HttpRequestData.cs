@@ -41,7 +41,7 @@ namespace BIC.ScrapperTests
                 FilterView = EFilterView.All,
                 Filters    = new Filters()
                 {
-                    CountrFilter   = "usa",
+                    CountryFilter   = "usa",
                     ExchangeFilter = "nyse",
                     IndexFilter    = "sp500",
                     SectorFilter   = "basicmaterials",

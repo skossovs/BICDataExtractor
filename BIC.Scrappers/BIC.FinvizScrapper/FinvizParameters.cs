@@ -33,7 +33,7 @@ namespace BIC.Scrappers.FinvizScrapper
         public string IndexFilter    { get; set; }
         public string SectorFilter   { get; set; }
         public string IndustryFilter { get; set; }
-        public string CountrFilter   { get; set; }
+        public string CountryFilter   { get; set; }
     }
 
     public class FinvizParameters
