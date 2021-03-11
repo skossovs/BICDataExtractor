@@ -9,9 +9,10 @@ namespace BIC.Scrappers.FinvizScrapper
     // This class is for planning only doesn't do anything, just thoughts in here
     class Plan
     {
-        // 1. Create File Logger
-        // 2. Create commands to scrap by Sector
-        // 2.1. Create list of Sectors, decide where: exe or scrapper lib.
-        // 3. Create DB ETL project
+        // 1. Fix Chrome memory leak. Cut off chrome.exe process mad respawn
+        // 2. Implement file logging.
+        // 3. Block Chrome logs if possible.
+        // 4. Create DB ETL project.
+
     }
 }

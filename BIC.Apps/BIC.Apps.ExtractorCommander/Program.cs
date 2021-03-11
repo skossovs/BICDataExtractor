@@ -17,13 +17,19 @@ namespace BIC.Apps.ExtractorCommander
             try
             {
                 _logger.Info("Starting..");
-                // TODO: implement commands
                 var app = new CommandLineApplication();
 
+                #region Command lines
+                //  -rs finviz -etl secmaster                  -- security master call
+                //  -rs finviz -all                            -- download all sectors
+                //  -rs finviz -sec sec_basicmaterials         -- download one sector
+                #endregion
+
                 #region Option description
-                app.HelpOption("--help");
+                app.HelpOption("--help");  // TODO: implement help
                 var optionResource = app.Option("-rs|--resource", "Resource"     , CommandOptionType.SingleValue);
                 //var optionView     = app.Option("-vw|--view"    , "View"         , CommandOptionType.SingleValue); TODO: all views (objects) will be loaded
+                var optionFeed     = app.Option("-etl|--ETL"    , "ETL Feed type", CommandOptionType.SingleValue);
                 var optionNoFilter = app.Option("-all|--All"    , "All no filter", CommandOptionType.NoValue);
                 var optionSector   = app.Option("-sec|--sector" , "Sector"       , CommandOptionType.SingleValue);
                 #endregion
@@ -34,20 +40,27 @@ namespace BIC.Apps.ExtractorCommander
                     var resource = optionResource.HasValue() ? optionResource.Value() : null;
                     //var view     = optionView    .HasValue() ? optionView    .Value() : null;  TODO:
                     var sector   = optionSector  .HasValue() ? optionSector  .Value() : null;
-
+                    // TODO: come up with bridge design pattern to properly combine commands, get rid of many-layered ifs
                     if (optionResource.HasValue())
                     {
                         if (resource == Commands.Constants.FinvizResource)
                         {
-                            if (optionNoFilter.HasValue())
+                            if (optionFeed.Value() == "secmaster")
                             {
-                                Commands.Finviz.ScrapOverview(); // TODO: *** not finished
-                                Commands.Finviz.ScrapFinancial();
+                                Commands.Finviz.ScrapOverview();
                             }
                             else
                             {
-                                Commands.Finviz.ScrapOverview();
-                                Commands.Finviz.ScrapFinancial();
+                                if (optionNoFilter.HasValue())
+                                {
+                                    Commands.Finviz.ScrapOverview();
+                                    Commands.Finviz.ScrapFinancial();
+                                }
+                                else
+                                {
+                                    Commands.Finviz.ScrapOverview(sector);
+                                    Commands.Finviz.ScrapFinancial(sector);
+                                }
                             }
                         }
                     }

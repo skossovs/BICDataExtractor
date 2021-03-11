@@ -8,7 +8,7 @@ namespace BIC.Scrappers.FinvizScrapper
 {
     public class FinvizFilterComboboxes
     {
-        public struct Item
+        public class Item
         {
             public string Label;
             public string Value;
