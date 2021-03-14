@@ -14,5 +14,10 @@ namespace BIC.Utils.SettingProcessors
             var settingHelper = new AppSettingsProcessorLogger();
             settingHelper.Populate(singletonSetings, singletonSetings.GetType().Assembly);
         }
+        public static void PopulatePropertiesBeforLogging(object singletonSetings)
+        {
+            var settingHelper = new AppSettingsProcessor();
+            settingHelper.Populate(singletonSetings, singletonSetings.GetType().Assembly);
+        }
     }
 }

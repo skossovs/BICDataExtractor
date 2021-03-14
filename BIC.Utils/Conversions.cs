@@ -71,5 +71,9 @@ namespace BIC.Utils
             else
                 return value;
         }
+        public static bool YNtoBool(this string yn)
+        {
+            return (yn.ToUpper() == "Y" || yn.ToUpper() == "YES");
+        }
     }
 }

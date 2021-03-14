@@ -11,6 +11,8 @@ namespace BIC.Scrappers.FinvizScrapper
     {
         // 1. Fix Chrome memory leak. Cut off chrome.exe process mad respawn. DONE
         // 2. Implement file logging.
+        // 2.1. Settings has hard time to accomodate in BIC.Utils project. File Logging require Log path. DONE
+        // 2.2. Simple Logger and File Logger places in hierarchy are not clear.
         // 3. Block Chrome logs if possible.
         // 4. Create DB ETL project.
         // 5. Implement variable timedelay.
