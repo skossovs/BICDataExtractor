@@ -16,11 +16,10 @@ namespace BIC.Scrappers.FinvizScrapper
         // 3. Create project that export files in SQL database
         // 3.1. Create Security Master.
         // 4. Block Chrome logs if possible.
-        // 5. Create DB ETL project.
-        // 6. Implement variable timedelay.
-        // 6.1. Implement delay skip if different site detected. So Yahoo doesn't wait for Finviz.
-        // 7. Create Yahoo.Finance Scrapper library
-        // 8. Reorganize tests.
+        // 5. Implement variable timedelay.
+        // 5.1. Implement delay skip if different site detected. So Yahoo doesn't wait for Finviz.
+        // 6. Create Yahoo.Finance Scrapper library
+        // 7. Reorganize tests.
 
     }
 }
