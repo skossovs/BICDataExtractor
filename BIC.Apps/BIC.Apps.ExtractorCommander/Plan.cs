@@ -10,15 +10,17 @@ namespace BIC.Scrappers.FinvizScrapper
     class Plan
     {
         // 1. Fix Chrome memory leak. Cut off chrome.exe process mad respawn. DONE
-        // 2. Implement file logging.
+        // 2. Implement file logging. DONE
         // 2.1. Settings has hard time to accomodate in BIC.Utils project. File Logging require Log path. DONE
-        // 2.2. Simple Logger and File Logger places in hierarchy are not clear.
-        // 3. Block Chrome logs if possible.
-        // 4. Create DB ETL project.
-        // 5. Implement variable timedelay.
-        // 5.1. Implement delay skip if different site detected. So Yahoo doesn't wait for Finviz.
-        // 6. Create Yahoo.Finance Scrapper library
-        // 7. Reorganize tests.
+        // 2.2. Simple Logger and File Logger places in hierarchy are not clear. DONE
+        // 3. Create project that export files in SQL database
+        // 3.1. Create Security Master.
+        // 4. Block Chrome logs if possible.
+        // 5. Create DB ETL project.
+        // 6. Implement variable timedelay.
+        // 6.1. Implement delay skip if different site detected. So Yahoo doesn't wait for Finviz.
+        // 7. Create Yahoo.Finance Scrapper library
+        // 8. Reorganize tests.
 
     }
 }
