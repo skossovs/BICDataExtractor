@@ -47,7 +47,9 @@
     <Compile Include="Attributes\SettingsAttributes.cs" />
     <Compile Include="Conversions.cs" />
     <Compile Include="EmptyPlacesConversions.cs" />
+    <Compile Include="Logger\FileLogger.cs" />
     <Compile Include="Logger\ILog.cs" />
+    <Compile Include="Logger\LogDelegator.cs" />
     <Compile Include="Logger\LogServiceProvider.cs" />
     <Compile Include="Logger\SimpleLogger.cs" />
     <Compile Include="Monads\Maybe.cs" />

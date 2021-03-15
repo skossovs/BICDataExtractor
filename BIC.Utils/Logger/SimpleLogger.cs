@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BIC.Utils.Logger
 {
-    public class SimpleLogger : ILog
+    public class SimpleLogger : ILog, IDisposable
     {
         public SimpleLogger()   {}
 
@@ -71,6 +71,10 @@ namespace BIC.Utils.Logger
             Console.WriteLine(_get_prefix("EXCEPTION") + ex.Message);
             Console.WriteLine(_get_prefix("STACK_TRACE") + ex.StackTrace);
             Console.ResetColor();
+        }
+
+        public void Dispose()
+        {
         }
     }
 }
