@@ -31,8 +31,10 @@ namespace BIC.Scrappers.Utils
             {
                 BinaryLocation = Settings.GetInstance().ChromeLocation
             };
-
             options.AddArguments(new List<string>() { "headless", "disable-gpu" });
+            /// Cloud Flare problem to resolve
+            /// https://www.api2pdf.com/solved-access-denied-v2018-api2pdf-com-used-cloudflare-to-restrict-access/
+            options.AddArgument("--user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36");
             _browser = new ChromeDriver(AppDomain.CurrentDomain.BaseDirectory, options);
         }
 
@@ -49,6 +51,7 @@ namespace BIC.Scrappers.Utils
         #endregion
 
         // https://sites.google.com/a/chromium.org/chromedriver/
+        // https://stackoverflow.com/questions/17998162/how-to-change-user-agent-in-selenium-with-net
         public static string GetData(string url)
         {
             lock (delayLocker)
