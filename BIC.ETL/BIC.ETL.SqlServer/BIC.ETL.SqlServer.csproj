@@ -41,7 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileArchivarius.cs" />
-    <Compile Include="FileManagers\SecurityMasterFileReader.cs" />
+    <Compile Include="FileReaders\SecurityMasterFileReader.cs" />
     <Compile Include="FileProcessor.cs" />
     <Compile Include="IFileReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -51,6 +51,10 @@
     <ProjectReference Include="..\..\BIC.Interfaces\BIC.Foundation.csproj">
       <Project>{5B2C1550-32A6-4FE1-80DA-B7F6BCE7D366}</Project>
       <Name>BIC.Foundation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\BIC.Scrappers\BIC.FinvizScrapper\BIC.FinvizScrapper.csproj">
+      <Project>{e7ea4eb2-ffea-4a80-9369-5ef7576c628c}</Project>
+      <Name>BIC.FinvizScrapper</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\BIC.Utils\BIC.Utils.csproj">
       <Project>{1fd4c7b7-7ea9-4f9a-91f6-09ff4aedd208}</Project>

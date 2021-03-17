@@ -64,6 +64,9 @@ namespace BIC.Scrappers.FinvizScrapper
             int maxPage = 0;
             bool result = pager.DefineMetrics(requestParameters, out recordsPerPage, out maxPage);
 
+            if (!result)
+                throw new Exception("Error while defining Page Metrics");
+
             return new PageMetric() { NumberOfPages = maxPage };
         }
         private bool GetStringTableFromCurrentPage(string generatedAddress, out string[] headers, out IEnumerable<string[]> data)

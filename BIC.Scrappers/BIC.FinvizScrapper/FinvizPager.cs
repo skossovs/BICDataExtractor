@@ -28,6 +28,16 @@ namespace BIC.Scrappers.FinvizScrapper
             var rendered = cq.Render();
             string pageBody = pgmScrapper.FindRawContent(rendered);
 
+            if (pageBody.IsNullOrEmtpy())
+            {
+                _logger.Error("Page metric raw content is wrong, whole page content is listed below: ");
+                _logger.Error(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+                _logger.Error(htmlContent);
+                _logger.Error(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+                recordsPerPage = 0; maxPage = 0;
+                return false;
+            }
+
             var pageInfo = pgmScrapper.CallParsers(pageBody);
 
             recordsPerPage = pageInfo.First().RecordsPerPage;

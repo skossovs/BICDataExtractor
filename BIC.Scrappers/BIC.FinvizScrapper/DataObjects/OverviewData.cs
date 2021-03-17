@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace BIC.Scrappers.FinvizScrapper.DataObjects
 {
+    // TODO: in order to decouple Scrapper from ETL it is better practice to put it in BIC.Foundation library
     public class OverviewData
     {
         [PropertyMappingAttribute(ColumnNameOnTheSite = "No.")]

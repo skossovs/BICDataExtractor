@@ -25,7 +25,8 @@ namespace BIC.Utils.Logger
         {
             ~Destructor()
             {
-                _logDelegator.Dispose();
+                if(_logDelegator!=null)
+                    _logDelegator.Dispose();
             }
         }
         private static readonly Destructor Finalise = new Destructor();

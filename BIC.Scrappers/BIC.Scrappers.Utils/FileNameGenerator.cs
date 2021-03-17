@@ -14,7 +14,7 @@ namespace BIC.Scrappers.Utils
             string timeStamp = "";
 
             if (includeTimestamp)
-                timeStamp = "_" + DateTime.Now.ToLongTimeString().Replace(':', '-');
+                timeStamp = "_" + DateTime.Now.ToShortDateString().Replace('/','-') + " " + DateTime.Now.ToLongTimeString().Replace(':', '-');
             return t.Assembly.GetName().Name + "_" + t.Name + timeStamp + "." + extension;
         }
 

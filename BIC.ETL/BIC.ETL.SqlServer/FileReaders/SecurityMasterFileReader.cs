@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BIC.ETL.SqlServer.FileManagers
+namespace BIC.ETL.SqlServer.FileReaders
 {
     public class SecurityMasterFileReader : IFileReader<SecurityRecord>
     {
