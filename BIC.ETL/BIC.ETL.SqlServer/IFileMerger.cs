@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace BIC.ETL.SqlServer
 {
-    public interface IFileReader<T>
+    public interface IFileMerger<T>
     {
         IEnumerable<T> Read();
-        bool Next();
+        void Merge(IEnumerable<T> newData);
     }
 }

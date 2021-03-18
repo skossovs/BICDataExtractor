@@ -26,5 +26,7 @@ namespace BIC.ETL.SqlServer
 
         [Mandatory]
         public string InputDirectory { get; set; }
+        [Mandatory]
+        public string SQLConnectionString { get; set; }
     }
 }
