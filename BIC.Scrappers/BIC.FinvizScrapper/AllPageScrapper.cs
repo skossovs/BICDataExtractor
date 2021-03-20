@@ -71,7 +71,8 @@ namespace BIC.Scrappers.FinvizScrapper
         }
         private bool GetStringTableFromCurrentPage(string generatedAddress, out string[] headers, out IEnumerable<string[]> data)
         {
-            var currentPagehtmlContent = RequestHelper.GetData(generatedAddress);
+            var retriever = ContentRetrieverFactory.CreateInstance(ERetrieverType.Finviz);
+            var currentPagehtmlContent = retriever.GetData(generatedAddress);
             var cqHelper = new CQHelper();
             var cq = cqHelper.InitiateWithContent(currentPagehtmlContent);
 

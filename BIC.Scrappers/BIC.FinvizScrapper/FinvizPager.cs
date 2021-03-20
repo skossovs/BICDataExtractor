@@ -19,7 +19,8 @@ namespace BIC.Scrappers.FinvizScrapper
             var requestData = Conversions.FromFinvizParametersToHttpRequestData(requestParameters);
             var url         = requestData.GenerateAddressRequest();
 
-            var htmlContent = RequestHelper.GetData(url);
+            var retriever = ContentRetrieverFactory.CreateInstance(ERetrieverType.Finviz);
+            var htmlContent = retriever.GetData(url);
             var cqHelper    = new CQHelper();
             var cq          = cqHelper.InitiateWithContent(htmlContent);
 

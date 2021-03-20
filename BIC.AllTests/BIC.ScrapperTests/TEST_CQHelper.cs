@@ -18,10 +18,6 @@ namespace BIC.ScrapperTests
         [TestMethod]
         public void TestCqFinvizSite()
         {
-            //var currentPagehtmlContent = RequestHelper.GetData("https://finviz.com/screener.ashx");
-            //var cqHelper = new CQHelper();
-            //var cq = cqHelper.InitiateWithContent(currentPagehtmlContent);
-
             var delayer                = new BIC.Scrappers.Utils.Delayers.VariableDelayer();
             var chromeRetriever        = new ChromeRetriever(delayer);
             var currentPagehtmlContent = chromeRetriever.GetData("https://finviz.com/screener.ashx");
@@ -39,7 +35,8 @@ namespace BIC.ScrapperTests
             r.Filters = new HttpRequestData.Filter() { Sector = "basicmaterials", Industry = "gold", Country = "usa" };
             var generatedAddress = r.GenerateAddressRequest();
 
-            var currentPagehtmlContent = RequestHelper.GetData(generatedAddress);
+            var chromeRetriever = new ChromeRetriever(new Scrappers.Utils.Delayers.VariableDelayer());
+            var currentPagehtmlContent = chromeRetriever.GetData(generatedAddress);
             var cqHelper = new CQHelper();
             var cq = cqHelper.InitiateWithContent(currentPagehtmlContent);
 
@@ -54,7 +51,9 @@ namespace BIC.ScrapperTests
             r.Filters = new HttpRequestData.Filter() { Sector = "basicmaterials", Industry = "gold", Country = "usa" };
             var generatedAddress = r.GenerateAddressRequest();
 
-            var currentPagehtmlContent = RequestHelper.GetData(generatedAddress);
+            var chromeRetriever = new ChromeRetriever(new Scrappers.Utils.Delayers.VariableDelayer());
+            var currentPagehtmlContent = chromeRetriever.GetData(generatedAddress);
+
             var cqHelper = new CQHelper();
             var cq = cqHelper.InitiateWithContent(currentPagehtmlContent);
 
@@ -89,7 +88,9 @@ namespace BIC.ScrapperTests
             r.Filters = new HttpRequestData.Filter() { Sector = "basicmaterials", Country = "usa" };
             var generatedAddress = r.GenerateAddressRequest();
 
-            var allContent = RequestHelper.GetData(generatedAddress);
+            var chromeRetriever = new ChromeRetriever(new Scrappers.Utils.Delayers.VariableDelayer());
+            var allContent = chromeRetriever.GetData(generatedAddress);
+
             Assert.IsTrue(allContent.Contains("Page 5"));
         }
     }
