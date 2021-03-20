@@ -14,8 +14,8 @@ namespace BIC.Scrappers.FinvizScrapper
         // 2.1. Settings has hard time to accomodate in BIC.Utils project. File Logging require Log path. DONE
         // 2.2. Simple Logger and File Logger places in hierarchy are not clear. DONE
         // 3. Create project that export files in SQL database. >>
-        // 3.1. Create File Manager Concept >>
-        // 3.2. Create Security Master. Must provide Merge operation always.
+        // 3.1. Create File Manager Concept DONE
+        // 3.2. Create Security Master. Must provide Merge operation always. DONE
         // 4. Block Chrome logs if possible.
         // 5. Implement variable timedelay.
         // 5.1. Implement delay skip if different site detected. So Yahoo doesn't wait for Finviz.

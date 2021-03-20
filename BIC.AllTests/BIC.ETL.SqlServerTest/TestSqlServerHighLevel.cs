@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace BIC.ETL.SqlServerTest
 {
     [TestClass]
-    public class TestHighLevel
+    public class TestSqlServerHighLevel
     {
         [TestMethod]
         public void TestFileProcessor()
