@@ -47,6 +47,7 @@
     <Compile Include="DataObjects\IndustryRecord.cs" />
     <Compile Include="DataObjects\SecurityRecord.cs" />
     <Compile Include="Interfaces\Enums.cs" />
+    <Compile Include="Interfaces\IContentRetriever.cs" />
     <Compile Include="Interfaces\IPager.cs" />
     <Compile Include="Interfaces\IPagerScrapper.cs" />
     <Compile Include="Interfaces\IParser.cs" />

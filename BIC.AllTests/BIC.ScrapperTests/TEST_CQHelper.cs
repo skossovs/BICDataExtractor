@@ -18,9 +18,15 @@ namespace BIC.ScrapperTests
         [TestMethod]
         public void TestCqFinvizSite()
         {
-            var currentPagehtmlContent = RequestHelper.GetData("https://finviz.com/screener.ashx");
-            var cqHelper = new CQHelper();
-            var cq = cqHelper.InitiateWithContent(currentPagehtmlContent);
+            //var currentPagehtmlContent = RequestHelper.GetData("https://finviz.com/screener.ashx");
+            //var cqHelper = new CQHelper();
+            //var cq = cqHelper.InitiateWithContent(currentPagehtmlContent);
+
+            var delayer                = new BIC.Scrappers.Utils.Delayers.VariableDelayer();
+            var chromeRetriever        = new ChromeRetriever(delayer);
+            var currentPagehtmlContent = chromeRetriever.GetData("https://finviz.com/screener.ashx");
+            var cqHelper               = new CQHelper();
+            var cq                     = cqHelper.InitiateWithContent(currentPagehtmlContent);
 
             Assert.IsTrue(cq.Elements.Count() > 0, "Returns no elements");
         }

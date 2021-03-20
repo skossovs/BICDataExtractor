@@ -17,9 +17,9 @@ namespace BIC.Scrappers.FinvizScrapper
         // 3.1. Create File Manager Concept DONE
         // 3.2. Create Security Master. Must provide Merge operation always. DONE
         // 4. Block Chrome logs if possible.
-        // 5. Implement variable timedelay.
-        // 5.1. Implement delay skip if different site detected. So Yahoo doesn't wait for Finviz.
-        // 5.2. as better alternative to 5.1. make request class non-static, create instance for each site and make it behave differently
+        // 5. Implement variable timedelay. >>
+        // 5.1. Implement delay skip if different site detected. So Yahoo doesn't wait for Finviz. >>
+        // 5.2. as better alternative to 5.1. make request class non-static, create instance for each site and make it behave differently >>
         // 6. Create Yahoo.Finance Scrapper library
         // 7. Reorganize tests.
 

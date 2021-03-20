@@ -71,8 +71,12 @@ namespace BIC.Utils.Logger
 
         public void Dispose()
         {
-            // TODO: define if it is closed, sometimes fails
-            _writer.Close();
+            // TODO: define if it is closed, sometimes fails, just cover up for now
+            try
+            {
+                _writer.Close();
+            }
+            catch(Exception ex)    { }
         }
     }
 }

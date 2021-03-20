@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BIC.Scrappers.Utils
+namespace BIC.Foundation.Interfaces
 {
-    public abstract class RecordScrapper
+    public interface IContentRetriever
     {
+        string GetData(string url);
     }
 }
