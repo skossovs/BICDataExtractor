@@ -61,13 +61,26 @@ namespace BIC.Apps.ExtractorCommander.Commands
             var allPageScrapper = new AllPageScrapper<T>();
             var fp = new FinvizParameters()
             {
-                View = EView.Overview,
                 FilterView = EFilterView.All,
                 Filters = new Filters()
                 {
                     SectorFilter = sector,
                 }
             };
+
+            var typeName = typeof(T).Name;
+            switch(typeName)
+            {
+                case "OverviewData":
+                    fp.View = EView.Overview;
+                    break;
+                case "FinancialData":
+                    fp.View = EView.Financial;
+                    break;
+                default:
+                    _logger.Error($"Unsupported type {typeName}");
+                    throw new Exception($"Unsupported type {typeName}");
+            }
 
             allPageScrapper.Scrap(fp);
             _logger.Info($"Finished Loading Sector {sectorItem.Label}.");

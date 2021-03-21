@@ -46,21 +46,13 @@ namespace BIC.Apps.ExtractorCommander
                         if (resource == Commands.Constants.FinvizResource)
                         {
                             if (optionFeed.Value() == "secmaster")
-                            {
                                 Commands.Finviz.ScrapOverview();
-                            }
-                            else
+                            else if(optionFeed.Value() == "finance")
                             {
-                                if (optionNoFilter.HasValue())
-                                {
-                                    Commands.Finviz.ScrapOverview();
+                                if (!optionNoFilter.HasValue())
                                     Commands.Finviz.ScrapFinancial();
-                                }
                                 else
-                                {
-                                    Commands.Finviz.ScrapOverview(sector);
                                     Commands.Finviz.ScrapFinancial(sector);
-                                }
                             }
                         }
                     }

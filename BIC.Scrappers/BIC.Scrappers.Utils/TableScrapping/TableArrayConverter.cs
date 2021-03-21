@@ -69,6 +69,11 @@ namespace BIC.Scrappers.Utils.TableScrapping
                 T obj = new T();
                 foreach (var m in _propertyMapping)
                 {
+                    if(m.ColumnIndex == -1)
+                    {
+                        _logger.Error($"Column index is -1 for the following property : {props[m.PropertyIndex].Name}");
+                        continue;
+                    }
                     switch(m.PropertyType)
                     {
                         case AllowedTypes.DateType:
