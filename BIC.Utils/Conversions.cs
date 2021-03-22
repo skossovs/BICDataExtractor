@@ -75,5 +75,13 @@ namespace BIC.Utils
         {
             return (yn?.ToUpper() == "Y" || yn?.ToUpper() == "YES");
         }
+
+        // returns Year and Quarter of date
+        public static Tuple<int, int> DateToYearQuarter(DateTime dt)
+        {
+            var y = dt.Year;
+            int q = (dt.Month - ((dt.Month - 1) % 3)) / 3 + 1;  // primitive application of group theory
+            return new Tuple<int, int>(y, q);
+        }
     }
 }

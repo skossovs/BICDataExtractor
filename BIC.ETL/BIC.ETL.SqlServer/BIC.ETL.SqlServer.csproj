@@ -46,9 +46,12 @@
   <ItemGroup>
     <Compile Include="DataLayer\BICContext.cs" />
     <Compile Include="DataLayer\IndustryData.cs" />
+    <Compile Include="DataLayer\KeyRatioData.cs" />
     <Compile Include="DataLayer\SectorData.cs" />
     <Compile Include="DataLayer\SecurityData.cs" />
+    <Compile Include="DataLayer\TimeDimmensionData.cs" />
     <Compile Include="FileArchivarius.cs" />
+    <Compile Include="FileReaders\FinvizKeyRatioFileMerger.cs" />
     <Compile Include="FileReaders\SecurityMasterFileMerger.cs" />
     <Compile Include="FileProcessor.cs" />
     <Compile Include="IFileMerger.cs" />

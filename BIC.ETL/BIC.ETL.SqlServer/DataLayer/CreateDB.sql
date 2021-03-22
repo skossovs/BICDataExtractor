@@ -35,3 +35,27 @@ CREATE TABLE [dbo].[Security](
 
 GO
 
+CREATE TABLE [dbo].[TimeDimmension](
+	[TimeID]  [int] NOT NULL,
+	[Year]    [int] NOT NULL,
+	[Quarter] [int] NOT NULL,
+) ON [PRIMARY]
+
+GO
+-- Populate TimeDimmension
+-- n-80 subject to change depends from which date you want to populate
+With numbers AS
+(SELECT TOP (3000) n = ROW_NUMBER() OVER (ORDER BY number) 
+  FROM [master]..spt_values )
+, dates AS
+(SELECT DATEADD(DAY, n - 80, CAST(GETDATE() AS Date)) d FROM numbers)
+, dims AS
+(SELECT
+	CONVERT(VARCHAR, d, 112)                                        d_int
+,	((DATEPART(MONTH, d) - ((DATEPART(MONTH, d) - 1) % 3)) / 3 + 1) Q
+,	DATEPART(YEAR, d)                                               Y
+FROM dates)
+SELECT * INTO #TimeDimmension FROM dims
+
+INSERT INTO [TimeDimmension]
+SELECT * FROM #TimeDimmension

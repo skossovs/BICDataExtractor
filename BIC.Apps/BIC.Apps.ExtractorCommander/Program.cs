@@ -22,7 +22,7 @@ namespace BIC.Apps.ExtractorCommander
                 #region Command lines
                 //  -rs finviz -etl secmaster                  -- security master call
                 //  -rs finviz -all                            -- download all sectors
-                //  -rs finviz -sec sec_basicmaterials         -- download one sector
+                //  -rs finviz -etl finance -sec healthcare    -- download one sector
                 #endregion
 
                 #region Option description
@@ -49,10 +49,12 @@ namespace BIC.Apps.ExtractorCommander
                                 Commands.Finviz.ScrapOverview();
                             else if(optionFeed.Value() == "finance")
                             {
-                                if (!optionNoFilter.HasValue())
+                                if (optionNoFilter.HasValue())
                                     Commands.Finviz.ScrapFinancial();
-                                else
+                                else if (optionSector.HasValue())
                                     Commands.Finviz.ScrapFinancial(sector);
+                                else
+                                    throw new Exception("Neither -all nor sector specified command (-sec) was entered");
                             }
                         }
                     }
@@ -76,7 +78,11 @@ namespace BIC.Apps.ExtractorCommander
             {
                 _logger.Info(">>>>>> Finished Processing");
             }
-            Console.ReadLine();
+#if   (DEBUG)
+    Console.ReadLine();
+#else
+    _logger.Info("This was Release version");
+#endif
         }
     }
 }

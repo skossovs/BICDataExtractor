@@ -48,6 +48,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TestConversions.cs" />
     <Compile Include="TestEntities\Settings.cs" />
     <Compile Include="TestSettingsLoggerFinviz.cs" />
     <Compile Include="TestSettingsLogger.cs" />
