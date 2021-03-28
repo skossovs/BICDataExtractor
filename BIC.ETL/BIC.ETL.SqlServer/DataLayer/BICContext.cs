@@ -14,5 +14,6 @@ namespace BIC.ETL.SqlServer.DataLayer
         public Table<IndustryData> Industry;
         public Table<SectorData>   Sector;
         public Table<SecurityData> Security;
+        public Table<KeyRatioData> KeyRatio;
     }
 }

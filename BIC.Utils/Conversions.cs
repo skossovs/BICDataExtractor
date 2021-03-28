@@ -77,7 +77,7 @@ namespace BIC.Utils
         }
 
         // returns Year and Quarter of date
-        public static Tuple<int, int> DateToYearQuarter(DateTime dt)
+        public static Tuple<int, int> DateToYearQuarter(this DateTime dt)
         {
             var y = dt.Year;
             int q = (dt.Month - ((dt.Month - 1) % 3)) / 3 + 1;  // primitive application of group theory

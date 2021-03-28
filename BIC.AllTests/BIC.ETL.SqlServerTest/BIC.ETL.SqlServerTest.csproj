@@ -48,6 +48,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TestMergers.cs" />
     <Compile Include="TestSqlServerHighLevel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -63,6 +64,10 @@
     <ProjectReference Include="..\..\BIC.Interfaces\BIC.Foundation.csproj">
       <Project>{5b2c1550-32a6-4fe1-80da-b7f6bce7d366}</Project>
       <Name>BIC.Foundation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\BIC.Scrappers\BIC.FinvizScrapper\BIC.FinvizScrapper.csproj">
+      <Project>{E7EA4EB2-FFEA-4A80-9369-5EF7576C628C}</Project>
+      <Name>BIC.FinvizScrapper</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\BIC.Utils\BIC.Utils.csproj">
       <Project>{1fd4c7b7-7ea9-4f9a-91f6-09ff4aedd208}</Project>

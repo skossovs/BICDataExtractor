@@ -59,3 +59,38 @@ SELECT * INTO #TimeDimmension FROM dims
 
 INSERT INTO [TimeDimmension]
 SELECT * FROM #TimeDimmension
+
+-- Key Ratio table
+CREATE TABLE [dbo].[KeyRatio](
+	KeyRatioID            int IDENTITY(1,1) NOT NULL,
+	SecurityID            int NOT NULL,
+	Year                  int NOT NULL,
+	Quarter               int NOT NULL,
+	MarketCap             numeric(18,6),
+    Dividend              numeric(18,6),
+    ROA                   numeric(18,6),
+    ROE                   numeric(18,6),
+    ROI                   numeric(18,6),
+    CurrentRatio          numeric(18,6),
+    QuickRatio            numeric(18,6),
+    LongTermDebtToEquity  numeric(18,6),
+    DebtToEquity          numeric(18,6),
+    GrossMargin           numeric(18,6),
+    OperationMargin       numeric(18,6),
+    ProfitMargin          numeric(18,6),
+    Earnings              numeric(18,6),
+    Price                 numeric(18,6),
+    Change                numeric(18,6),
+    Volume                numeric(18,6)) ON [PRIMARY]
+GO
+
+
+
+
+
+
+
+) ON [PRIMARY]
+
+GO
+        
