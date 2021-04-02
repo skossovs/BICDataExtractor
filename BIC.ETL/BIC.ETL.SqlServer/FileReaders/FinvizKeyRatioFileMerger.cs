@@ -4,8 +4,11 @@ using BIC.Scrappers.FinvizScrapper.DataObjects;
 using Newtonsoft.Json;
 using BIC.Utils;
 using System.Linq;
+using LinqToDB;
 using System.Text;
 using System.Threading.Tasks;
+using LinqToDB.Configuration;
+using BIC.ETL.SqlServer.DataLayer;
 
 namespace BIC.ETL.SqlServer.FileReaders
 {
@@ -25,74 +28,96 @@ namespace BIC.ETL.SqlServer.FileReaders
 
         public void Merge(IEnumerable<FinancialData> newData)
         {
-            var context = new DataLayer.BICContext(_connectionString);
-
             // get existing key ratio by quarter
-            var yq      = _datestamp.DateToYearQuarter();
-            var year    = yq.Item1;
+            var yq = _datestamp.DateToYearQuarter();
+            var year = yq.Item1;
             var quarter = yq.Item2;
+            // TODO: make it common
+            var connectionString = Settings.GetInstance().SQLConnectionString;
+            // create options builder
+            var builder = new LinqToDbConnectionOptionsBuilder();
+            // configure connection string
+            var options = builder.UseSqlServer(connectionString).Build();
 
-            //var exitingKR = context.KeyRatio.Select(s => s).Where(s1 => s1.Year == year && s1.Quarter == quarter);
+            using (var db = new DataLayer.BICDB(options))
+            {
+                var qNewData = from f in newData
+                               join s in db.Securities.Select(s1 => new { s1.SecurityID, s1.Ticker }) on f.Ticker equals s.Ticker
+                               select new DataLayer.KeyRatio
+                               {
+                                   SecurityID = s.SecurityID,
+                                   Change = f.Change,
+                                   CurrentRatio = f.CurrentRatio,
+                                   DebtToEquity = f.DebtToEquity,
+                                   Dividend = f.Dividend,
+                                   Earnings = f.Earnings,
+                                   GrossMargin = f.GrossMargin,
+                                   LongTermDebtToEquity = f.LongTermDebtToEquity,
+                                   MarketCap = f.MarketCap,
+                                   OperationMargin = f.OperationMargin,
+                                   Price = f.Price,
+                                   ProfitMargin = f.ProfitMargin,
+                                   Quarter = quarter,
+                                   Year = year,
+                                   QuickRatio = f.QuickRatio,
+                                   ROA = f.ROA,
+                                   ROE = f.ROE,
+                                   ROI = f.ROI,
+                                   Volume = f.Volume
+                               };
 
-            var exitingKR =  context.KeyRatio
-                .AsEnumerable()
-                .Select(s => new DataLayer.KeyRatioData
-                {
-                        SecurityID           = s.SecurityID,
-                        Change               = s.Change,
-                        CurrentRatio         = s.CurrentRatio,
-                        DebtToEquity         = s.DebtToEquity,
-                        Dividend             = s.Dividend,
-                        Earnings             = s.Earnings,
-                        GrossMargin          = s.GrossMargin,
-                        LongTermDebtToEquity = s.LongTermDebtToEquity,
-                        MarketCap            = s.MarketCap,
-                        OperationMargin      = s.OperationMargin,
-                        Price                = s.Price,
-                        ProfitMargin         = s.ProfitMargin,
-                        Quarter              = s.Quarter,
-                        Year                 = s.Year,
-                        QuickRatio           = s.QuickRatio,
-                        ROA                  = s.ROA,
-                        ROE                  = s.ROE,
-                        ROI                  = s.ROI,
-                        Volume               = s.Volume
-                    })
-                .Where(s1 => s1.Year == year && s1.Quarter == quarter);
 
-            var qNewData = from f in newData
-                           join s in context.Security.Select(s1 => new { s1.SecurityID, s1.Ticker }) on f.Ticker equals s.Ticker
-                           select new DataLayer.KeyRatioData
-                           {
-                               SecurityID           = s.SecurityID,
-                               Change               = f.Change,
-                               CurrentRatio         = f.CurrentRatio,
-                               DebtToEquity         = f.DebtToEquity,
-                               Dividend             = f.Dividend,
-                               Earnings             = f.Earnings,
-                               GrossMargin          = f.GrossMargin,
-                               LongTermDebtToEquity = f.LongTermDebtToEquity,
-                               MarketCap            = f.MarketCap,
-                               OperationMargin      = f.OperationMargin,
-                               Price                = f.Price,
-                               ProfitMargin         = f.ProfitMargin,
-                               Quarter              = quarter,
-                               Year                 = year,
-                               QuickRatio           = f.QuickRatio,
-                               ROA                  = f.ROA,
-                               ROE                  = f.ROE,
-                               ROI                  = f.ROI,
-                               Volume               = f.Volume
-                           };
+                db.KeyRatios
+                  .Merge()
+                  .Using(qNewData)
+                  .OnTargetKey()
+                  .InsertWhenNotMatched(src => new KeyRatio()
+                  {
+                      SecurityID           = src.SecurityID,
+                      Year                 = src.Year,
+                      Quarter              = src.Quarter,
+                      CurrentRatio         = src.CurrentRatio,
+                      DebtToEquity         = src.DebtToEquity,
+                      Dividend             = src.Dividend,
+                      Earnings             = src.Earnings,
+                      GrossMargin          = src.GrossMargin,
+                      LongTermDebtToEquity = src.LongTermDebtToEquity,
+                      MarketCap            = src.MarketCap,
+                      OperationMargin      = src.OperationMargin,
+                      Price                = src.Price,
+                      ProfitMargin         = src.ProfitMargin,
+                      QuickRatio           = src.QuickRatio,
+                      ROA                  = src.ROA,
+                      ROE                  = src.ROE,
+                      ROI                  = src.ROI,
+                      Volume               = src.Volume
+                  })
+                  .UpdateWhenMatched((target, src) => new KeyRatio()
+                  {
+                      SecurityID           = src.SecurityID,
+                      Year                 = src.Year,
+                      Quarter              = src.Quarter,
+                      CurrentRatio         = src.CurrentRatio,
+                      DebtToEquity         = src.DebtToEquity,
+                      Dividend             = src.Dividend,
+                      Earnings             = src.Earnings,
+                      GrossMargin          = src.GrossMargin,
+                      LongTermDebtToEquity = src.LongTermDebtToEquity,
+                      MarketCap            = src.MarketCap,
+                      OperationMargin      = src.OperationMargin,
+                      Price                = src.Price,
+                      ProfitMargin         = src.ProfitMargin,
+                      QuickRatio           = src.QuickRatio,
+                      ROA                  = src.ROA,
+                      ROE                  = src.ROE,
+                      ROI                  = src.ROI,
+                      Volume               = src.Volume
+                  })
+                  .Merge();
 
-            var toBeInserted = qNewData.Select(s => s).Except(exitingKR);
-
-            // Insert new data in Key Ratio table
-            context.KeyRatio.InsertAllOnSubmit(toBeInserted);
-            context.SubmitChanges();
-            // Update existing attributes
-            // Implement quarterly logic
-
+                // Update existing attributes
+                // Implement quarterly logic
+            }
         }
 
         public IEnumerable<FinancialData> Read()

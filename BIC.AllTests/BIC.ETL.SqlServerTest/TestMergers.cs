@@ -8,6 +8,7 @@ namespace BIC.ETL.SqlServerTest
     public class TestMergers
     {
         // TODO: this test has file dependency
+        // https://github.com/linq2db/linq2db start using linq2db for merge operation
         [TestMethod]
         public void TestFinvizKeyRatioFileMerger()
         {

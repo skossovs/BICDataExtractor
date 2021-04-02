@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="linq2db, Version=3.3.0.0, Culture=neutral, PublicKeyToken=e41013125f9e410a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\linq2db.3.3.0\lib\net45\linq2db.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -44,12 +47,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataLayer\BICContext.cs" />
-    <Compile Include="DataLayer\IndustryData.cs" />
-    <Compile Include="DataLayer\KeyRatioData.cs" />
-    <Compile Include="DataLayer\SectorData.cs" />
-    <Compile Include="DataLayer\SecurityData.cs" />
-    <Compile Include="DataLayer\TimeDimmensionData.cs" />
+    <Compile Include="DataLayer\BIC.generated.cs" />
+    <Compile Include="DataLayer\ConnectionStringSettings.cs" />
     <Compile Include="FileArchivarius.cs" />
     <Compile Include="FileReaders\FinvizKeyRatioFileMerger.cs" />
     <Compile Include="FileReaders\SecurityMasterFileMerger.cs" />
@@ -73,7 +72,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="DataLayer\CreateDB.sql" />

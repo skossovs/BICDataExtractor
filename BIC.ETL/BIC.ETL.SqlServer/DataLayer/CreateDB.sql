@@ -84,13 +84,16 @@ CREATE TABLE [dbo].[KeyRatio](
     Volume                numeric(18,6)) ON [PRIMARY]
 GO
 
+ALTER TABLE dbo.[Industry]
+ADD CONSTRAINT PK_Industry PRIMARY KEY (IndustryID)
 
+ALTER TABLE dbo.[Sector]
+ADD CONSTRAINT PK_Sector PRIMARY KEY (SectorID)
 
+ALTER TABLE dbo.[Security]
+ADD CONSTRAINT PK_Security PRIMARY KEY (SecurityID)
 
-
-
-
-) ON [PRIMARY]
+ALTER TABLE dbo.[TimeDimmension]
+ADD CONSTRAINT PK_TimeDimmension PRIMARY KEY (TimeID)
 
 GO
-        
