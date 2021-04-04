@@ -62,26 +62,33 @@ SELECT * FROM #TimeDimmension
 
 -- Key Ratio table
 CREATE TABLE [dbo].[KeyRatio](
-	KeyRatioID            int IDENTITY(1,1) NOT NULL,
-	SecurityID            int NOT NULL,
-	Year                  int NOT NULL,
-	Quarter               int NOT NULL,
-	MarketCap             numeric(18,6),
-    Dividend              numeric(18,6),
-    ROA                   numeric(18,6),
-    ROE                   numeric(18,6),
-    ROI                   numeric(18,6),
-    CurrentRatio          numeric(18,6),
-    QuickRatio            numeric(18,6),
-    LongTermDebtToEquity  numeric(18,6),
-    DebtToEquity          numeric(18,6),
-    GrossMargin           numeric(18,6),
-    OperationMargin       numeric(18,6),
-    ProfitMargin          numeric(18,6),
-    Earnings              numeric(18,6),
-    Price                 numeric(18,6),
-    Change                numeric(18,6),
-    Volume                numeric(18,6)) ON [PRIMARY]
+	[SecurityID] [int] NOT NULL,
+	[Year] [int] NOT NULL,
+	[Quarter] [int] NOT NULL,
+	[MarketCap] [numeric](38, 6) NULL,
+	[Dividend] [numeric](18, 6) NULL,
+	[ROA] [numeric](18, 6) NULL,
+	[ROE] [numeric](18, 6) NULL,
+	[ROI] [numeric](18, 6) NULL,
+	[CurrentRatio] [numeric](18, 6) NULL,
+	[QuickRatio] [numeric](18, 6) NULL,
+	[LongTermDebtToEquity] [numeric](18, 6) NULL,
+	[DebtToEquity] [numeric](18, 6) NULL,
+	[GrossMargin] [numeric](18, 6) NULL,
+	[OperationMargin] [numeric](18, 6) NULL,
+	[ProfitMargin] [numeric](18, 6) NULL,
+	[Earnings] [numeric](18, 6) NULL,
+	[Price] [numeric](18, 6) NULL,
+	[Change] [numeric](18, 6) NULL,
+	[Volume] [numeric](38, 6) NULL,
+ CONSTRAINT [PK_KeyRatio] PRIMARY KEY CLUSTERED 
+(
+	[SecurityID] ASC,
+	[Year] ASC,
+	[Quarter] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
 GO
 
 ALTER TABLE dbo.[Industry]

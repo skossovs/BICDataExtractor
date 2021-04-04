@@ -32,6 +32,7 @@ namespace BIC.ETL.SqlServer.FileReaders
             // configure connection string
             var options = builder.UseSqlServer(connectionString).Build();
 
+            // TODO: use LINQ2DB Merge instead
             using (var db = new DataLayer.BICDB(options))
             {
                 // 1. Merge Sector information

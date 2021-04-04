@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataConnectionFactory.cs" />
     <Compile Include="DataLayer\BIC.generated.cs" />
     <Compile Include="DataLayer\ConnectionStringSettings.cs" />
     <Compile Include="FileArchivarius.cs" />

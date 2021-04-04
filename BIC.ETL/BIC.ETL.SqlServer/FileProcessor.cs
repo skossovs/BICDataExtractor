@@ -21,7 +21,7 @@ namespace BIC.ETL.SqlServer
             var path = Settings.GetInstance().InputDirectory;
 
             var lstFiles = new List<FileType>();
-            foreach(var f in System.IO.Directory.EnumerateFiles(path))
+            foreach(var f in System.IO.Directory.EnumerateFiles(path).Where(j => j.EndsWith("json")))
             {
                 // 1. Recognize the file
                 var fileType = Recognize(f);
@@ -30,9 +30,8 @@ namespace BIC.ETL.SqlServer
 
             foreach(var ft in lstFiles.OrderBy(s => s.TimeStamp))
             {
-                // 2. Read it    (IFileReaders)
+                // 1. Read and Merge it    (IFileReaders)
                 MergFileTypeObject(ft);
-                // 3. Process it (FileProcessor)
                 // 4. Archive it (FileArchivarius)
             }
 
@@ -68,11 +67,14 @@ namespace BIC.ETL.SqlServer
                     {
                         case "OverviewData":
                             // TODO: here is the problem, different types of data should be returned, current architecture doesn't solve it
-                            var reader = new FileReaders.SecurityMasterFileMerger(ft.FilePath, ft.TimeStamp);
-                            var overviewObjects = reader.Read();
-                            reader.Merge(overviewObjects);
+                            var secMasterReader = new FileReaders.SecurityMasterFileMerger(ft.FilePath, ft.TimeStamp);
+                            var overviewObjects = secMasterReader.Read();
+                            secMasterReader.Merge(overviewObjects);
                             break;
                         case "FinancialData":
+                            var keyRatioReader = new FileReaders.FinvizKeyRatioFileMerger(ft.FilePath, ft.TimeStamp);
+                            var keyRatioObjects = keyRatioReader.Read();
+                            keyRatioReader.Merge(keyRatioObjects);
                             break;
                     }
                     break;
