@@ -9,11 +9,12 @@ namespace BIC.Scrappers.FinvizScrapper
     // This class is for planning only doesn't do anything, just thoughts in here
     class Plan
     {
-        // 1. Download KeyRatio data in memory and updated it there, after that upload back to database.
-        // 2. Create Yahoo.Finance Scrapper library
+        // 1. Download KeyRatio data in memory and updated it there, after that upload back to database. DONE.
+        // 2. Create Yahoo.Finance Scrapper library >>
         // 3. Implement File archivarius
         // 4. Reorganize tests.
 
+        // 8. Fix linq2db issue with connection object
         // 9. StackFrame.Debug instead of object name in logging
         // 10. Block Chrome logs if possible.
     }

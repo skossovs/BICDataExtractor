@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BIC.Foundation.Interfaces
 {
-    public enum ERetrieverType { Finviz };
+    public enum ERetrieverType { Finviz, Yahoo };
     public interface IContentRetriever
     {
         string GetData(string url);

@@ -58,6 +58,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TEST_HttpRequestData.cs" />
     <Compile Include="TEST_TableReaderBasedOnFinviz.cs" />
+    <Compile Include="TEST_YahooScrapper.cs" />
     <Compile Include="TEST_YamlOperations.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -79,6 +80,10 @@
     <ProjectReference Include="..\..\BIC.Utils\BIC.Utils.csproj">
       <Project>{1fd4c7b7-7ea9-4f9a-91f6-09ff4aedd208}</Project>
       <Name>BIC.Utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\BIC.YahooScrapper\BIC.YahooScrapper.csproj">
+      <Project>{56109268-3256-49de-8269-7b6d526c366b}</Project>
+      <Name>BIC.YahooScrapper</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
