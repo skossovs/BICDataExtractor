@@ -33,7 +33,6 @@ namespace BIC.Scrappers.YahooScrapper
             return true;
         }
 
-
         private bool GetStringTableFromCurrentPage(string generatedAddress, out string[] headers, out IEnumerable<string[]> data)
         {
             var retriever = ContentRetrieverFactory.CreateInstance(ERetrieverType.Yahoo);
@@ -48,51 +47,53 @@ namespace BIC.Scrappers.YahooScrapper
                 return false;
             }
 
-            headers = null; data = null;
-            cq = cq.Find(@"div[data-ractid=""51""]");
-            _logger.Debug(cq.Html());
+            headers = null;
+            var cqHeaders = cq.Find(@"div[class=""D(tbr) C($primaryColor)""]");
+            _logger.Debug("Headers text fragment: {0}", cqHeaders.Html());
             //// Find Headers
-            //var cqHeaders = cq.Find(@"td[class^=""table-top""]");
-            //var headersList = new List<string>() { "IgnoreIt" };
+                cqHeaders   = cqHeaders.Find(@"span[data-reactid]");
+            var headersList = new List<string>();
             //// Display headers
-            //foreach (var h in cqHeaders)
-            //{
-            //    // remove image if found
-            //    var headerCaption = h.InnerHTML;
-            //    var imageEndIndex = headerCaption.IndexOf('>');
-            //    if (imageEndIndex != -1)
-            //        headerCaption = headerCaption.Remove(0, imageEndIndex + 1);
-            //    headersList.Add(headerCaption);
-            //}
-            //headers = headersList.Skip(1).ToArray(); // Remove first empty field from the headers
-            //var headers1 = headersList.ToArray();
-            //_logger.Debug("*********************************** Extracted table ***********************************");
-            //_logger.Debug(headers.Aggregate("", (s1, s2) => s1 + "|" + s2));
+            foreach (var h in cqHeaders)
+            {
+                var headerCaption = h.InnerHTML;
+                headersList.Add(headerCaption);
+            }
+            headers = headersList.ToArray();
+            _logger.Debug("*********************************** Extracted Header ***********************************");
+            _logger.Debug(headers.Aggregate("", (s1, s2) => s1 + "|" + s2));
 
             //// Find Rows & Cells
-            //var cellsInTheRow = headers1.Count();
-            //string[] currentRow = new string[cellsInTheRow];
-            //var lstCells = new List<string[]>();
-            //int iCell = 0;
+            var cqData = cq.Find(@"div[class=""D(tbrg)""]");
+                cqData = cqData.Find(@"div[data-test=""fin-row""]");
+            _logger.Debug("Data text fragment: {0}", cqData.Html());
+            var cellsInTheRow = headers.Count();
+            string[] currentRow = new string[cellsInTheRow];
+            var lstCells = new List<string[]>();
+            int iCell = 0;
 
-            //var cqCellsInLine = cq.Find(@"tr[class$=""-row-cp""]"); // ends with -row-cp
-            //foreach (var cell in cqCellsInLine.Contents())
-            //{
-            //    // Extract Cells
-            //    var cqCells = cqHelper.InitiateWithContent(cell.Render());
-            //    var cellValue = cqCells.Contents().Text();
-            //    currentRow[iCell] = cellValue;
-            //    iCell++;
-            //    if (iCell == cellsInTheRow)
-            //    {
-            //        lstCells.Add(currentRow.Skip(1).ToArray());
-            //        _logger.Debug(currentRow.Aggregate("", (s1, s2) => s1 + "|" + s2 + "|"));
-            //        currentRow = new string[cellsInTheRow];
-            //        iCell = 0;
-            //    }
-            //}
+            //TODO: clean up failed filters
+            //var cqCellsInLine = cqData.Find(@"div[data-test=""fin-col""],span[data-reactid]");   span class="Va(m)"
+            //var cqCellsInLine = cqData.Find(@"div[class^=""D(tbc) Ta(start)""],div[class^=""Ta(c) Py(6px) Bxz(bb)""]");
+            var cqCellsInLine = cqData.Find(@"span[class=""Va(m)""],div[class^=""Ta(c) Py(6px) Bxz(bb)""]");
+            _logger.Debug("*********************************** Extracted Data ***********************************");
+            foreach (var cell in cqCellsInLine.Contents())
+            {
+                // Extract Cells
+                var cqCell        = cqHelper.InitiateWithContent(cell.Render());
+                var cellValue     = cqCell.Contents().Text();
+                currentRow[iCell] = cellValue;
+                iCell++;
+                if (iCell == cellsInTheRow)
+                {
+                    lstCells.Add(currentRow.ToArray());
+                    _logger.Debug(currentRow.Aggregate("", (s1, s2) => s1 + "|" + s2 + "|"));
+                    currentRow = new string[cellsInTheRow];
+                    iCell = 0;
+                }
+            }
 
-            //data = lstCells.AsEnumerable();
+            data = lstCells.AsEnumerable();
             return true;
         }
 
