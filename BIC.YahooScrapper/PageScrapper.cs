@@ -1,6 +1,9 @@
 ﻿using BIC.Foundation.Interfaces;
 using BIC.Scrappers.Utils;
+using BIC.Scrappers.YahooScrapper.DataObjects;
 using BIC.Utils.Logger;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,16 +27,68 @@ namespace BIC.Scrappers.YahooScrapper
             // 2.1. Get string table from current page
             string[] header;
             IEnumerable<string[]> cells;
-            if (!GetStringTableFromCurrentPage(generatedAddress, out header, out cells))
-            {
-                _logger.Warning("Failed to extract table data");
-                return false;
-            }
+            bool result = false;
+            if(!requestParameters.IsQuarterly)
+                result = GetStringTableFromCurrentPageYearly(generatedAddress, out header, out cells);
+            else
+                result = GetStringTableFromCurrentPageQuarterly(generatedAddress, out header, out cells);
 
-            return true;
+            if (result == false)
+                _logger.Warning("Failed to extract table data");
+            return result;
         }
 
-        private bool GetStringTableFromCurrentPage(string generatedAddress, out string[] headers, out IEnumerable<string[]> data)
+        private bool GetStringTableFromCurrentPageQuarterly(string generatedAddress, out string[] headers, out IEnumerable<string[]> data)
+        {
+            var retriever = ContentRetrieverFactory.CreateInstance(ERetrieverType.Yahoo);
+            var currentPagehtmlContent = retriever.GetData(generatedAddress);
+            var cqHelper = new CQHelper();
+            var cq = cqHelper.InitiateWithContent(currentPagehtmlContent);
+
+            headers = null; data = null;
+            // TODO: process json inside response
+            // find script
+            var scripts = cq.Find("script");
+            _logger.Debug("*********************************** Extract Quarterly Json ***********************************");
+            foreach (var s in scripts.Contents())
+            {
+                var content = s.Render();
+                var startIndex = content.IndexOf("root.App.main = ");
+                if (startIndex == -1)
+                    continue;
+                startIndex += 16;
+
+                var endIndex = content.IndexOf("(this));", startIndex);
+
+                var jsonString = content.Substring(startIndex, endIndex - startIndex - 3); // TODO: magic numbers
+
+                jsonString = jsonString.Replace("&quot;", @"""");
+                //_logger.Debug(jsonString);
+                //var jsonObject = JsonConvert.DeserializeObject(jsonString);
+
+                var jsonObject = JObject.Parse(jsonString);
+
+                var jIncomeToken = jsonObject.SelectToken("context.dispatcher.stores.QuoteSummaryStore.incomeStatementHistoryQuarterly");
+                var incomeStatementsQuarterlyList = new List<IncomeStatementDataQuarterly>();
+
+                foreach (var jt in jIncomeToken.First.Values())
+                {
+                    var v = jt.ToObject<IncomeStatementDataQuarterly>();
+                    incomeStatementsQuarterlyList.Add(v);
+                }
+
+                // 1. Convert List of classes into table
+                // 2. Transpose table
+
+                //_logger.Debug("JTOKEN:");
+                //_logger.Debug(JsonConvert.SerializeObject(jIncomeToken));
+
+
+
+            }
+            return false;
+        }
+        private bool GetStringTableFromCurrentPageYearly(string generatedAddress, out string[] headers, out IEnumerable<string[]> data)
         {
             var retriever = ContentRetrieverFactory.CreateInstance(ERetrieverType.Yahoo);
             var currentPagehtmlContent = retriever.GetData(generatedAddress);
@@ -47,7 +102,6 @@ namespace BIC.Scrappers.YahooScrapper
                 return false;
             }
 
-            headers = null;
             var cqHeaders = cq.Find(@"div[class=""D(tbr) C($primaryColor)""]");
             _logger.Debug("Headers text fragment: {0}", cqHeaders.Html());
             //// Find Headers
@@ -96,16 +150,6 @@ namespace BIC.Scrappers.YahooScrapper
             data = lstCells.AsEnumerable();
             return true;
         }
-
-
-
-
-
-
-
-
-
-
 
     }
 }

@@ -12,21 +12,49 @@ namespace BIC.ScrapperTests
     public class TEST_YahooScrapper
     {
         [TestMethod]
-        public void TestYahooIncomeStatementScrapper()
+        public void TestYahooIncomeStatementScrapperYearly()
         {
-            var yp = CreateYahooParametersInstance("financials", "MSFT");
+            var yp = CreateYahooParametersInstance("financials", "MSFT", false);
             var pager = new PageScrapper<YahooParameters>();
             bool result = pager.Scrap(yp);
             Assert.IsTrue(result);
-
         }
 
-        private YahooParameters CreateYahooParametersInstance(string view, string ticker)
+        [TestMethod]
+        public void TestYahooIncomeStatementScrapperQuarterly()
+        {
+            var yp = CreateYahooParametersInstance("financials", "MSFT", true);
+            var pager = new PageScrapper<YahooParameters>();
+            bool result = pager.Scrap(yp);
+            Assert.IsTrue(result);
+        }
+
+
+        [TestMethod]
+        public void TestYahooBalanceSheetStatementScrapperYearly()
+        {
+            var yp = CreateYahooParametersInstance("balance-sheet", "MSFT", false);
+            var pager = new PageScrapper<YahooParameters>();
+            bool result = pager.Scrap(yp);
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void TestYahooCashFlowStatementScrapperYearly()
+        {
+            var yp = CreateYahooParametersInstance("cash-flow", "MSFT", false);
+            var pager = new PageScrapper<YahooParameters>();
+            bool result = pager.Scrap(yp);
+            Assert.IsTrue(result);
+        }
+
+        private YahooParameters CreateYahooParametersInstance(string view, string ticker, bool isQuarterly)
         {
             return new YahooParameters()
             {
-                ReportType = view,
-                Ticker     = ticker,
+                ReportType  = view,
+                Ticker      = ticker,
+                IsQuarterly = isQuarterly
             };
         }
     }

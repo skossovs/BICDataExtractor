@@ -10,5 +10,6 @@ namespace BIC.Scrappers.YahooScrapper
     {
         public string Ticker { get; set; }
         public string ReportType { get; set; }
+        public bool   IsQuarterly { get; set; }
     }
 }
