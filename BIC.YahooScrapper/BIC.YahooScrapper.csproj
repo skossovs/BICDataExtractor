@@ -47,6 +47,7 @@
     <Compile Include="DataObjects\BalanceSheetData.cs" />
     <Compile Include="DataObjects\CashFlowData.cs" />
     <Compile Include="DataObjects\IncomeStatementData.cs" />
+    <Compile Include="DataObjects\QuarterData.cs" />
     <Compile Include="DataObjects\QuarterNumber.cs" />
     <Compile Include="HttpRequestData.cs" />
     <Compile Include="PageScrapper.cs" />

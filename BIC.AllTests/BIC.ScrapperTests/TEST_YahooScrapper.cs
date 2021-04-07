@@ -40,6 +40,15 @@ namespace BIC.ScrapperTests
         }
 
         [TestMethod]
+        public void TestYahooBalanceSheetStatementScrapperQuarterly()
+        {
+            var yp = CreateYahooParametersInstance("balance-sheet", "MSFT", true);
+            var pager = new PageScrapper<YahooParameters>();
+            bool result = pager.Scrap(yp);
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
         public void TestYahooCashFlowStatementScrapperYearly()
         {
             var yp = CreateYahooParametersInstance("cash-flow", "MSFT", false);

@@ -10,7 +10,7 @@ namespace BIC.Scrappers.YahooScrapper.DataObjects
     {
     }
 
-    public class IncomeStatementDataQuarterly
+    public class IncomeStatementDataQuarterly : QuarterData
     {
         public QuarterNumber researchDevelopment                 { get; set; }
         public QuarterNumber effectOfAccountingCharges           { get; set; }

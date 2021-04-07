@@ -10,7 +10,9 @@ namespace BIC.Scrappers.FinvizScrapper
     class Plan
     {
         // 1. Download KeyRatio data in memory and updated it there, after that upload back to database. DONE.
-        // 2. Create Yahoo.Finance Scrapper library >>
+        // 2.1. Create Yahoo.Finance Scrapper library. Quarters. Done.
+        // 2.2. Yahoo.Finance Scrapper for yearly
+        // 2.3. Create command in ExtractorCommander that goes against all tickers.
         // 3. Implement File archivarius
         // 4. Reorganize tests.
 

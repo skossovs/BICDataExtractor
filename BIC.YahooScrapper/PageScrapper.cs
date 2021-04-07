@@ -19,7 +19,7 @@ namespace BIC.Scrappers.YahooScrapper
         {
             var r = new HttpRequestData()
             {
-                    Ticker = requestParameters.Ticker
+                    Ticker     = requestParameters.Ticker
                 ,   ReportType = requestParameters.ReportType
             };
             var generatedAddress = r.GenerateAddressRequest();
@@ -28,24 +28,81 @@ namespace BIC.Scrappers.YahooScrapper
             string[] header;
             IEnumerable<string[]> cells;
             bool result = false;
-            if(!requestParameters.IsQuarterly)
-                result = GetStringTableFromCurrentPageYearly(generatedAddress, out header, out cells);
-            else
-                result = GetStringTableFromCurrentPageQuarterly(generatedAddress, out header, out cells);
+            Exception ex = null;
 
-            if (result == false)
-                _logger.Warning("Failed to extract table data");
+            if (requestParameters.IsQuarterly) // TODO: refactor it too many copy-paste
+            {
+                if (r.ReportType == "financials")
+                {
+                    IEnumerable<IncomeStatementDataQuarterly> allPageData;
+                    result = GetStringTableFromCurrentPageQuarterly(generatedAddress, requestParameters, out allPageData);
+
+                    if (result == false)
+                        _logger.Warning("Failed to extract table data");
+
+                    // 3. Save List of types into file system as json file TODO: copy-paste
+                    var fileName = FileHelper.ComposeFileName(typeof(IncomeStatementDataQuarterly), true, "json");
+                    var fullPath = System.IO.Path.Combine(Settings.GetInstance().OutputDirectory, fileName);
+                    _logger.Info("Saving data into json file: " + fullPath);
+
+                    result = FileHelper.SaveAsJSON(allPageData, fullPath, out ex);
+                }
+                else if (r.ReportType == "balance-sheet")
+                {
+                    IEnumerable<BalanceSheetDataQuarterly> allPageData;
+                    result = GetStringTableFromCurrentPageQuarterly(generatedAddress, requestParameters, out allPageData);
+
+
+                    if (result == false)
+                        _logger.Warning("Failed to extract table data");
+
+                    // 3. Save List of types into file system as json file TODO: copy-paste
+                    var fileName = FileHelper.ComposeFileName(typeof(BalanceSheetDataQuarterly), true, "json");
+                    var fullPath = System.IO.Path.Combine(Settings.GetInstance().OutputDirectory, fileName);
+                    _logger.Info("Saving data into json file: " + fullPath);
+
+                    result = FileHelper.SaveAsJSON(allPageData, fullPath, out ex);
+                }
+                else if (r.ReportType == "cash-flow")
+                {
+                    IEnumerable<CashFlowDataQuarterly> allPageData;
+                    result = GetStringTableFromCurrentPageQuarterly(generatedAddress, requestParameters, out allPageData);
+
+                    if (result == false)
+                        _logger.Warning("Failed to extract table data");
+
+                    // 3. Save List of types into file system as json file TODO: copy-paste
+                    var fileName = FileHelper.ComposeFileName(typeof(CashFlowDataQuarterly), true, "json");
+                    var fullPath = System.IO.Path.Combine(Settings.GetInstance().OutputDirectory, fileName);
+                    _logger.Info("Saving data into json file: " + fullPath);
+
+                    result = FileHelper.SaveAsJSON(allPageData, fullPath, out ex);
+                }
+
+            }
+            else // TODO: not fiinished Yearly part
+            {
+                result = GetStringTableFromCurrentPageYearly(generatedAddress, out header, out cells);
+                result = false;
+            }
+            if (!result)
+            {
+                _logger.Error(ex.StackTrace);
+                _logger.Error(ex.Message);
+            }
+
             return result;
         }
 
-        private bool GetStringTableFromCurrentPageQuarterly(string generatedAddress, out string[] headers, out IEnumerable<string[]> data)
+        private bool GetStringTableFromCurrentPageQuarterly<QT>(string generatedAddress, YahooParameters requestParameters, out IEnumerable<QT> data)
+            where QT:QuarterData
         {
             var retriever = ContentRetrieverFactory.CreateInstance(ERetrieverType.Yahoo);
             var currentPagehtmlContent = retriever.GetData(generatedAddress);
             var cqHelper = new CQHelper();
             var cq = cqHelper.InitiateWithContent(currentPagehtmlContent);
 
-            headers = null; data = null;
+            data = null;
             // TODO: process json inside response
             // find script
             var scripts = cq.Find("script");
@@ -68,25 +125,34 @@ namespace BIC.Scrappers.YahooScrapper
 
                 var jsonObject = JObject.Parse(jsonString);
 
-                var jIncomeToken = jsonObject.SelectToken("context.dispatcher.stores.QuoteSummaryStore.incomeStatementHistoryQuarterly");
-                var incomeStatementsQuarterlyList = new List<IncomeStatementDataQuarterly>();
+                string jsonPath = "";
+                if (typeof(QT).Name == "IncomeStatementDataQuarterly")
+                    jsonPath = "context.dispatcher.stores.QuoteSummaryStore.incomeStatementHistoryQuarterly";
+                else if(typeof(QT).Name == "BalanceSheetDataQuarterly")
+                    jsonPath = "context.dispatcher.stores.QuoteSummaryStore.balanceSheetHistoryQuarterly";
+                else if (typeof(QT).Name == "CashFlowDataQuarterly")
+                    jsonPath = "context.dispatcher.stores.QuoteSummaryStore.cashflowStatementHistory";
+                else
+                {
+                    _logger.Error("Unsupported type: {0}", typeof(QT).Name);
+                    throw new Exception("Unsupported type: " + typeof(QT).Name);
+                }
+
+                var jIncomeToken = jsonObject.SelectToken(jsonPath);
+                var lst = new List<QT>();
 
                 foreach (var jt in jIncomeToken.First.Values())
                 {
-                    var v = jt.ToObject<IncomeStatementDataQuarterly>();
-                    incomeStatementsQuarterlyList.Add(v);
+                    var v = jt.ToObject<QT>();
+                    v.Ticker = requestParameters.Ticker;
+                    lst.Add(v);
                 }
-
-                // 1. Convert List of classes into table
-                // 2. Transpose table
+                data = lst.AsEnumerable<QT>();
 
                 //_logger.Debug("JTOKEN:");
                 //_logger.Debug(JsonConvert.SerializeObject(jIncomeToken));
-
-
-
             }
-            return false;
+            return true;
         }
         private bool GetStringTableFromCurrentPageYearly(string generatedAddress, out string[] headers, out IEnumerable<string[]> data)
         {
