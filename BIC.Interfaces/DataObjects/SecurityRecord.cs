@@ -10,7 +10,9 @@ namespace BIC.Foundation.DataObjects
     {
         public int    SecurityID       { get; set; }
         public string Ticker           { get; set; }
-        public int    SectorRecordID   { get; set; }
-        public int    IndustryRecordID { get; set; }
+        public int    SectorID         { get; set; }
+        public string Sector           { get; set; }
+        public int    IndustryID       { get; set; }
+        public string Industry         { get; set; }
     }
 }

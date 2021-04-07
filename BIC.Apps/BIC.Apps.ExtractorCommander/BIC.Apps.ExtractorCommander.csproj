@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="Commands\Constants.cs" />
     <Compile Include="Commands\Finviz.cs" />
+    <Compile Include="Commands\Yahoo.cs" />
     <Compile Include="Plan.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -59,6 +60,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\BIC.ETL\BIC.ETL.SqlServer\BIC.ETL.SqlServer.csproj">
+      <Project>{10af3d83-1fb5-41d1-8f15-df70e9d7cfa2}</Project>
+      <Name>BIC.ETL.SqlServer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\BIC.Interfaces\BIC.Foundation.csproj">
+      <Project>{5b2c1550-32a6-4fe1-80da-b7f6bce7d366}</Project>
+      <Name>BIC.Foundation</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\BIC.Scrappers\BIC.FinvizScrapper\BIC.FinvizScrapper.csproj">
       <Project>{E7EA4EB2-FFEA-4A80-9369-5EF7576C628C}</Project>
       <Name>BIC.FinvizScrapper</Name>
@@ -66,6 +75,10 @@
     <ProjectReference Include="..\..\BIC.Utils\BIC.Utils.csproj">
       <Project>{1fd4c7b7-7ea9-4f9a-91f6-09ff4aedd208}</Project>
       <Name>BIC.Utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\BIC.YahooScrapper\BIC.YahooScrapper.csproj">
+      <Project>{56109268-3256-49DE-8269-7B6D526C366B}</Project>
+      <Name>BIC.YahooScrapper</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

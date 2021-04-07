@@ -23,6 +23,7 @@ namespace BIC.Apps.ExtractorCommander
                 //  -rs finviz -etl secmaster                  -- security master call
                 //  -rs finviz -all                            -- download all sectors
                 //  -rs finviz -etl finance -sec healthcare    -- download one sector
+                //  -rs yahoo  -etl finance -sec healthcare    -- download one sector
                 #endregion
 
                 #region Option description
@@ -47,12 +48,24 @@ namespace BIC.Apps.ExtractorCommander
                         {
                             if (optionFeed.Value() == "secmaster")
                                 Commands.Finviz.ScrapOverview();
-                            else if(optionFeed.Value() == "finance")
+                            else if (optionFeed.Value() == "finance")
                             {
                                 if (optionNoFilter.HasValue())
                                     Commands.Finviz.ScrapFinancial();
                                 else if (optionSector.HasValue())
                                     Commands.Finviz.ScrapFinancial(sector);
+                                else
+                                    throw new Exception("Neither -all nor sector specified command (-sec) was entered");
+                            }
+                        }
+                        else if (resource == Commands.Constants.YahooResource)
+                        {
+                            if (optionFeed.Value() == "finance")
+                            {
+                                if (optionNoFilter.HasValue())
+                                    Commands.Yahoo.ScrapTickers();
+                                else if (optionSector.HasValue())
+                                    Commands.Yahoo.ScrapTickers(sector);
                                 else
                                     throw new Exception("Neither -all nor sector specified command (-sec) was entered");
                             }
