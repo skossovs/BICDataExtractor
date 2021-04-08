@@ -16,12 +16,15 @@ namespace BIC.Apps.ExtractorCommander.Commands
 
         public static void ScrapTickers()
         {
-            throw new NotSupportedException();
+            foreach (var sector in ETL.SqlServer.DataLayer.SecurityReader.GetSectors())
+            {
+                ScrapTickers(sector.Sector);
+            }
         }
 
         public static void ScrapTickers(string sector)
         {
-            foreach (var security in ETL.SqlServer.DataLayer.SecurityReader.GetSecurities())
+            foreach (var security in ETL.SqlServer.DataLayer.SecurityReader.GetSecurities(sector))
             {
                 Scrap<IncomeStatementDataQuarterly>(security.Ticker, true);
                 Scrap<BalanceSheetDataQuarterly>   (security.Ticker, true);

@@ -15,6 +15,7 @@ namespace BIC.Utils.Logger
         private string _get_prefix(string pfxType)
         {
             // get calling method & type
+            // TODO: is broken GetFrame(2) returns incorrect names
             var stackTrace = new StackTrace();
             var methodName = stackTrace.GetFrame(2).GetMethod().Name;
             var className = stackTrace.GetFrame(2).GetType().Name;
