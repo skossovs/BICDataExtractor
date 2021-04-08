@@ -55,6 +55,18 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <Content Include="TestFiles\BIC.FinvizScrapper_FinancialData_3-21-2021 1-18-44 PM.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFiles\BIC.YahooScrapper_BalanceSheetDataQuarterly_4-6-2021 11-54-26 PM.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFiles\BIC.YahooScrapper_CashFlowDataQuarterly_4-6-2021 11-54-43 PM.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestFiles\BIC.YahooScrapper_IncomeStatementDataQuarterly_4-6-2021 11-55-15 PM.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BIC.ETL\BIC.ETL.SqlServer\BIC.ETL.SqlServer.csproj">
@@ -72,6 +84,10 @@
     <ProjectReference Include="..\..\BIC.Utils\BIC.Utils.csproj">
       <Project>{1fd4c7b7-7ea9-4f9a-91f6-09ff4aedd208}</Project>
       <Name>BIC.Utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\BIC.YahooScrapper\BIC.YahooScrapper.csproj">
+      <Project>{56109268-3256-49de-8269-7b6d526c366b}</Project>
+      <Name>BIC.YahooScrapper</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

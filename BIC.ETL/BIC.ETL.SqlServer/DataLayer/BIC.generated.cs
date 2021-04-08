@@ -23,6 +23,9 @@ namespace BIC.ETL.SqlServer.DataLayer
     /// </summary>
     public partial class BICDB : LinqToDB.Data.DataConnection
     {
+        public ITable<BalanceSheetQuarterly> BalanceSheetQuarterlies { get { return this.GetTable<BalanceSheetQuarterly>(); } }
+        public ITable<CashFlowQuarterly> CashFlowQuarterlies { get { return this.GetTable<CashFlowQuarterly>(); } }
+        public ITable<IncomeStatementQuarterly> IncomeStatementQuarterlies { get { return this.GetTable<IncomeStatementQuarterly>(); } }
         public ITable<Industry> Industries { get { return this.GetTable<Industry>(); } }
         public ITable<KeyRatio> KeyRatios { get { return this.GetTable<KeyRatio>(); } }
         public ITable<Sector> Sectors { get { return this.GetTable<Sector>(); } }
@@ -53,6 +56,99 @@ namespace BIC.ETL.SqlServer.DataLayer
         partial void InitMappingSchema();
     }
 
+    [Table(Schema = "dbo", Name = "BalanceSheetQuarterly")]
+    public partial class BalanceSheetQuarterly
+    {
+        [Column(), PrimaryKey(1), NotNull] public int SecurityID { get; set; } // int
+        [Column(), PrimaryKey(2), NotNull] public int Year { get; set; } // int
+        [Column(), PrimaryKey(3), NotNull] public int Quarter { get; set; } // int
+        [Column("endDate"), NotNull] public DateTime EndDate { get; set; } // date
+        [Column("cash"), Nullable] public decimal? Cash { get; set; } // decimal(38, 0)
+        [Column("intangibleAssets"), Nullable] public decimal? IntangibleAssets { get; set; } // decimal(38, 0)
+        [Column("otherCurrentAssets"), Nullable] public decimal? OtherCurrentAssets { get; set; } // decimal(38, 0)
+        [Column("totalCurrentAssets"), Nullable] public decimal? TotalCurrentAssets { get; set; } // decimal(38, 0)
+        [Column("goodWill"), Nullable] public decimal? GoodWill { get; set; } // decimal(38, 0)
+        [Column("retainedEarnings"), Nullable] public decimal? RetainedEarnings { get; set; } // decimal(38, 0)
+        [Column("propertyPlantEquipment"), Nullable] public decimal? PropertyPlantEquipment { get; set; } // decimal(38, 0)
+        [Column("longTermInvestments"), Nullable] public decimal? LongTermInvestments { get; set; } // decimal(38, 0)
+        [Column("shortTermInvestments"), Nullable] public decimal? ShortTermInvestments { get; set; } // decimal(38, 0)
+        [Column("netReceivables"), Nullable] public decimal? NetReceivables { get; set; } // decimal(38, 0)
+        [Column("inventory"), Nullable] public decimal? Inventory { get; set; } // decimal(38, 0)
+        [Column("accountsPayable"), Nullable] public decimal? AccountsPayable { get; set; } // decimal(38, 0)
+        [Column("otherAssets"), Nullable] public decimal? OtherAssets { get; set; } // decimal(38, 0)
+        [Column("totalAssets"), Nullable] public decimal? TotalAssets { get; set; } // decimal(38, 0)
+        [Column("otherCurrentLiab"), Nullable] public decimal? OtherCurrentLiab { get; set; } // decimal(38, 0)
+        [Column("totalCurrentLiabilities"), Nullable] public decimal? TotalCurrentLiabilities { get; set; } // decimal(38, 0)
+        [Column("shortLongTermDebt"), Nullable] public decimal? ShortLongTermDebt { get; set; } // decimal(38, 0)
+        [Column("otherLiab"), Nullable] public decimal? OtherLiab { get; set; } // decimal(38, 0)
+        [Column("longTermDebt"), Nullable] public decimal? LongTermDebt { get; set; } // decimal(38, 0)
+        [Column("totalLiab"), Nullable] public decimal? TotalLiab { get; set; } // decimal(38, 0)
+        [Column("netTangibleAssets"), Nullable] public decimal? NetTangibleAssets { get; set; } // decimal(38, 0)
+        [Column("totalStockholderEquity"), Nullable] public decimal? TotalStockholderEquity { get; set; } // decimal(38, 0)
+        [Column("commonStock"), Nullable] public decimal? CommonStock { get; set; } // decimal(38, 0)
+        [Column("otherStockholderEquity"), Nullable] public decimal? OtherStockholderEquity { get; set; } // decimal(38, 0)
+        [Column("treasuryStock"), Nullable] public decimal? TreasuryStock { get; set; } // decimal(38, 0)
+    }
+
+    [Table(Schema = "dbo", Name = "CashFlowQuarterly")]
+    public partial class CashFlowQuarterly
+    {
+        [Column(), PrimaryKey(1), NotNull] public int SecurityID { get; set; } // int
+        [Column(), PrimaryKey(2), NotNull] public int Year { get; set; } // int
+        [Column(), PrimaryKey(3), NotNull] public int Quarter { get; set; } // int
+        [Column("endDate"), NotNull] public DateTime EndDate { get; set; } // date
+        [Column("investments"), Nullable] public decimal? Investments { get; set; } // numeric(38, 0)
+        [Column("netBorrowings"), Nullable] public decimal? NetBorrowings { get; set; } // numeric(38, 0)
+        [Column("netIncome"), Nullable] public decimal? NetIncome { get; set; } // numeric(38, 0)
+        [Column("issuanceOfStock"), Nullable] public decimal? IssuanceOfStock { get; set; } // numeric(38, 0)
+        [Column("repurchaseOfStock"), Nullable] public decimal? RepurchaseOfStock { get; set; } // numeric(38, 0)
+        [Column("effectOfExchangeRate"), Nullable] public decimal? EffectOfExchangeRate { get; set; } // numeric(38, 0)
+        [Column("depreciation"), Nullable] public decimal? Depreciation { get; set; } // numeric(38, 0)
+        [Column("dividendsPaid"), Nullable] public decimal? DividendsPaid { get; set; } // numeric(38, 0)
+        [Column("changeInCash"), Nullable] public decimal? ChangeInCash { get; set; } // numeric(38, 0)
+        [Column("changeToLiabilities"), Nullable] public decimal? ChangeToLiabilities { get; set; } // numeric(38, 0)
+        [Column("changeToOperatingActivities"), Nullable] public decimal? ChangeToOperatingActivities { get; set; } // numeric(38, 0)
+        [Column("changeToInventory"), Nullable] public decimal? ChangeToInventory { get; set; } // numeric(38, 0)
+        [Column("changeToAccountReceivables"), Nullable] public decimal? ChangeToAccountReceivables { get; set; } // numeric(38, 0)
+        [Column("otherCashflowsFromInvestingActivities"), Nullable] public decimal? OtherCashflowsFromInvestingActivities { get; set; } // numeric(38, 0)
+        [Column("otherCashflowsFromFinancingActivities"), Nullable] public decimal? OtherCashflowsFromFinancingActivities { get; set; } // numeric(38, 0)
+        [Column("totalCashflowsFromInvestingActivities"), Nullable] public decimal? TotalCashflowsFromInvestingActivities { get; set; } // numeric(38, 0)
+        [Column("totalCashFromFinancingActivities"), Nullable] public decimal? TotalCashFromFinancingActivities { get; set; } // numeric(38, 0)
+        [Column("totalCashFromOperatingActivities"), Nullable] public decimal? TotalCashFromOperatingActivities { get; set; } // numeric(38, 0)
+        [Column("capitalExpenditures"), Nullable] public decimal? CapitalExpenditures { get; set; } // numeric(38, 0)
+    }
+
+    [Table(Schema = "dbo", Name = "IncomeStatementQuarterly")]
+    public partial class IncomeStatementQuarterly
+    {
+        [Column(), PrimaryKey(1), NotNull] public int SecurityID { get; set; } // int
+        [Column(), PrimaryKey(2), NotNull] public int Year { get; set; } // int
+        [Column(), PrimaryKey(3), NotNull] public int Quarter { get; set; } // int
+        [Column("endDate"), NotNull] public DateTime EndDate { get; set; } // date
+        [Column("totalRevenue"), Nullable] public decimal? TotalRevenue { get; set; } // numeric(38, 0)
+        [Column("costOfRevenue"), Nullable] public decimal? CostOfRevenue { get; set; } // numeric(38, 0)
+        [Column("researchDevelopment"), Nullable] public decimal? ResearchDevelopment { get; set; } // numeric(38, 0)
+        [Column("totalOperatingExpenses"), Nullable] public decimal? TotalOperatingExpenses { get; set; } // numeric(38, 0)
+        [Column("totalOtherIncomeExpenseNet"), Nullable] public decimal? TotalOtherIncomeExpenseNet { get; set; } // numeric(38, 0)
+        [Column("otherOperatingExpenses"), Nullable] public decimal? OtherOperatingExpenses { get; set; } // numeric(38, 0)
+        [Column("minorityInterest"), Nullable] public decimal? MinorityInterest { get; set; } // numeric(38, 0)
+        [Column("interestExpense"), Nullable] public decimal? InterestExpense { get; set; } // numeric(38, 0)
+        [Column("extraordinaryItems"), Nullable] public decimal? ExtraordinaryItems { get; set; } // numeric(38, 0)
+        [Column("sellingGeneralAdministrative"), Nullable] public decimal? SellingGeneralAdministrative { get; set; } // numeric(38, 0)
+        [Column("nonRecurring"), Nullable] public decimal? NonRecurring { get; set; } // numeric(38, 0)
+        [Column("otherItems"), Nullable] public decimal? OtherItems { get; set; } // numeric(38, 0)
+        [Column("incomeTaxExpense"), Nullable] public decimal? IncomeTaxExpense { get; set; } // numeric(38, 0)
+        [Column("netIncomeFromContinuingOps"), Nullable] public decimal? NetIncomeFromContinuingOps { get; set; } // numeric(38, 0)
+        [Column("netIncomeApplicableToCommonShares"), Nullable] public decimal? NetIncomeApplicableToCommonShares { get; set; } // numeric(38, 0)
+        [Column("discontinuedOperations"), Nullable] public decimal? DiscontinuedOperations { get; set; } // numeric(38, 0)
+        [Column("effectOfAccountingCharges"), Nullable] public decimal? EffectOfAccountingCharges { get; set; } // numeric(38, 0)
+        [Column("incomeBeforeTax"), Nullable] public decimal? IncomeBeforeTax { get; set; } // numeric(38, 0)
+        [Column("ebit"), Nullable] public decimal? Ebit { get; set; } // numeric(38, 0)
+        [Column("operatingIncome"), Nullable] public decimal? OperatingIncome { get; set; } // numeric(38, 0)
+        [Column("netIncome"), Nullable] public decimal? NetIncome { get; set; } // numeric(38, 0)
+        [Column("grossProfit"), Nullable] public decimal? GrossProfit { get; set; } // numeric(38, 0)
+    }
+
     [Table(Schema = "dbo", Name = "Industry")]
     public partial class Industry
     {
@@ -67,7 +163,7 @@ namespace BIC.ETL.SqlServer.DataLayer
         [PrimaryKey(1), NotNull] public int SecurityID { get; set; } // int
         [PrimaryKey(2), NotNull] public int Year { get; set; } // int
         [PrimaryKey(3), NotNull] public int Quarter { get; set; } // int
-        [Column, Nullable] public decimal? MarketCap { get; set; } // numeric(18, 6)
+        [Column, Nullable] public decimal? MarketCap { get; set; } // numeric(38, 6)
         [Column, Nullable] public decimal? Dividend { get; set; } // numeric(18, 6)
         [Column, Nullable] public decimal? ROA { get; set; } // numeric(18, 6)
         [Column, Nullable] public decimal? ROE { get; set; } // numeric(18, 6)
@@ -82,7 +178,7 @@ namespace BIC.ETL.SqlServer.DataLayer
         [Column, Nullable] public decimal? Earnings { get; set; } // numeric(18, 6)
         [Column, Nullable] public decimal? Price { get; set; } // numeric(18, 6)
         [Column, Nullable] public decimal? Change { get; set; } // numeric(18, 6)
-        [Column, Nullable] public decimal? Volume { get; set; } // numeric(18, 6)
+        [Column, Nullable] public decimal? Volume { get; set; } // numeric(38, 6)
     }
 
     [Table(Schema = "dbo", Name = "Sector")]
@@ -113,6 +209,30 @@ namespace BIC.ETL.SqlServer.DataLayer
 
     public static partial class TableExtensions
     {
+        public static BalanceSheetQuarterly Find(this ITable<BalanceSheetQuarterly> table, int SecurityID, int Year, int Quarter)
+        {
+            return table.FirstOrDefault(t =>
+                t.SecurityID == SecurityID &&
+                t.Year == Year &&
+                t.Quarter == Quarter);
+        }
+
+        public static CashFlowQuarterly Find(this ITable<CashFlowQuarterly> table, int SecurityID, int Year, int Quarter)
+        {
+            return table.FirstOrDefault(t =>
+                t.SecurityID == SecurityID &&
+                t.Year == Year &&
+                t.Quarter == Quarter);
+        }
+
+        public static IncomeStatementQuarterly Find(this ITable<IncomeStatementQuarterly> table, int SecurityID, int Year, int Quarter)
+        {
+            return table.FirstOrDefault(t =>
+                t.SecurityID == SecurityID &&
+                t.Year == Year &&
+                t.Quarter == Quarter);
+        }
+
         public static Industry Find(this ITable<Industry> table, int IndustryID)
         {
             return table.FirstOrDefault(t =>

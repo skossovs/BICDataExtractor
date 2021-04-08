@@ -104,3 +104,114 @@ ALTER TABLE dbo.[TimeDimmension]
 ADD CONSTRAINT PK_TimeDimmension PRIMARY KEY (TimeID)
 
 GO
+
+CREATE TABLE [dbo].[CashFlowQuarterly](
+	[SecurityID] [int] NOT NULL,
+	[Year] [int] NOT NULL,
+	[Quarter] [int] NOT NULL,
+	[endDate] [date] NOT NULL,
+	[investments] [numeric](38, 0) NULL,
+	[netBorrowings] [numeric](38, 0) NULL,
+	[netIncome] [numeric](38, 0) NULL,
+	[issuanceOfStock] [numeric](38, 0) NULL,
+	[repurchaseOfStock] [numeric](38, 0) NULL,
+	[effectOfExchangeRate] [numeric](38, 0) NULL,
+	[depreciation] [numeric](38, 0) NULL,
+	[dividendsPaid] [numeric](38, 0) NULL,
+	[changeInCash] [numeric](38, 0) NULL,
+	[changeToLiabilities] [numeric](38, 0) NULL,
+	[changeToOperatingActivities] [numeric](38, 0) NULL,
+	[changeToInventory] [numeric](38, 0) NULL,
+	[changeToAccountReceivables] [numeric](38, 0) NULL,
+	[otherCashflowsFromInvestingActivities] [numeric](38, 0) NULL,
+	[otherCashflowsFromFinancingActivities] [numeric](38, 0) NULL,
+	[totalCashflowsFromInvestingActivities] [numeric](38, 0) NULL,
+	[totalCashFromFinancingActivities] [numeric](38, 0) NULL,
+	[totalCashFromOperatingActivities] [numeric](38, 0) NULL,
+	[capitalExpenditures] [numeric](38, 0) NULL,
+ CONSTRAINT [PK_CashFlowQuarterly] PRIMARY KEY CLUSTERED 
+(
+	[SecurityID] ASC,
+	[Year] ASC,
+	[Quarter] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+CREATE TABLE [dbo].[BalanceSheetQuarterly](
+	[SecurityID] [int] NOT NULL,
+	[Year] [int] NOT NULL,
+	[Quarter] [int] NOT NULL,
+	[endDate] [date] NOT NULL,
+	[cash] [decimal](38, 0) NULL,
+	[intangibleAssets] [decimal](38, 0) NULL,
+	[otherCurrentAssets] [decimal](38, 0) NULL,
+	[totalCurrentAssets] [decimal](38, 0) NULL,
+	[goodWill] [decimal](38, 0) NULL,
+	[retainedEarnings] [decimal](38, 0) NULL,
+	[propertyPlantEquipment] [decimal](38, 0) NULL,
+	[longTermInvestments] [decimal](38, 0) NULL,
+	[shortTermInvestments] [decimal](38, 0) NULL,
+	[netReceivables] [decimal](38, 0) NULL,
+	[inventory] [decimal](38, 0) NULL,
+	[accountsPayable] [decimal](38, 0) NULL,
+	[otherAssets] [decimal](38, 0) NULL,
+	[totalAssets] [decimal](38, 0) NULL,
+	[otherCurrentLiab] [decimal](38, 0) NULL,
+	[totalCurrentLiabilities] [decimal](38, 0) NULL,
+	[shortLongTermDebt] [decimal](38, 0) NULL,
+	[otherLiab] [decimal](38, 0) NULL,
+	[longTermDebt] [decimal](38, 0) NULL,
+	[totalLiab] [decimal](38, 0) NULL,
+	[netTangibleAssets] [decimal](38, 0) NULL,
+	[totalStockholderEquity] [decimal](38, 0) NULL,
+	[commonStock] [decimal](38, 0) NULL,
+	[otherStockholderEquity] [decimal](38, 0) NULL,
+	[treasuryStock] [decimal](38, 0) NULL,
+ CONSTRAINT [PK_BalanceSheetQuarterly] PRIMARY KEY CLUSTERED 
+(
+	[SecurityID] ASC,
+	[Year] ASC,
+	[Quarter] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+CREATE TABLE [dbo].[IncomeStatementQuarterly](
+	[SecurityID] [int] NOT NULL,
+	[Year] [int] NOT NULL,
+	[Quarter] [int] NOT NULL,
+	[endDate] [date] NOT NULL,
+	[totalRevenue] [numeric](38, 0) NULL,
+	[costOfRevenue] [numeric](38, 0) NULL,
+	[researchDevelopment] [numeric](38, 0) NULL,
+	[totalOperatingExpenses] [numeric](38, 0) NULL,
+	[totalOtherIncomeExpenseNet] [numeric](38, 0) NULL,
+	[otherOperatingExpenses] [numeric](38, 0) NULL,
+	[minorityInterest] [numeric](38, 0) NULL,
+	[interestExpense] [numeric](38, 0) NULL,
+	[extraordinaryItems] [numeric](38, 0) NULL,
+	[sellingGeneralAdministrative] [numeric](38, 0) NULL,
+	[nonRecurring] [numeric](38, 0) NULL,
+	[otherItems] [numeric](38, 0) NULL,
+	[incomeTaxExpense] [numeric](38, 0) NULL,
+	[netIncomeFromContinuingOps] [numeric](38, 0) NULL,
+	[netIncomeApplicableToCommonShares] [numeric](38, 0) NULL,
+	[discontinuedOperations] [numeric](38, 0) NULL,
+	[effectOfAccountingCharges] [numeric](38, 0) NULL,
+	[incomeBeforeTax] [numeric](38, 0) NULL,
+	[ebit] [numeric](38, 0) NULL,
+	[operatingIncome] [numeric](38, 0) NULL,
+	[netIncome] [numeric](38, 0) NULL,
+	[grossProfit] [numeric](38, 0) NULL,
+ CONSTRAINT [PK_IncomeStatementQuarterly] PRIMARY KEY CLUSTERED 
+(
+	[SecurityID] ASC,
+	[Year] ASC,
+	[Quarter] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
