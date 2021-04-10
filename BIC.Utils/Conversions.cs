@@ -83,7 +83,14 @@ namespace BIC.Utils
             int q = (dt.Month - ((dt.Month - 1) % 3)) / 3 + 1;  // primitive application of group theory
             return new Tuple<int, int>(y, q);
         }
-
+        // returns Year and Quarter of date with shift
+        public static Tuple<int, int> DateToYearQuarter(this DateTime dt, int quarterDiff)
+        {
+            var dtShifted = dt.AddDays(quarterDiff * 90);
+            var y = dtShifted.Year;
+            int q = (dtShifted.Month - ((dtShifted.Month - 1) % 3)) / 3 + 1;  // primitive application of group theory
+            return new Tuple<int, int>(y, q);
+        }
         public static string GenFileNameSuffix(this DateTime dt)
         {
             return dt.ToShortDateString().Replace('/', '-') + " " + dt.ToLongTimeString().Replace(':', '-');

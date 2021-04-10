@@ -30,53 +30,19 @@ namespace BIC.Scrappers.YahooScrapper
             bool result = false;
             Exception ex = null;
 
-            if (requestParameters.IsQuarterly) // TODO: refactor it too many copy-paste
+            if (requestParameters.IsQuarterly)
             {
                 if (r.ReportType == "financials")
                 {
-                    IEnumerable<IncomeStatementDataQuarterly> allPageData;
-                    result = GetStringTableFromCurrentPageQuarterly(generatedAddress, requestParameters, out allPageData);
-
-                    if (result == false)
-                        _logger.Warning("Failed to extract table data");
-
-                    // 3. Save List of types into file system as json file TODO: copy-paste
-                    var fileName = FileHelper.ComposeFileName(typeof(IncomeStatementDataQuarterly), true, "json");
-                    var fullPath = System.IO.Path.Combine(Settings.GetInstance().OutputDirectory, fileName);
-                    _logger.Info("Saving data into json file: " + fullPath);
-
-                    result = FileHelper.SaveAsJSON(allPageData, fullPath, out ex);
+                    result = ProcessData<IncomeStatementDataQuarterly>(requestParameters, generatedAddress, out ex);
                 }
                 else if (r.ReportType == "balance-sheet")
                 {
-                    IEnumerable<BalanceSheetDataQuarterly> allPageData;
-                    result = GetStringTableFromCurrentPageQuarterly(generatedAddress, requestParameters, out allPageData);
-
-
-                    if (result == false)
-                        _logger.Warning("Failed to extract table data");
-
-                    // 3. Save List of types into file system as json file TODO: copy-paste
-                    var fileName = FileHelper.ComposeFileName(typeof(BalanceSheetDataQuarterly), true, "json");
-                    var fullPath = System.IO.Path.Combine(Settings.GetInstance().OutputDirectory, fileName);
-                    _logger.Info("Saving data into json file: " + fullPath);
-
-                    result = FileHelper.SaveAsJSON(allPageData, fullPath, out ex);
+                    result = ProcessData<BalanceSheetDataQuarterly>(requestParameters, generatedAddress, out ex);
                 }
                 else if (r.ReportType == "cash-flow")
                 {
-                    IEnumerable<CashFlowDataQuarterly> allPageData;
-                    result = GetStringTableFromCurrentPageQuarterly(generatedAddress, requestParameters, out allPageData);
-
-                    if (result == false)
-                        _logger.Warning("Failed to extract table data");
-
-                    // 3. Save List of types into file system as json file TODO: copy-paste
-                    var fileName = FileHelper.ComposeFileName(typeof(CashFlowDataQuarterly), true, "json");
-                    var fullPath = System.IO.Path.Combine(Settings.GetInstance().OutputDirectory, fileName);
-                    _logger.Info("Saving data into json file: " + fullPath);
-
-                    result = FileHelper.SaveAsJSON(allPageData, fullPath, out ex);
+                    result = ProcessData<CashFlowDataQuarterly>(requestParameters, generatedAddress, out ex);
                 }
 
             }
@@ -94,6 +60,22 @@ namespace BIC.Scrappers.YahooScrapper
             return result;
         }
 
+        private bool ProcessData<QT>(YahooParameters requestParameters, string generatedAddress, out Exception ex) where QT : QuarterData
+        {
+            IEnumerable<QT> allPageData;
+            bool result = GetStringTableFromCurrentPageQuarterly(generatedAddress, requestParameters, out allPageData);
+
+            if (result == false)
+                _logger.Warning("Failed to extract table data");
+
+            // 3. Save List of types into file system as json file
+            var fileName = FileHelper.ComposeFileName(typeof(QT), true, "json");
+            var fullPath = System.IO.Path.Combine(Settings.GetInstance().OutputDirectory, fileName);
+            _logger.Info("Saving data into json file: " + fullPath);
+
+            return FileHelper.SaveAsJSON(allPageData, fullPath, out ex);
+        }
+
         private bool GetStringTableFromCurrentPageQuarterly<QT>(string generatedAddress, YahooParameters requestParameters, out IEnumerable<QT> data)
             where QT:QuarterData
         {
@@ -103,7 +85,7 @@ namespace BIC.Scrappers.YahooScrapper
             var cq = cqHelper.InitiateWithContent(currentPagehtmlContent);
 
             data = null;
-            // TODO: process json inside response
+            // process json inside response
             // find script
             var scripts = cq.Find("script");
             _logger.Debug("*********************************** Extract Quarterly Json ***********************************");

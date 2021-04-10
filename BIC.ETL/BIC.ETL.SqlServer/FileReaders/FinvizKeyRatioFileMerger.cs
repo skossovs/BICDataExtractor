@@ -22,11 +22,10 @@ namespace BIC.ETL.SqlServer.FileReaders
             _datestamp = datestamp;
         }
 
-
         public void Merge(IEnumerable<FinancialData> newData)
         {
             // get existing key ratio by quarter
-            var yq = _datestamp.DateToYearQuarter();
+            var yq = _datestamp.DateToYearQuarter(-1);
             var year = yq.Item1;
             var quarter = yq.Item2;
 
@@ -104,10 +103,6 @@ namespace BIC.ETL.SqlServer.FileReaders
                     Volume = src.Volume
                 })
                 .Merge();
-
-            // Update existing attributes
-            // Implement quarterly logic
-
 
         }
 
