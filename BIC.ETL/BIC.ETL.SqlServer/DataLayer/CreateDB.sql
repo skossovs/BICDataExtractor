@@ -1,4 +1,5 @@
-﻿USE [BIC]
+﻿-- * * * * * * * *     C R E A T E   T A B L E S    * * * * * * * *
+USE [BIC]
 GO
 
 /****** Object:  Table [dbo].[Sector]    Script Date: 3/19/2021 12:00:22 AM ******/
@@ -42,23 +43,6 @@ CREATE TABLE [dbo].[TimeDimmension](
 ) ON [PRIMARY]
 
 GO
--- Populate TimeDimmension
--- n-80 subject to change depends from which date you want to populate
-With numbers AS
-(SELECT TOP (3000) n = ROW_NUMBER() OVER (ORDER BY number) 
-  FROM [master]..spt_values )
-, dates AS
-(SELECT DATEADD(DAY, n - 80, CAST(GETDATE() AS Date)) d FROM numbers)
-, dims AS
-(SELECT
-	CONVERT(VARCHAR, d, 112)                                        d_int
-,	((DATEPART(MONTH, d) - ((DATEPART(MONTH, d) - 1) % 3)) / 3 + 1) Q
-,	DATEPART(YEAR, d)                                               Y
-FROM dates)
-SELECT * INTO #TimeDimmension FROM dims
-
-INSERT INTO [TimeDimmension]
-SELECT * FROM #TimeDimmension
 
 -- Key Ratio table
 CREATE TABLE [dbo].[KeyRatio](
@@ -215,3 +199,90 @@ CREATE TABLE [dbo].[IncomeStatementQuarterly](
 ) ON [PRIMARY]
 
 GO
+
+-- * * * * * * * *          R E P O R T S      * * * * * * * *
+-- 1. join tables
+SELECT
+	s.SecurityID
+,	s.Ticker
+,	b.[Year]
+,   b.[Quarter]
+,   b.[totalStockholderEquity] as Equity
+FROM		Security s
+LEFT  JOIN  BalanceSheetQuarterly b
+ON			b.SecurityID = s.SecurityID
+LEFT  JOIN  IncomeStatementQuarterly i
+ON          i.SecurityID = s.SecurityID
+        AND i.[Year]     = b.[Year]
+		AND i.[Quarter]  = b.[Quarter]
+LEFT  JOIN  CashFlowQuarterly c
+ON          c.SecurityID = s.SecurityID
+        AND c.[Year]     = b.[Year]
+		AND c.[Quarter]  = b.[Quarter]
+LEFT   JOIN [dbo].[KeyRatio]  k
+ON          k.SecurityID = s.SecurityID
+        AND k.[Year]     = b.[Year]
+		AND k.[Quarter]  = b.[Quarter]
+
+-- 2. Strategy "Value Stocks"
+SELECT 
+	s.SecurityID
+,	s.Ticker
+,   sc.Sector
+,   ids.Industry
+,	b.[Year]
+,   b.[Quarter]
+,   (b.[totalStockholderEquity] - COALESCE(b.goodWill,0) + COALESCE(b.retainedEarnings,0))/k.MarketCap as Worthiness
+,   b.[totalStockholderEquity] as Equity
+,   b.retainedEarnings
+,   k.MarketCap
+,   k.CurrentRatio
+,   k.QuickRatio
+,   k.LongTermDebtToEquity
+,   k.DebtToEquity
+,   k.GrossMargin
+,   k.OperationMargin
+,   k.ProfitMargin
+,   k.Volume
+FROM		Security s
+INNER JOIN  Sector   sc
+ON          s.SectorID = sc.SectorID
+INNER JOIN  Industry ids
+ON          s.IndustryID = ids.IndustryID
+LEFT  JOIN  BalanceSheetQuarterly b
+ON			b.SecurityID = s.SecurityID
+LEFT  JOIN  IncomeStatementQuarterly i
+ON          i.SecurityID = s.SecurityID
+        AND i.[Year]     = b.[Year]
+		AND i.[Quarter]  = b.[Quarter]
+LEFT  JOIN  CashFlowQuarterly c
+ON          c.SecurityID = s.SecurityID
+        AND c.[Year]     = b.[Year]
+		AND c.[Quarter]  = b.[Quarter]
+LEFT   JOIN [dbo].[KeyRatio]  k
+ON          k.SecurityID = s.SecurityID
+        AND k.[Year]     = b.[Year]
+		AND k.[Quarter]  = b.[Quarter]
+WHERE b.Quarter = 4
+-- 3. Strategy "Growth Stocks"
+-- 4. Strategy "Penny Stocks"
+
+
+-- * * * * * * * *     I N S E R T   D A T A   * * * * * * * *
+-- Populate TimeDimmension
+-- n-80 subject to change depends from which date you want to populate
+With numbers AS
+(SELECT TOP (3000) n = ROW_NUMBER() OVER (ORDER BY number) 
+  FROM [master]..spt_values )
+, dates AS
+(SELECT DATEADD(DAY, n - 80, CAST(GETDATE() AS Date)) d FROM numbers)
+, dims AS
+(SELECT
+	CONVERT(VARCHAR, d, 112)                                        d_int
+,	((DATEPART(MONTH, d) - ((DATEPART(MONTH, d) - 1) % 3)) / 3 + 1) Q
+,	DATEPART(YEAR, d)                                               Y
+FROM dates)
+SELECT * INTO #TimeDimmension FROM dims
+
+INSERT INTO [TimeDimmension]
+SELECT * FROM #TimeDimmension

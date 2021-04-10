@@ -12,7 +12,11 @@ namespace BIC.ETL.SqlServer.FileReaders
         protected string _fileName;
         public IEnumerable<T> Read()
         {
-            var jsonContent = (new System.IO.StreamReader(_fileName)).ReadToEnd();
+            string jsonContent = string.Empty;
+            using (var stream = new System.IO.StreamReader(_fileName))
+            {
+                jsonContent = stream.ReadToEnd();
+            }
             return JsonConvert.DeserializeObject<IEnumerable<T>>(jsonContent);
         }
     }

@@ -83,5 +83,10 @@ namespace BIC.Utils
             int q = (dt.Month - ((dt.Month - 1) % 3)) / 3 + 1;  // primitive application of group theory
             return new Tuple<int, int>(y, q);
         }
+
+        public static string GenFileNameSuffix(this DateTime dt)
+        {
+            return dt.ToShortDateString().Replace('/', '-') + " " + dt.ToLongTimeString().Replace(':', '-');
+        }
     }
 }

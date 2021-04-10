@@ -11,6 +11,12 @@ namespace BIC.ETL.SqlServer
     public class FileProcessor
     {
         private ILog _logger = LogServiceProvider.Logger;
+        private FileArchivarius _archivarius;
+
+        public FileProcessor()
+        {
+            _archivarius = new FileArchivarius();
+        }
         private class FileType
         {
             public string                            FilePath;
@@ -32,12 +38,12 @@ namespace BIC.ETL.SqlServer
 
             foreach(var ft in lstFiles.OrderBy(s => s.TimeStamp))
             {
-                // 1. Read and Merge it    (IFileReaders)
+                // 1. Read and Merge it (IFileReaders)
                 _logger.Info("Start Processing file: {0} ..", ft.FilePath);
                 MergFileTypeObject(ft);
-                // 4. Archive it (FileArchivarius)
+                // 2. Archive it
+                _archivarius.Archive(ft.FilePath);
             }
-
         }
         private FileType Recognize(string fullFilePath)
         {

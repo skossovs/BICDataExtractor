@@ -48,6 +48,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TestArchivarius.cs" />
     <Compile Include="TestMergers.cs" />
     <Compile Include="TestSqlServerHighLevel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
