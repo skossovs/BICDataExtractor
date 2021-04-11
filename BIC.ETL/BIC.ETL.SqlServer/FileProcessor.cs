@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BIC.ETL.SqlServer
@@ -24,7 +25,15 @@ namespace BIC.ETL.SqlServer
             public string                            ClassName;
             public DateTime                          TimeStamp;
         }
+
         public void Do()
+        {
+            // nobody has access to this stop token
+            var tokenSource = new CancellationTokenSource();
+            Do(tokenSource.Token);
+        }
+
+        public void Do(CancellationToken ct)
         {
             var path = Settings.GetInstance().InputDirectory;
 
@@ -36,7 +45,9 @@ namespace BIC.ETL.SqlServer
                 lstFiles.Add(fileType);
             }
 
-            foreach(var ft in lstFiles.OrderBy(s => s.TimeStamp))
+            ct.ThrowIfCancellationRequested();
+
+            foreach (var ft in lstFiles.OrderBy(s => s.TimeStamp))
             {
                 // 1. Read and Merge it (IFileReaders)
                 _logger.Info("Start Processing file: {0} ..", ft.FilePath);
@@ -46,7 +57,9 @@ namespace BIC.ETL.SqlServer
                     _archivarius.Archive(ft.FilePath);
                 else
                     _logger.Warning("file {0} has been left for inspection", ft.FilePath);
-                // TODO: implement cycle break here
+
+                if (ct.IsCancellationRequested)
+                    ct.ThrowIfCancellationRequested();
             }
         }
         private FileType Recognize(string fullFilePath)

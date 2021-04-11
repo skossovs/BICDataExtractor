@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BIC.Apps.EtlProcess
@@ -10,9 +11,34 @@ namespace BIC.Apps.EtlProcess
     {
         static void Main(string[] args)
         {
-            using (var processor = new ETL.SqlServer.FileProcessor())
+            var tokenSource = new CancellationTokenSource();
+            CancellationToken ct = tokenSource.Token;
+
+            var task = Task.Run(() =>
             {
-                processor.Do();
+                using (var processor = new ETL.SqlServer.FileProcessor())
+                {
+                    processor.Do();
+                }
+            }, tokenSource.Token);
+
+            // press any key to stop processing
+            System.Console.ReadLine();
+
+            tokenSource.Cancel();
+            System.Console.WriteLine("Processing has been cancelled");
+
+            try
+            {
+                task.Wait(ct);
+            }
+            catch (OperationCanceledException e)
+            {
+                Console.WriteLine($"{nameof(OperationCanceledException)} thrown with message: {e.Message}");
+            }
+            finally
+            {
+                tokenSource.Dispose();
             }
         }
     }
