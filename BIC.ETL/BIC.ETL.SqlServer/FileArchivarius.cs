@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace BIC.ETL.SqlServer
 {
     // TODO: this guy put all processed files in a series of fixed length archives
-    public class FileArchivarius
+    public class FileArchivarius : IDisposable
     {
         private RxQueuePubSub _queue;
         private ILog          _logger = LogServiceProvider.Logger;
@@ -64,6 +64,11 @@ namespace BIC.ETL.SqlServer
         public void Archive(string fullPath)
         {
             _queue.Enqueue(new ArchivalJob(fullPath, _logger));
+        }
+
+        public void Dispose()
+        {
+            _queue.Dispose();
         }
     }
 }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BIC.ETL.SqlServer
 {
-    public class FileProcessor
+    public class FileProcessor :IDisposable
     {
         private ILog _logger = LogServiceProvider.Logger;
         private FileArchivarius _archivarius;
@@ -40,9 +40,13 @@ namespace BIC.ETL.SqlServer
             {
                 // 1. Read and Merge it (IFileReaders)
                 _logger.Info("Start Processing file: {0} ..", ft.FilePath);
-                MergFileTypeObject(ft);
+                bool mergeResult = MergFileTypeObject(ft);
                 // 2. Archive it
-                _archivarius.Archive(ft.FilePath);
+                if (mergeResult)
+                    _archivarius.Archive(ft.FilePath);
+                else
+                    _logger.Warning("file {0} has been left for inspection", ft.FilePath);
+                // TODO: implement cycle break here
             }
         }
         private FileType Recognize(string fullFilePath)
@@ -84,7 +88,7 @@ namespace BIC.ETL.SqlServer
 
             return fileType;
         }
-        private void MergFileTypeObject(FileType ft)
+        private bool MergFileTypeObject(FileType ft)
         {
             try
             {
@@ -136,8 +140,15 @@ namespace BIC.ETL.SqlServer
             {
                 _logger.Error(ex.Message);
                 _logger.Error(ex.StackTrace);
-                throw;
+                return false;
             }
+
+            return true;
+        }
+
+        public void Dispose()
+        {
+            _archivarius.Dispose();
         }
     }
 }

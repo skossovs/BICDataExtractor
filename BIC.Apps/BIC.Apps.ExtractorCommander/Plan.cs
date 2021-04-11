@@ -18,7 +18,6 @@ namespace BIC.Scrappers.FinvizScrapper
         // 6.     Errors:
         // 6.1.   Merge fails on duplicates. The reason is companies late filling. Need to fix quarters.>>
         // 6.1.2. Queue doesn't have enough time to process last item, before finished.
-        // 6.1.3. Logger doesn't work for FileProcessor.
 
         // 7.     Yahoo.Finance Scrapper for yearly
         // 8.     Fix linq2db issue with connection object. Specifically for Merge. Looks like Merge operation happens after connection object is closed.
