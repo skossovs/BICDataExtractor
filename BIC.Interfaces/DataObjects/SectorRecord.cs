@@ -8,5 +8,9 @@ namespace BIC.Foundation.DataObjects
 {
     public class SectorRecord
     {
+        public int SectorID  { get; set; }
+        public string Sector { get; set; }
+
+        public List<IndustryRecord> Industries { get; set; }
     }
 }

@@ -1,0 +1,47 @@
+﻿ExchangeFilter:
+- Label: AMEX
+  Value: amex
+- Label: NASDAQ
+  Value: nasd
+- Label: NASDAQ
+  Value: nasd
+- Label: NYSE
+  Value: nyse
+IndexFilter:
+- Label: S&P 500
+  Value: sp500
+- Label: DJIA
+  Value: dji
+SectorFilter:
+- Label: Basic Materials
+  Value: basicmaterials
+- Label: Industrials
+  Value: industrials
+- Label: Communications Services
+  Value: communicationservices
+- Label: Consumer Cyclical
+  Value: consumercyclical
+- Label: Consumer Cyclical
+  Value: consumercyclical
+- Label: Consumer Defensive
+  Value: consumerdefensive
+- Label: Energy
+  Value: energy
+- Label: Financial
+  Value: financial
+- Label: Healthcare
+  Value: healthcare
+- Label: Realestate
+  Value: realestate
+- Label: Technology
+  Value: technology
+- Label: Utilities
+  Value: utilities
+IndustryFilter:
+- Label: Building Products & Equipment
+  Value: buildingproductsequipment
+CountryFilter:
+- Label: USA
+  Value: usa
+- Label: Foreighn (ex-USA)
+  Value: notusa

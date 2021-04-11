@@ -3,6 +3,7 @@ using System;
 
 namespace BIC.Scrappers.FinvizScrapper.DataObjects
 {
+    // TODO: in order to decouple Scrapper from ETL it is better practice to put it in BIC.Foundation library
     public class FinancialData
     {
         [PropertyMappingAttribute(ColumnNameOnTheSite = "No.")]
@@ -19,7 +20,7 @@ namespace BIC.Scrappers.FinvizScrapper.DataObjects
         public Decimal? ROE { get; set; }
         [PropertyMappingAttribute(ColumnNameOnTheSite = "ROI")]
         public Decimal? ROI { get; set; }
-        [PropertyMappingAttribute(ColumnNameOnTheSite = "Current R")]
+        [PropertyMappingAttribute(ColumnNameOnTheSite = "Curr R")]
         public Decimal? CurrentRatio { get; set; }
         [PropertyMappingAttribute(ColumnNameOnTheSite = "Quick R")]
         public Decimal? QuickRatio { get; set; }

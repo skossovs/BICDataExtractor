@@ -1,0 +1,514 @@
+[
+  {
+    "intangibleAssets": {
+      "raw": "5000000",
+      "fmt": "5M",
+      "longFmt": "5,000,000"
+    },
+    "totalLiab": {
+      "raw": "3932000000",
+      "fmt": "3.93B",
+      "longFmt": "3,932,000,000"
+    },
+    "totalStockholderEquity": {
+      "raw": "3695000000",
+      "fmt": "3.69B",
+      "longFmt": "3,695,000,000"
+    },
+    "otherCurrentLiab": {
+      "raw": "186000000",
+      "fmt": "186M",
+      "longFmt": "186,000,000"
+    },
+    "totalAssets": {
+      "raw": "7672000000",
+      "fmt": "7.67B",
+      "longFmt": "7,672,000,000"
+    },
+    "endDate": {
+      "raw": "1609372800",
+      "fmt": "2020-12-31",
+      "longFmt": null
+    },
+    "commonStock": {
+      "raw": "17000000",
+      "fmt": "17M",
+      "longFmt": "17,000,000"
+    },
+    "otherCurrentAssets": {
+      "raw": "42000000",
+      "fmt": "42M",
+      "longFmt": "42,000,000"
+    },
+    "retainedEarnings": {
+      "raw": "-2341000000",
+      "fmt": "-2.34B",
+      "longFmt": "-2,341,000,000"
+    },
+    "otherLiab": {
+      "raw": "1068000000",
+      "fmt": "1.07B",
+      "longFmt": "1,068,000,000"
+    },
+    "goodWill": {
+      "raw": "126000000",
+      "fmt": "126M",
+      "longFmt": "126,000,000"
+    },
+    "treasuryStock": {
+      "raw": "-1188000000",
+      "fmt": "-1.19B",
+      "longFmt": "-1,188,000,000"
+    },
+    "otherAssets": {
+      "raw": "342000000",
+      "fmt": "342M",
+      "longFmt": "342,000,000"
+    },
+    "cash": {
+      "raw": "1330000000",
+      "fmt": "1.33B",
+      "longFmt": "1,330,000,000"
+    },
+    "totalCurrentLiabilities": {
+      "raw": "959000000",
+      "fmt": "959M",
+      "longFmt": "959,000,000"
+    },
+    "shortLongTermDebt": {
+      "raw": "142000000",
+      "fmt": "142M",
+      "longFmt": "142,000,000"
+    },
+    "otherStockholderEquity": {
+      "raw": "-1188000000",
+      "fmt": "-1.19B",
+      "longFmt": "-1,188,000,000"
+    },
+    "propertyPlantEquipment": {
+      "raw": "3026000000",
+      "fmt": "3.03B",
+      "longFmt": "3,026,000,000"
+    },
+    "totalCurrentAssets": {
+      "raw": "2334000000",
+      "fmt": "2.33B",
+      "longFmt": "2,334,000,000"
+    },
+    "longTermInvestments": {
+      "raw": "1839000000",
+      "fmt": "1.84B",
+      "longFmt": "1,839,000,000"
+    },
+    "netTangibleAssets": {
+      "raw": "3564000000",
+      "fmt": "3.56B",
+      "longFmt": "3,564,000,000"
+    },
+    "shortTermInvestments": null,
+    "netReceivables": {
+      "raw": "173000000",
+      "fmt": "173M",
+      "longFmt": "173,000,000"
+    },
+    "maxAge": 1,
+    "longTermDebt": {
+      "raw": "1789000000",
+      "fmt": "1.79B",
+      "longFmt": "1,789,000,000"
+    },
+    "inventory": {
+      "raw": "733000000",
+      "fmt": "733M",
+      "longFmt": "733,000,000"
+    },
+    "accountsPayable": {
+      "raw": "403000000",
+      "fmt": "403M",
+      "longFmt": "403,000,000"
+    },
+    "Ticker": "AU"
+  },
+  {
+    "intangibleAssets": {
+      "raw": "5000000",
+      "fmt": "5M",
+      "longFmt": "5,000,000"
+    },
+    "totalLiab": {
+      "raw": "3932000000",
+      "fmt": "3.93B",
+      "longFmt": "3,932,000,000"
+    },
+    "totalStockholderEquity": {
+      "raw": "3695000000",
+      "fmt": "3.69B",
+      "longFmt": "3,695,000,000"
+    },
+    "otherCurrentLiab": {
+      "raw": "186000000",
+      "fmt": "186M",
+      "longFmt": "186,000,000"
+    },
+    "totalAssets": {
+      "raw": "7672000000",
+      "fmt": "7.67B",
+      "longFmt": "7,672,000,000"
+    },
+    "endDate": {
+      "raw": "1601424000",
+      "fmt": "2020-09-30",
+      "longFmt": null
+    },
+    "commonStock": {
+      "raw": "17000000",
+      "fmt": "17M",
+      "longFmt": "17,000,000"
+    },
+    "otherCurrentAssets": {
+      "raw": "42000000",
+      "fmt": "42M",
+      "longFmt": "42,000,000"
+    },
+    "retainedEarnings": {
+      "raw": "-2341000000",
+      "fmt": "-2.34B",
+      "longFmt": "-2,341,000,000"
+    },
+    "otherLiab": {
+      "raw": "1068000000",
+      "fmt": "1.07B",
+      "longFmt": "1,068,000,000"
+    },
+    "goodWill": {
+      "raw": "126000000",
+      "fmt": "126M",
+      "longFmt": "126,000,000"
+    },
+    "treasuryStock": {
+      "raw": "-1188000000",
+      "fmt": "-1.19B",
+      "longFmt": "-1,188,000,000"
+    },
+    "otherAssets": {
+      "raw": "342000000",
+      "fmt": "342M",
+      "longFmt": "342,000,000"
+    },
+    "cash": {
+      "raw": "1330000000",
+      "fmt": "1.33B",
+      "longFmt": "1,330,000,000"
+    },
+    "totalCurrentLiabilities": {
+      "raw": "959000000",
+      "fmt": "959M",
+      "longFmt": "959,000,000"
+    },
+    "shortLongTermDebt": {
+      "raw": "142000000",
+      "fmt": "142M",
+      "longFmt": "142,000,000"
+    },
+    "otherStockholderEquity": {
+      "raw": "-1188000000",
+      "fmt": "-1.19B",
+      "longFmt": "-1,188,000,000"
+    },
+    "propertyPlantEquipment": {
+      "raw": "3026000000",
+      "fmt": "3.03B",
+      "longFmt": "3,026,000,000"
+    },
+    "totalCurrentAssets": {
+      "raw": "2334000000",
+      "fmt": "2.33B",
+      "longFmt": "2,334,000,000"
+    },
+    "longTermInvestments": {
+      "raw": "1839000000",
+      "fmt": "1.84B",
+      "longFmt": "1,839,000,000"
+    },
+    "netTangibleAssets": {
+      "raw": "3564000000",
+      "fmt": "3.56B",
+      "longFmt": "3,564,000,000"
+    },
+    "shortTermInvestments": null,
+    "netReceivables": {
+      "raw": "173000000",
+      "fmt": "173M",
+      "longFmt": "173,000,000"
+    },
+    "maxAge": 1,
+    "longTermDebt": {
+      "raw": "1789000000",
+      "fmt": "1.79B",
+      "longFmt": "1,789,000,000"
+    },
+    "inventory": {
+      "raw": "733000000",
+      "fmt": "733M",
+      "longFmt": "733,000,000"
+    },
+    "accountsPayable": {
+      "raw": "403000000",
+      "fmt": "403M",
+      "longFmt": "403,000,000"
+    },
+    "Ticker": "AU"
+  },
+  {
+    "intangibleAssets": {
+      "raw": "120000000",
+      "fmt": "120M",
+      "longFmt": "120,000,000"
+    },
+    "totalLiab": {
+      "raw": "4826000000",
+      "fmt": "4.83B",
+      "longFmt": "4,826,000,000"
+    },
+    "totalStockholderEquity": {
+      "raw": "3012000000",
+      "fmt": "3.01B",
+      "longFmt": "3,012,000,000"
+    },
+    "otherCurrentLiab": {
+      "raw": "368000000",
+      "fmt": "368M",
+      "longFmt": "368,000,000"
+    },
+    "totalAssets": {
+      "raw": "7874000000",
+      "fmt": "7.87B",
+      "longFmt": "7,874,000,000"
+    },
+    "endDate": {
+      "raw": "1593475200",
+      "fmt": "2020-06-30",
+      "longFmt": null
+    },
+    "commonStock": {
+      "raw": "17000000",
+      "fmt": "17M",
+      "longFmt": "17,000,000"
+    },
+    "otherCurrentAssets": {
+      "raw": "580000000",
+      "fmt": "580M",
+      "longFmt": "580,000,000"
+    },
+    "retainedEarnings": {
+      "raw": "-2871000000",
+      "fmt": "-2.87B",
+      "longFmt": "-2,871,000,000"
+    },
+    "otherLiab": {
+      "raw": "1047000000",
+      "fmt": "1.05B",
+      "longFmt": "1,047,000,000"
+    },
+    "goodWill": null,
+    "treasuryStock": {
+      "raw": "-1328000000",
+      "fmt": "-1.33B",
+      "longFmt": "-1,328,000,000"
+    },
+    "otherAssets": {
+      "raw": "341000000",
+      "fmt": "341M",
+      "longFmt": "341,000,000"
+    },
+    "cash": {
+      "raw": "1292000000",
+      "fmt": "1.29B",
+      "longFmt": "1,292,000,000"
+    },
+    "totalCurrentLiabilities": {
+      "raw": "1068000000",
+      "fmt": "1.07B",
+      "longFmt": "1,068,000,000"
+    },
+    "shortLongTermDebt": {
+      "raw": "136000000",
+      "fmt": "136M",
+      "longFmt": "136,000,000"
+    },
+    "otherStockholderEquity": {
+      "raw": "-1328000000",
+      "fmt": "-1.33B",
+      "longFmt": "-1,328,000,000"
+    },
+    "propertyPlantEquipment": {
+      "raw": "2805000000",
+      "fmt": "2.81B",
+      "longFmt": "2,805,000,000"
+    },
+    "totalCurrentAssets": {
+      "raw": "2827000000",
+      "fmt": "2.83B",
+      "longFmt": "2,827,000,000"
+    },
+    "longTermInvestments": {
+      "raw": "1781000000",
+      "fmt": "1.78B",
+      "longFmt": "1,781,000,000"
+    },
+    "netTangibleAssets": {
+      "raw": "2892000000",
+      "fmt": "2.89B",
+      "longFmt": "2,892,000,000"
+    },
+    "shortTermInvestments": null,
+    "netReceivables": {
+      "raw": "248000000",
+      "fmt": "248M",
+      "longFmt": "248,000,000"
+    },
+    "maxAge": 1,
+    "longTermDebt": {
+      "raw": "2592000000",
+      "fmt": "2.59B",
+      "longFmt": "2,592,000,000"
+    },
+    "inventory": {
+      "raw": "707000000",
+      "fmt": "707M",
+      "longFmt": "707,000,000"
+    },
+    "accountsPayable": {
+      "raw": "526000000",
+      "fmt": "526M",
+      "longFmt": "526,000,000"
+    },
+    "Ticker": "AU"
+  },
+  {
+    "intangibleAssets": {
+      "raw": "109000000",
+      "fmt": "109M",
+      "longFmt": "109,000,000"
+    },
+    "totalLiab": {
+      "raw": "5491000000",
+      "fmt": "5.49B",
+      "longFmt": "5,491,000,000"
+    },
+    "totalStockholderEquity": {
+      "raw": "2621000000",
+      "fmt": "2.62B",
+      "longFmt": "2,621,000,000"
+    },
+    "otherCurrentLiab": {
+      "raw": "307000000",
+      "fmt": "307M",
+      "longFmt": "307,000,000"
+    },
+    "totalAssets": {
+      "raw": "8150000000",
+      "fmt": "8.15B",
+      "longFmt": "8,150,000,000"
+    },
+    "endDate": {
+      "raw": "1585612800",
+      "fmt": "2020-03-31",
+      "longFmt": null
+    },
+    "commonStock": {
+      "raw": "17000000",
+      "fmt": "17M",
+      "longFmt": "17,000,000"
+    },
+    "otherCurrentAssets": {
+      "raw": "554000000",
+      "fmt": "554M",
+      "longFmt": "554,000,000"
+    },
+    "retainedEarnings": {
+      "raw": "-3125000000",
+      "fmt": "-3.12B",
+      "longFmt": "-3,125,000,000"
+    },
+    "otherLiab": {
+      "raw": "1055000000",
+      "fmt": "1.05B",
+      "longFmt": "1,055,000,000"
+    },
+    "goodWill": null,
+    "treasuryStock": {
+      "raw": "-1463000000",
+      "fmt": "-1.46B",
+      "longFmt": "-1,463,000,000"
+    },
+    "otherAssets": {
+      "raw": "305000000",
+      "fmt": "305M",
+      "longFmt": "305,000,000"
+    },
+    "cash": {
+      "raw": "1870000000",
+      "fmt": "1.87B",
+      "longFmt": "1,870,000,000"
+    },
+    "totalCurrentLiabilities": {
+      "raw": "1588000000",
+      "fmt": "1.59B",
+      "longFmt": "1,588,000,000"
+    },
+    "shortLongTermDebt": {
+      "raw": "739000000",
+      "fmt": "739M",
+      "longFmt": "739,000,000"
+    },
+    "otherStockholderEquity": {
+      "raw": "-1463000000",
+      "fmt": "-1.46B",
+      "longFmt": "-1,463,000,000"
+    },
+    "propertyPlantEquipment": {
+      "raw": "2739000000",
+      "fmt": "2.74B",
+      "longFmt": "2,739,000,000"
+    },
+    "totalCurrentAssets": {
+      "raw": "3338000000",
+      "fmt": "3.34B",
+      "longFmt": "3,338,000,000"
+    },
+    "longTermInvestments": {
+      "raw": "1659000000",
+      "fmt": "1.66B",
+      "longFmt": "1,659,000,000"
+    },
+    "netTangibleAssets": {
+      "raw": "2512000000",
+      "fmt": "2.51B",
+      "longFmt": "2,512,000,000"
+    },
+    "shortTermInvestments": null,
+    "netReceivables": {
+      "raw": "223000000",
+      "fmt": "223M",
+      "longFmt": "223,000,000"
+    },
+    "maxAge": 1,
+    "longTermDebt": {
+      "raw": "2741000000",
+      "fmt": "2.74B",
+      "longFmt": "2,741,000,000"
+    },
+    "inventory": {
+      "raw": "691000000",
+      "fmt": "691M",
+      "longFmt": "691,000,000"
+    },
+    "accountsPayable": {
+      "raw": "505000000",
+      "fmt": "505M",
+      "longFmt": "505,000,000"
+    },
+    "Ticker": "AU"
+  }
+]

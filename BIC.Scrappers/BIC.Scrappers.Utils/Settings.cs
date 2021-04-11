@@ -14,13 +14,14 @@ namespace BIC.Scrappers.Utils
             if (_singletonSetings == null)
             {
                 _singletonSetings = new Settings();
-                var settingHelper = new AppSettingsProcessorLogger(); // TODO: base class is needed
-                settingHelper.Populate(_singletonSetings, _singletonSetings.GetType().Assembly);
+                Provider.PopulateProperties(_singletonSetings);
             }
             return _singletonSetings;
         }
         [Mandatory]
         public int TimeDelayInSeconds { get; set; }
+
+        public string IntervalTimeDelayInSeconds { get; set; }
 
         [Mandatory]
         public string ChromeLocation { get; set; }

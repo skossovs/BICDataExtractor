@@ -29,5 +29,11 @@ namespace BIC.Utils.Tests
             Assert.AreEqual("Value", s.StringMandatoryProperty);
         }
 
+        [TestMethod]
+        public void TestLogDirectoryProperty()
+        {
+            var s = BIC.Utils.Settings.GetInstance();
+            Assert.AreEqual("E:\\_LOG", s.LogDirectory);
+        }
     }
 }

@@ -14,6 +14,5 @@ namespace BIC.Foundation.Interfaces
     public interface IParser<T>
     {
         T ParseObject(string fragment);
-        T ParseObject(string fragment, ref T obj);
     }
 }

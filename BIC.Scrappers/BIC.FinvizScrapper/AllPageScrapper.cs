@@ -33,7 +33,7 @@ namespace BIC.Scrappers.FinvizScrapper
                     return;
                 }
                 // 2.2. Convert string page into List of types
-                var tr = new TableReader<T>();
+                var tr = new TableArrayConverter<T>();
                 if (!tr.MapHeader(header))
                 {
                     _logger.Warning("Failed to map header to class object");
@@ -64,12 +64,18 @@ namespace BIC.Scrappers.FinvizScrapper
             int maxPage = 0;
             bool result = pager.DefineMetrics(requestParameters, out recordsPerPage, out maxPage);
 
+            if (!result)
+                throw new Exception("Error while defining Page Metrics");
+
             return new PageMetric() { NumberOfPages = maxPage };
         }
         private bool GetStringTableFromCurrentPage(string generatedAddress, out string[] headers, out IEnumerable<string[]> data)
         {
+            var retriever = ContentRetrieverFactory.CreateInstance(ERetrieverType.Finviz);
+            var currentPagehtmlContent = retriever.GetData(generatedAddress);
             var cqHelper = new CQHelper();
-            var cq = cqHelper.GetData(generatedAddress);
+            var cq = cqHelper.InitiateWithContent(currentPagehtmlContent);
+
             if (cq.Elements.Count() == 0)
             {
                 _logger.Warning("Request returns no elements");

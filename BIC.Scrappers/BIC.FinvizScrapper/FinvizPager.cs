@@ -19,7 +19,8 @@ namespace BIC.Scrappers.FinvizScrapper
             var requestData = Conversions.FromFinvizParametersToHttpRequestData(requestParameters);
             var url         = requestData.GenerateAddressRequest();
 
-            var htmlContent = RequestHelper.GetData(url);
+            var retriever = ContentRetrieverFactory.CreateInstance(ERetrieverType.Finviz);
+            var htmlContent = retriever.GetData(url);
             var cqHelper    = new CQHelper();
             var cq          = cqHelper.InitiateWithContent(htmlContent);
 
@@ -27,6 +28,16 @@ namespace BIC.Scrappers.FinvizScrapper
 
             var rendered = cq.Render();
             string pageBody = pgmScrapper.FindRawContent(rendered);
+
+            if (pageBody.IsNullOrEmtpy())
+            {
+                _logger.Error("Page metric raw content is wrong, whole page content is listed below: ");
+                _logger.Error(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+                _logger.Error(htmlContent);
+                _logger.Error(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+                recordsPerPage = 0; maxPage = 0;
+                return false;
+            }
 
             var pageInfo = pgmScrapper.CallParsers(pageBody);
 
@@ -43,11 +54,6 @@ namespace BIC.Scrappers.FinvizScrapper
 
             maxPage = pageInfo.First().NumberOfPages.Value;
             return true;
-        }
-
-        public IEnumerable<string> GenerateRequestAdresses()
-        {
-            throw new NotImplementedException(); // TODO: not used method
         }
     }
 }

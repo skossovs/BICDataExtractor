@@ -8,13 +8,14 @@ using System.Threading.Tasks;
 
 namespace BIC.Utils.Logger
 {
-    public class SimpleLogger : ILog
+    public class SimpleLogger : ILog, IDisposable
     {
         public SimpleLogger()   {}
 
         private string _get_prefix(string pfxType)
         {
             // get calling method & type
+            // TODO: is broken GetFrame(2) returns incorrect names
             var stackTrace = new StackTrace();
             var methodName = stackTrace.GetFrame(2).GetMethod().Name;
             var className = stackTrace.GetFrame(2).GetType().Name;
@@ -71,6 +72,10 @@ namespace BIC.Utils.Logger
             Console.WriteLine(_get_prefix("EXCEPTION") + ex.Message);
             Console.WriteLine(_get_prefix("STACK_TRACE") + ex.StackTrace);
             Console.ResetColor();
+        }
+
+        public void Dispose()
+        {
         }
     }
 }

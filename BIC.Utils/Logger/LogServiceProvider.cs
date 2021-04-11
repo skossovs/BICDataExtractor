@@ -8,16 +8,28 @@ namespace BIC.Utils.Logger
 {
     public class LogServiceProvider
     {
-        private static ILog _logInstance;
+        private static LogDelegator _logDelegator;
 
         public static ILog Logger
         {
             get
             {
-                _logInstance = _logInstance ?? new SimpleLogger();
-                return _logInstance;
+                _logDelegator = _logDelegator ?? new LogDelegator();
+                return _logDelegator as ILog;
             }
-            set { _logInstance = value; }
         }
+
+        // This one is exotic way to call static destructor
+        #region static destructor
+        private sealed class Destructor
+        {
+            ~Destructor()
+            {
+                if(_logDelegator!=null)
+                    _logDelegator.Dispose();
+            }
+        }
+        private static readonly Destructor Finalise = new Destructor();
+        #endregion
     }
 }

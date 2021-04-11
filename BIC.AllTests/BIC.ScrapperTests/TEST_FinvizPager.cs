@@ -11,7 +11,7 @@ namespace BIC.ScrapperTests
         [TestMethod]
         public void TestDefineMetrics()
         {
-            var fp = CreateFinvizParametersInstance();
+            var fp = CreateFinvizParametersInstance(EView.Overview);
             var pager = new FinvizPager<FinvizParameters>();
             int recordsPerPage = 0;
             int maxPage = 0;
@@ -20,18 +20,27 @@ namespace BIC.ScrapperTests
         }
 
         [TestMethod]
-        public void TestAllPageScrapper()
+        public void TestAllPageScrapperOverviewData()
         {
             var allPageScrapper = new AllPageScrapper<OverviewData>();
-            var fp = CreateFinvizParametersInstance();
+            var fp = CreateFinvizParametersInstance(EView.Overview);
             allPageScrapper.Scrap(fp);
         }
 
-        private FinvizParameters CreateFinvizParametersInstance()
+        [TestMethod]
+        public void TestAllPageScrapperFinancialData()
+        {
+            var allPageScrapper = new AllPageScrapper<FinancialData>();
+            var fp = CreateFinvizParametersInstance(EView.Financial);
+            allPageScrapper.Scrap(fp);
+
+        }
+
+        private FinvizParameters CreateFinvizParametersInstance(EView view)
         {
             return new FinvizParameters()
             {
-                View = EView.Overview,
+                View = view,
                 FilterView = EFilterView.All,
                 Filters = new Filters()
                 {

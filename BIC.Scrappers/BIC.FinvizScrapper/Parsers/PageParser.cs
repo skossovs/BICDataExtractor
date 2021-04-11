@@ -25,11 +25,5 @@ namespace BIC.Scrappers.FinvizScrapper.Parsers
                     .StringToInt(s => _logger.Error($"Can't parse page fragment {s}", s)),
             };
         }
-
-        public PageMetric ParseObject(string fragment, ref PageMetric obj)
-        {
-            // TODO: Design incorrect ??
-            throw new NotImplementedException();
-        }
     }
 }

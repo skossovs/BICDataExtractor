@@ -1,0 +1,390 @@
+[
+  {
+    "investments": {
+      "raw": "29000000",
+      "fmt": "29M",
+      "longFmt": "29,000,000"
+    },
+    "changeToLiabilities": {
+      "raw": "8000000",
+      "fmt": "8M",
+      "longFmt": "8,000,000"
+    },
+    "totalCashflowsFromInvestingActivities": {
+      "raw": "-476000000",
+      "fmt": "-476M",
+      "longFmt": "-476,000,000"
+    },
+    "netBorrowings": {
+      "raw": "-131000000",
+      "fmt": "-131M",
+      "longFmt": "-131,000,000"
+    },
+    "totalCashFromFinancingActivities": {
+      "raw": "-329000000",
+      "fmt": "-329M",
+      "longFmt": "-329,000,000"
+    },
+    "changeToOperatingActivities": null,
+    "issuanceOfStock": null,
+    "netIncome": {
+      "raw": "953000000",
+      "fmt": "953M",
+      "longFmt": "953,000,000"
+    },
+    "changeInCash": {
+      "raw": "874000000",
+      "fmt": "874M",
+      "longFmt": "874,000,000"
+    },
+    "endDate": {
+      "raw": "1609372800",
+      "fmt": "2020-12-31",
+      "longFmt": null
+    },
+    "repurchaseOfStock": null,
+    "effectOfExchangeRate": {
+      "raw": "25000000",
+      "fmt": "25M",
+      "longFmt": "25,000,000"
+    },
+    "totalCashFromOperatingActivities": {
+      "raw": "1654000000",
+      "fmt": "1.65B",
+      "longFmt": "1,654,000,000"
+    },
+    "depreciation": {
+      "raw": "576000000",
+      "fmt": "576M",
+      "longFmt": "576,000,000"
+    },
+    "otherCashflowsFromInvestingActivities": {
+      "raw": "8000000",
+      "fmt": "8M",
+      "longFmt": "8,000,000"
+    },
+    "dividendsPaid": {
+      "raw": "-38000000",
+      "fmt": "-38M",
+      "longFmt": "-38,000,000"
+    },
+    "changeToInventory": {
+      "raw": "-83000000",
+      "fmt": "-83M",
+      "longFmt": "-83,000,000"
+    },
+    "changeToAccountReceivables": {
+      "raw": "-163000000",
+      "fmt": "-163M",
+      "longFmt": "-163,000,000"
+    },
+    "otherCashflowsFromFinancingActivities": {
+      "raw": "-160000000",
+      "fmt": "-160M",
+      "longFmt": "-160,000,000"
+    },
+    "maxAge": 1,
+    "changeToNetincome": {
+      "raw": "363000000",
+      "fmt": "363M",
+      "longFmt": "363,000,000"
+    },
+    "capitalExpenditures": {
+      "raw": "-718000000",
+      "fmt": "-718M",
+      "longFmt": "-718,000,000"
+    },
+    "Ticker": "AU"
+  },
+  {
+    "investments": {
+      "raw": "-11000000",
+      "fmt": "-11M",
+      "longFmt": "-11,000,000"
+    },
+    "changeToLiabilities": {
+      "raw": "40000000",
+      "fmt": "40M",
+      "longFmt": "40,000,000"
+    },
+    "totalCashflowsFromInvestingActivities": {
+      "raw": "-743000000",
+      "fmt": "-743M",
+      "longFmt": "-743,000,000"
+    },
+    "netBorrowings": {
+      "raw": "3000000",
+      "fmt": "3M",
+      "longFmt": "3,000,000"
+    },
+    "totalCashFromFinancingActivities": {
+      "raw": "-177000000",
+      "fmt": "-177M",
+      "longFmt": "-177,000,000"
+    },
+    "changeToOperatingActivities": null,
+    "issuanceOfStock": null,
+    "netIncome": {
+      "raw": "-12000000",
+      "fmt": "-12M",
+      "longFmt": "-12,000,000"
+    },
+    "changeInCash": {
+      "raw": "127000000",
+      "fmt": "127M",
+      "longFmt": "127,000,000"
+    },
+    "endDate": {
+      "raw": "1577750400",
+      "fmt": "2019-12-31",
+      "longFmt": null
+    },
+    "repurchaseOfStock": null,
+    "effectOfExchangeRate": {
+      "raw": "25000000",
+      "fmt": "25M",
+      "longFmt": "25,000,000"
+    },
+    "totalCashFromOperatingActivities": {
+      "raw": "1047000000",
+      "fmt": "1.05B",
+      "longFmt": "1,047,000,000"
+    },
+    "depreciation": {
+      "raw": "602000000",
+      "fmt": "602M",
+      "longFmt": "602,000,000"
+    },
+    "otherCashflowsFromInvestingActivities": {
+      "raw": "-20000000",
+      "fmt": "-20M",
+      "longFmt": "-20,000,000"
+    },
+    "dividendsPaid": {
+      "raw": "-27000000",
+      "fmt": "-27M",
+      "longFmt": "-27,000,000"
+    },
+    "changeToInventory": {
+      "raw": "-67000000",
+      "fmt": "-67M",
+      "longFmt": "-67,000,000"
+    },
+    "changeToAccountReceivables": {
+      "raw": "-138000000",
+      "fmt": "-138M",
+      "longFmt": "-138,000,000"
+    },
+    "otherCashflowsFromFinancingActivities": {
+      "raw": "-153000000",
+      "fmt": "-153M",
+      "longFmt": "-153,000,000"
+    },
+    "maxAge": 1,
+    "changeToNetincome": {
+      "raw": "622000000",
+      "fmt": "622M",
+      "longFmt": "622,000,000"
+    },
+    "capitalExpenditures": {
+      "raw": "-709000000",
+      "fmt": "-709M",
+      "longFmt": "-709,000,000"
+    },
+    "Ticker": "AU"
+  },
+  {
+    "investments": {
+      "raw": "-14000000",
+      "fmt": "-14M",
+      "longFmt": "-14,000,000"
+    },
+    "changeToLiabilities": {
+      "raw": "-46000000",
+      "fmt": "-46M",
+      "longFmt": "-46,000,000"
+    },
+    "totalCashflowsFromInvestingActivities": {
+      "raw": "-335000000",
+      "fmt": "-335M",
+      "longFmt": "-335,000,000"
+    },
+    "netBorrowings": {
+      "raw": "-214000000",
+      "fmt": "-214M",
+      "longFmt": "-214,000,000"
+    },
+    "totalCashFromFinancingActivities": {
+      "raw": "-393000000",
+      "fmt": "-393M",
+      "longFmt": "-393,000,000"
+    },
+    "changeToOperatingActivities": null,
+    "issuanceOfStock": null,
+    "netIncome": {
+      "raw": "133000000",
+      "fmt": "133M",
+      "longFmt": "133,000,000"
+    },
+    "changeInCash": {
+      "raw": "124000000",
+      "fmt": "124M",
+      "longFmt": "124,000,000"
+    },
+    "endDate": {
+      "raw": "1546214400",
+      "fmt": "2018-12-31",
+      "longFmt": null
+    },
+    "repurchaseOfStock": null,
+    "effectOfExchangeRate": {
+      "raw": "-5000000",
+      "fmt": "-5M",
+      "longFmt": "-5,000,000"
+    },
+    "totalCashFromOperatingActivities": {
+      "raw": "857000000",
+      "fmt": "857M",
+      "longFmt": "857,000,000"
+    },
+    "depreciation": {
+      "raw": "582000000",
+      "fmt": "582M",
+      "longFmt": "582,000,000"
+    },
+    "otherCashflowsFromInvestingActivities": {
+      "raw": "244000000",
+      "fmt": "244M",
+      "longFmt": "244,000,000"
+    },
+    "dividendsPaid": {
+      "raw": "-24000000",
+      "fmt": "-24M",
+      "longFmt": "-24,000,000"
+    },
+    "changeToInventory": {
+      "raw": "-2000000",
+      "fmt": "-2M",
+      "longFmt": "-2,000,000"
+    },
+    "changeToAccountReceivables": {
+      "raw": "-74000000",
+      "fmt": "-74M",
+      "longFmt": "-74,000,000"
+    },
+    "otherCashflowsFromFinancingActivities": {
+      "raw": "-155000000",
+      "fmt": "-155M",
+      "longFmt": "-155,000,000"
+    },
+    "maxAge": 1,
+    "changeToNetincome": {
+      "raw": "264000000",
+      "fmt": "264M",
+      "longFmt": "264,000,000"
+    },
+    "capitalExpenditures": {
+      "raw": "-575000000",
+      "fmt": "-575M",
+      "longFmt": "-575,000,000"
+    },
+    "Ticker": "AU"
+  },
+  {
+    "investments": {
+      "raw": "-32000000",
+      "fmt": "-32M",
+      "longFmt": "-32,000,000"
+    },
+    "changeToLiabilities": {
+      "raw": "16000000",
+      "fmt": "16M",
+      "longFmt": "16,000,000"
+    },
+    "totalCashflowsFromInvestingActivities": {
+      "raw": "-862000000",
+      "fmt": "-862M",
+      "longFmt": "-862,000,000"
+    },
+    "netBorrowings": {
+      "raw": "48000000",
+      "fmt": "48M",
+      "longFmt": "48,000,000"
+    },
+    "totalCashFromFinancingActivities": {
+      "raw": "-148000000",
+      "fmt": "-148M",
+      "longFmt": "-148,000,000"
+    },
+    "changeToOperatingActivities": null,
+    "issuanceOfStock": null,
+    "netIncome": {
+      "raw": "-191000000",
+      "fmt": "-191M",
+      "longFmt": "-191,000,000"
+    },
+    "changeInCash": {
+      "raw": "-10000000",
+      "fmt": "-10M",
+      "longFmt": "-10,000,000"
+    },
+    "endDate": {
+      "raw": "1514678400",
+      "fmt": "2017-12-31",
+      "longFmt": null
+    },
+    "repurchaseOfStock": null,
+    "effectOfExchangeRate": {
+      "raw": "3000000",
+      "fmt": "3M",
+      "longFmt": "3,000,000"
+    },
+    "totalCashFromOperatingActivities": {
+      "raw": "997000000",
+      "fmt": "997M",
+      "longFmt": "997,000,000"
+    },
+    "depreciation": {
+      "raw": "712000000",
+      "fmt": "712M",
+      "longFmt": "712,000,000"
+    },
+    "otherCashflowsFromInvestingActivities": {
+      "raw": "-158000000",
+      "fmt": "-158M",
+      "longFmt": "-158,000,000"
+    },
+    "dividendsPaid": {
+      "raw": "-39000000",
+      "fmt": "-39M",
+      "longFmt": "-39,000,000"
+    },
+    "changeToInventory": {
+      "raw": "-67000000",
+      "fmt": "-67M",
+      "longFmt": "-67,000,000"
+    },
+    "changeToAccountReceivables": {
+      "raw": "-86000000",
+      "fmt": "-86M",
+      "longFmt": "-86,000,000"
+    },
+    "otherCashflowsFromFinancingActivities": {
+      "raw": "-157000000",
+      "fmt": "-157M",
+      "longFmt": "-157,000,000"
+    },
+    "maxAge": 1,
+    "changeToNetincome": {
+      "raw": "613000000",
+      "fmt": "613M",
+      "longFmt": "613,000,000"
+    },
+    "capitalExpenditures": {
+      "raw": "-675000000",
+      "fmt": "-675M",
+      "longFmt": "-675,000,000"
+    },
+    "Ticker": "AU"
+  }
+]
