@@ -20,6 +20,10 @@ namespace BIC.ETL.SqlServer.FileReaders
         }
         public void Merge(IEnumerable<IncomeStatementDataQuarterly> newData)
         {
+            // TODO: Validate for Late fillings:
+            //var qDates = from f in newData
+            //             select Convert.ToDateTime(f.endDate.fmt).DateToYearQuarter();
+
             var db = DataConnectionFactory.CreateInstance();
             var qNewData = from y in newData
                            join s in db.Securities.Select(s1 => new { s1.SecurityID, s1.Ticker }) on y.Ticker equals s.Ticker

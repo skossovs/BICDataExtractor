@@ -19,5 +19,11 @@ namespace BIC.ETL.SqlServer.FileReaders
             }
             return JsonConvert.DeserializeObject<IEnumerable<T>>(jsonContent);
         }
+        // TODO:
+        //protected void ValidateLateFillingQuarters<T>(IEnumerable<T> data)
+        //{
+        //    var q = from r in data
+        //            select r.
+        //}
     }
 }

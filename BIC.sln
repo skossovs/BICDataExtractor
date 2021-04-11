@@ -36,6 +36,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BIC.ETL.SqlServerTest", "BI
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BIC.YahooScrapper", "BIC.YahooScrapper\BIC.YahooScrapper.csproj", "{56109268-3256-49DE-8269-7B6D526C366B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Reports", "Reports", "{F06070E6-F457-4D65-92B1-10D46F5068D6}"
+	ProjectSection(SolutionItems) = preProject
+		BIC.Apps\Reports\TheReport.xlsx = BIC.Apps\Reports\TheReport.xlsx
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -96,5 +101,6 @@ Global
 		{10AF3D83-1FB5-41D1-8F15-DF70E9D7CFA2} = {67B8E07B-5AC6-450B-BFCF-21B809A44D88}
 		{1489E0E7-94F1-4BFF-8BBE-1EDABA76713E} = {BCAA643B-611A-41C9-85F8-5B0858FF8F8F}
 		{56109268-3256-49DE-8269-7B6D526C366B} = {18792F9E-3FDC-44B2-B39D-3708822A924D}
+		{F06070E6-F457-4D65-92B1-10D46F5068D6} = {99B1A906-C228-4DB2-A339-F810594926E6}
 	EndGlobalSection
 EndGlobal

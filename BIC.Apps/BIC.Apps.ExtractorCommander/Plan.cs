@@ -10,15 +10,13 @@ namespace BIC.Scrappers.FinvizScrapper
     class Plan
     {
         // 1.     Implement Reports for different strategies. >>
-        // 1.1.   Create ETL procedure, that joins KeyRatio with BIC data. Done.
         // 1.2.   Create Excel UI that slices and dices report data by Sectors and Industries. >>
         // 1.2.1. Implement Average Ratios calculatons for Sectors and Industries. >>
         // 2.     For Finviz KeyRatio need to Q := Q - 1, data is for previous quarter.Done
 
-        // 3.     Implement File archivarius. DONE.
         // 4.     Reorganize tests.
         // 6.     Errors:
-        // 6.1.   Merge fails on duplicates
+        // 6.1.   Merge fails on duplicates. The reason is companies late filling. Need to fix quarters.>>
         // 6.1.2. Queue doesn't have enough time to process last item, before finished.
         // 6.1.3. Logger doesn't work for FileProcessor.
 
