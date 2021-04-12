@@ -31,6 +31,47 @@ namespace BIC.Apps.ExtractorCommander.Commands
                 Scrap<CashFlowDataQuarterly>       (security.Ticker, true);
             }
         }
+
+        public static void ScrapTickersAfter(string ticker)
+        {
+            bool skipTheStep = true;
+            foreach (var security in ETL.SqlServer.DataLayer.SecurityReader.GetSecurities())
+            {
+                if (security.Ticker == ticker)
+                {
+                    skipTheStep = false;
+                    continue;
+                }
+
+                if (skipTheStep)
+                    continue;
+
+                Scrap<IncomeStatementDataQuarterly>(security.Ticker, true);
+                Scrap<BalanceSheetDataQuarterly>(security.Ticker, true);
+                Scrap<CashFlowDataQuarterly>(security.Ticker, true);
+            }
+        }
+
+        public static void ScrapTickersAfter(string sector, string ticker)
+        {
+            bool skipTheStep = true;
+            foreach (var security in ETL.SqlServer.DataLayer.SecurityReader.GetSecurities(sector))
+            {
+                if (security.Ticker == ticker)
+                {
+                    skipTheStep = false;
+                    continue;
+                }
+
+                if (skipTheStep)
+                    continue;
+
+                Scrap<IncomeStatementDataQuarterly>(security.Ticker, true);
+                Scrap<BalanceSheetDataQuarterly>(security.Ticker, true);
+                Scrap<CashFlowDataQuarterly>(security.Ticker, true);
+            }
+        }
+
         private static void Scrap<T>(string ticker, bool isQuarterly) where T : class, new()
         {
             // Find sector by value

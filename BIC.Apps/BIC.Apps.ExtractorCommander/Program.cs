@@ -20,19 +20,21 @@ namespace BIC.Apps.ExtractorCommander
                 var app = new CommandLineApplication();
 
                 #region Command lines
-                //  -rs finviz -etl secmaster                  -- security master call
-                //  -rs finviz -all                            -- download all sectors
-                //  -rs finviz -etl finance -sec healthcare    -- download one sector
-                //  -rs yahoo  -etl finance -sec healthcare    -- download one sector
+                //  -rs finviz -etl secmaster                                 -- security master call
+                //  -rs finviz -all                                           -- download all sectors
+                //  -rs finviz -etl finance -sec healthcare                   -- download one sector
+                //  -rs yahoo  -etl finance -sec healthcare                   -- download one sector
+                //  -rs yahoo  -etl finance -sec "Consumer Defensive" -at DL    -- download one sector
                 #endregion
 
                 #region Option description
                 app.HelpOption("--help");  // TODO: implement help
-                var optionResource = app.Option("-rs|--resource", "Resource"     , CommandOptionType.SingleValue);
-                //var optionView     = app.Option("-vw|--view"    , "View"         , CommandOptionType.SingleValue); TODO: all views (objects) will be loaded
-                var optionFeed     = app.Option("-etl|--ETL"    , "ETL Feed type", CommandOptionType.SingleValue);
-                var optionNoFilter = app.Option("-all|--All"    , "All no filter", CommandOptionType.NoValue);
-                var optionSector   = app.Option("-sec|--sector" , "Sector"       , CommandOptionType.SingleValue);
+                var optionResource         = app.Option("-rs|--resource", "Resource"     , CommandOptionType.SingleValue);
+                //var optionView           = app.Option("-vw|--view"    , "View"         , CommandOptionType.SingleValue); TODO: all views (objects) will be loaded
+                var optionFeed             = app.Option("-etl|--ETL"    , "ETL Feed type", CommandOptionType.SingleValue);
+                var optionNoFilter         = app.Option("-all|--All"    , "All no filter", CommandOptionType.NoValue);
+                var optionSector           = app.Option("-sec|--sector" , "Sector"       , CommandOptionType.SingleValue);
+                var optionStartAfterTicker = app.Option("-at|--afterticker", "Start after ticker", CommandOptionType.SingleValue);
                 #endregion
 
                 #region Executing Function definition
@@ -62,12 +64,24 @@ namespace BIC.Apps.ExtractorCommander
                         {
                             if (optionFeed.Value() == "finance")
                             {
-                                if (optionNoFilter.HasValue())
-                                    Commands.Yahoo.ScrapTickers();
-                                else if (optionSector.HasValue())
-                                    Commands.Yahoo.ScrapTickers(sector);
+                                if (optionStartAfterTicker.HasValue())
+                                {
+                                    if (optionNoFilter.HasValue())
+                                        Commands.Yahoo.ScrapTickersAfter(optionStartAfterTicker.Value());
+                                    else if (optionSector.HasValue())
+                                        Commands.Yahoo.ScrapTickersAfter(sector, optionStartAfterTicker.Value());
+                                    else
+                                        throw new Exception("Neither -all nor sector specified command (-sec) was entered");
+                                }
                                 else
-                                    throw new Exception("Neither -all nor sector specified command (-sec) was entered");
+                                {
+                                    if (optionNoFilter.HasValue())
+                                        Commands.Yahoo.ScrapTickers();
+                                    else if (optionSector.HasValue())
+                                        Commands.Yahoo.ScrapTickers(sector);
+                                    else
+                                        throw new Exception("Neither -all nor sector specified command (-sec) was entered");
+                                }
                             }
                         }
                     }

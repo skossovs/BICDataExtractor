@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BIC.ETL.SqlServer
 {
-    // TODO: this guy put all processed files in a series of fixed length archives
+    // this guy put all processed files in a series of fixed length archives
     public class FileArchivarius : IDisposable
     {
         private RxQueuePubSub _queue;

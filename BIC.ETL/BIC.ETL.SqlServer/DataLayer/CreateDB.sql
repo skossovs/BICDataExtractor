@@ -223,47 +223,42 @@ LEFT   JOIN [dbo].[KeyRatio]  k
 ON          k.SecurityID = s.SecurityID
         AND k.[Year]     = b.[Year]
 		AND k.[Quarter]  = b.[Quarter]
-
+GO
 -- 2. Strategy "Value Stocks"
-SELECT 
+
+ALTER VIEW [dbo].[LevelZeroScreener]
+AS
+SELECT        
 	s.SecurityID
 ,	s.Ticker
-,   sc.Sector
-,   ids.Industry
-,	b.[Year]
-,   b.[Quarter]
-,   (b.[totalStockholderEquity] - COALESCE(b.goodWill,0) + COALESCE(b.retainedEarnings,0))/k.MarketCap as Worthiness
-,   b.[totalStockholderEquity] as Equity
-,   b.retainedEarnings
-,   k.MarketCap
-,   k.CurrentRatio
-,   k.QuickRatio
-,   k.LongTermDebtToEquity
-,   k.DebtToEquity
-,   k.GrossMargin
-,   k.OperationMargin
-,   k.ProfitMargin
-,   k.Volume
-FROM		Security s
-INNER JOIN  Sector   sc
-ON          s.SectorID = sc.SectorID
-INNER JOIN  Industry ids
-ON          s.IndustryID = ids.IndustryID
-LEFT  JOIN  BalanceSheetQuarterly b
-ON			b.SecurityID = s.SecurityID
-LEFT  JOIN  IncomeStatementQuarterly i
-ON          i.SecurityID = s.SecurityID
-        AND i.[Year]     = b.[Year]
-		AND i.[Quarter]  = b.[Quarter]
-LEFT  JOIN  CashFlowQuarterly c
-ON          c.SecurityID = s.SecurityID
-        AND c.[Year]     = b.[Year]
-		AND c.[Quarter]  = b.[Quarter]
-LEFT   JOIN [dbo].[KeyRatio]  k
-ON          k.SecurityID = s.SecurityID
-        AND k.[Year]     = b.[Year]
-		AND k.[Quarter]  = b.[Quarter]
-WHERE b.Quarter = 4
+, sc.Sector
+, ids.Industry
+, b.Year
+, b.Quarter
+, (b.totalStockholderEquity - COALESCE (b.goodWill, 0) + COALESCE (b.retainedEarnings, 0)) / k.MarketCap AS Worthiness
+, COALESCE(b.intangibleAssets, b.goodWill) / netTangibleAssets AS intagnibleRatio
+, b.totalStockholderEquity AS Equity
+, b.retainedEarnings
+, k.MarketCap
+, COALESCE(k.CurrentRatio, totalCurrentAssets/totalCurrentLiabilities) AS CurrentRatio
+, k.QuickRatio
+, k.LongTermDebtToEquity
+, b.longTermDebt / (b.[totalAssets] - b.[totalCurrentAssets]) AS DebtToAssets
+, k.DebtToEquity
+, k.GrossMargin
+, k.OperationMargin
+, k.ProfitMargin
+, k.Volume
+FROM    dbo.Security AS s INNER JOIN
+		dbo.Sector AS sc ON s.SectorID = sc.SectorID INNER JOIN
+		dbo.Industry AS ids ON s.IndustryID = ids.IndustryID LEFT OUTER JOIN
+		dbo.BalanceSheetQuarterly AS b ON b.SecurityID = s.SecurityID LEFT OUTER JOIN
+		dbo.IncomeStatementQuarterly AS i ON i.SecurityID = s.SecurityID AND i.Year = b.Year AND i.Quarter = b.Quarter LEFT OUTER JOIN
+		dbo.CashFlowQuarterly AS c ON c.SecurityID = s.SecurityID AND c.Year = b.Year AND c.Quarter = b.Quarter LEFT OUTER JOIN
+		dbo.KeyRatio AS k ON k.SecurityID = s.SecurityID AND k.Year = b.Year AND k.Quarter = b.Quarter
+
+GO
+
 -- 3. Strategy "Growth Stocks"
 -- 4. Strategy "Penny Stocks"
 
