@@ -111,7 +111,6 @@ namespace BIC.ETL.SqlServer
                         switch (ft.ClassName)
                         {
                             case "OverviewData":
-                                // TODO: here is the problem, different types of data should be returned, current architecture doesn't solve it
                                 var secMasterReader = new FileReaders.SecurityMasterFileMerger(ft.FilePath, ft.TimeStamp);
                                 var overviewObjects = secMasterReader.Read();
                                 secMasterReader.Merge(overviewObjects);

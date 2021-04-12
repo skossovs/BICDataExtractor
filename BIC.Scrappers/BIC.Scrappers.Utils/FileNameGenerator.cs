@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using BIC.Utils;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace BIC.Scrappers.Utils
             string timeStamp = "";
 
             if (includeTimestamp)
-                timeStamp = "_" + DateTime.Now.ToShortDateString().Replace('/','-') + " " + DateTime.Now.ToLongTimeString().Replace(':', '-'); // TODO: use Conversion.GenDateSuffix
+                timeStamp = "_" + DateTime.Now.GenFileNameDateSuffix();
             return t.Assembly.GetName().Name + "_" + t.Name + timeStamp + "." + extension;
         }
 

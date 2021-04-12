@@ -80,12 +80,7 @@ namespace BIC.Scrappers.Utils.TableScrapping
                             props[m.PropertyIndex].SetValue(obj, record[m.ColumnIndex].StringToDate(e => _logger.Error(e.Message), EmptyCharacters));
                             break;
                         case AllowedTypes.DecimalType:
-                            if(record[m.ColumnIndex].Contains("%")) // TODO: misplaced responsibility
-                                props[m.PropertyIndex].SetValue(obj, record[m.ColumnIndex].PercentageStringToDecimal(e => _logger.Error(e.Message), EmptyCharacters));
-                            else if(record[m.ColumnIndex].Contains("M") || record[m.ColumnIndex].Contains("B")) // TODO: misplaced responsibility
-                                props[m.PropertyIndex].SetValue(obj, record[m.ColumnIndex].MillionBillionStringToDecimal(e => _logger.Error(e.Message), EmptyCharacters));
-                            else
-                                props[m.PropertyIndex].SetValue(obj, record[m.ColumnIndex].StringToDecimal(e => _logger.Error(e.Message), EmptyCharacters));
+                            props[m.PropertyIndex].SetValue(obj, record[m.ColumnIndex].AllSpecialsStringToDecimal(e => _logger.Error(e.Message), EmptyCharacters));
                             break;
                         case AllowedTypes.IntType:
                             props[m.PropertyIndex].SetValue(obj, record[m.ColumnIndex].StringToInt(e => _logger.Error(e.Message), EmptyCharacters));

@@ -10,18 +10,6 @@ namespace BIC.ETL.SqlServer.DataLayer
 {
     public static class SecurityReader
     {
-        // TODO: drop it
-        //private static LinqToDbConnectionOptions _options;
-
-        //static SecurityReader()
-        //{
-        //    var connectionString = Settings.GetInstance().SQLConnectionString;
-        //    // create options builder
-        //    var builder = new LinqToDbConnectionOptionsBuilder();
-        //    // configure connection string
-        //    _options = builder.UseSqlServer(connectionString).Build();
-        //}
-
         public static IEnumerable<SectorRecord> GetSectors()
         {
             var db = DataConnectionFactory.CreateInstance();

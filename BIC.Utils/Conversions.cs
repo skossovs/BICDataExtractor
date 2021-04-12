@@ -91,7 +91,7 @@ namespace BIC.Utils
             int q = (dtShifted.Month - ((dtShifted.Month - 1) % 3)) / 3 + 1;  // primitive application of group theory
             return new Tuple<int, int>(y, q);
         }
-        public static string GenFileNameSuffix(this DateTime dt)
+        public static string GenFileNameDateSuffix(this DateTime dt)
         {
             return dt.ToShortDateString().Replace('/', '-') + " " + dt.ToLongTimeString().Replace(':', '-');
         }

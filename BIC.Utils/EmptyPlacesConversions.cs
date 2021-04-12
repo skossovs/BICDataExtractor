@@ -27,6 +27,12 @@ namespace BIC.Utils
         {
             return value.NullIfEmptyPlace(emptyPlaceCharacters).MillionBillionStringToDecimal(errorAction);
         }
+
+        public static Decimal? AllSpecialsStringToDecimal(this string value, Action<Exception> errorAction, char[] emptyPlaceCharacters)
+        {
+            return value.NullIfEmptyPlace(emptyPlaceCharacters).AllSpecialsStringToDecimal(errorAction);
+        }
+
         public static Double? StringToDouble(this string value, Action<Exception> errorAction, char[] emptyPlaceCharacters)
         {
             return value.NullIfEmptyPlace(emptyPlaceCharacters).StringToDouble(errorAction);

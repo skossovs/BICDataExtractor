@@ -10,7 +10,7 @@ namespace BIC.Scrappers.Utils
     public class ContentRetrieverFactory
     {
         private static ChromeRetriever _chromeRetriever;
-        private static ChromeRetriever _yahooRetriever;  // TODO: for now it is the same retriever
+        private static ChromeRetriever _yahooRetriever;
         public static IContentRetriever CreateInstance(ERetrieverType retrieverType)
         {
             IContentRetriever result = null;

@@ -14,8 +14,10 @@ namespace BIC.ETL.SqlServer
     public class FileArchivarius : IDisposable
     {
         private RxQueuePubSub _queue;
-        private ILog          _logger = LogServiceProvider.Logger;
-        private string        _path   = Settings.GetInstance().InputDirectory;
+        private ILog          _logger           = LogServiceProvider.Logger;
+        private string        _path             = Settings.GetInstance().InputDirectory;
+        private string        _zipFileName      = Settings.GetInstance().ZipFileName;
+        private long          _zipFileMaxLength = Settings.GetInstance().ZipMaxFileLength;
         public FileArchivarius()
         {
             _queue = new RxQueuePubSub();
@@ -26,9 +28,14 @@ namespace BIC.ETL.SqlServer
         {
             private ILog   _logger;
             private string _fileName;
-            public ArchivalJob(string fileName, ILog logger)
+            private string _zipFileName;
+            private long   _zipFileMaxLength;
+
+            public ArchivalJob(string fileName, ILog logger, string zipFileName, long zipFileMaxLength)
             {
                 _fileName = fileName;
+                _zipFileName = zipFileName;
+                _zipFileMaxLength = zipFileMaxLength;
                 _logger   = logger;
             }
             public void Do()
@@ -36,7 +43,7 @@ namespace BIC.ETL.SqlServer
                 _logger.Debug("Archiving the file {0}..", _fileName);
 
                 var path = Path.GetDirectoryName(_fileName);
-                string zipFilePath = Path.Combine(path, "BIC.zip"); // TODO: archive name to settings
+                string zipFilePath = Path.Combine(path, _zipFileName);
 
                 ZipArchiveMode archiveMode = ZipArchiveMode.Create;
                 if (System.IO.File.Exists(zipFilePath))
@@ -53,17 +60,17 @@ namespace BIC.ETL.SqlServer
                 _logger.Debug("file {0} added to archive", _fileName);
                 // If archive reached certain size => enclose it
                 var fi = new FileInfo(zipFilePath);
-                if (fi.Length > 2000000)  // TODO: bring to settings
+                if (fi.Length > _zipFileMaxLength)
                 {
                     _logger.Info("Time to split archive");
-                    File.Move(zipFilePath, Path.Combine(path, $"BIC_{DateTime.Now.GenFileNameSuffix()}.zip"));
+                    File.Move(zipFilePath, Path.Combine(path, $"{_zipFileName}_{DateTime.Now.GenFileNameDateSuffix()}.zip"));
                 }
             }
         }
 
         public void Archive(string fullPath)
         {
-            _queue.Enqueue(new ArchivalJob(fullPath, _logger));
+            _queue.Enqueue(new ArchivalJob(fullPath, _logger, _zipFileName, _zipFileMaxLength));
         }
 
         public void Dispose()
