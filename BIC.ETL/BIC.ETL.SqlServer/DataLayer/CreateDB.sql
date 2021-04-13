@@ -249,6 +249,7 @@ SELECT
 , k.OperationMargin
 , k.ProfitMargin
 , k.Volume
+, ((b.commonStock * 1000)/k.Volume) AS Liquidity
 FROM    dbo.Security AS s INNER JOIN
 		dbo.Sector AS sc ON s.SectorID = sc.SectorID INNER JOIN
 		dbo.Industry AS ids ON s.IndustryID = ids.IndustryID LEFT OUTER JOIN

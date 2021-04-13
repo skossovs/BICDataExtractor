@@ -61,6 +61,7 @@ namespace BIC.ETL.SqlServer
                 if (ct.IsCancellationRequested)
                     ct.ThrowIfCancellationRequested();
             }
+            _logger.Info("************************ All files in directory have been processed ************************ ");
         }
         private FileType Recognize(string fullFilePath)
         {

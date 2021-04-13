@@ -21,6 +21,7 @@ namespace BIC.Scrappers.FinvizScrapper
         // 6.1.   Merge fails on duplicates. The reason is companies late filling. Need to fix quarters.
         //        sometimes yearly data came instead of quarterly. >>
         // 6.1.2. Queue doesn't have enough time to process last item, before finished.
+        // 6.1.3. Financial Sector cannot be scrapped. Need to debug
 
         // 7.     Implement Reports for different strategies. Next Levels.
         // 8.     Yahoo.Finance Scrapper for yearly
