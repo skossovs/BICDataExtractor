@@ -47,8 +47,8 @@ namespace BIC.Apps.ExtractorCommander.Commands
                     continue;
 
                 Scrap<IncomeStatementDataQuarterly>(security.Ticker, true);
-                Scrap<BalanceSheetDataQuarterly>(security.Ticker, true);
-                Scrap<CashFlowDataQuarterly>(security.Ticker, true);
+                Scrap<BalanceSheetDataQuarterly>   (security.Ticker, true);
+                Scrap<CashFlowDataQuarterly>       (security.Ticker, true);
             }
         }
 
@@ -74,34 +74,40 @@ namespace BIC.Apps.ExtractorCommander.Commands
 
         private static void Scrap<T>(string ticker, bool isQuarterly) where T : class, new()
         {
-            // Find sector by value
-            var yp = new YahooParameters()
+            try
             {
-                IsQuarterly = isQuarterly,
-                Ticker      = ticker
-            };
+                var yp = new YahooParameters()
+                {
+                    IsQuarterly = isQuarterly,
+                    Ticker      = ticker
+                };
 
-            var typeName = typeof(T).Name;
-            switch (typeName)
-            {
-                case "IncomeStatementDataQuarterly":
-                    yp.ReportType= "financials";
-                    break;
-                case "BalanceSheetDataQuarterly":
-                    yp.ReportType = "balance-sheet";
-                    break;
-                case "CashFlowDataQuarterly":
-                    yp.ReportType = "cash-flow";
-                    break;
-                default:
-                    _logger.Error($"Unsupported type {typeName}");
-                    throw new Exception($"Unsupported type {typeName}");
+                var typeName = typeof(T).Name;
+                switch (typeName)
+                {
+                    case "IncomeStatementDataQuarterly":
+                        yp.ReportType = "financials";
+                        break;
+                    case "BalanceSheetDataQuarterly":
+                        yp.ReportType = "balance-sheet";
+                        break;
+                    case "CashFlowDataQuarterly":
+                        yp.ReportType = "cash-flow";
+                        break;
+                    default:
+                        _logger.Error($"Unsupported type {typeName}");
+                        throw new Exception($"Unsupported type {typeName}");
+                }
+
+                _logger.Info($"Loading Ticker {ticker} for report type {yp.ReportType} ..");
+                var pageScrapper = new PageScrapper<T>();
+                var result = pageScrapper.Scrap(yp);
+                _logger.Info($"Finished Loading Ticker {ticker} for report type {yp.ReportType}.");
             }
-
-            _logger.Info($"Loading Ticker {ticker} for report type {yp.ReportType} ..");
-            var pageScrapper = new PageScrapper<T>();
-            var result = pageScrapper.Scrap(yp);
-            _logger.Info($"Finished Loading Ticker {ticker} for report type {yp.ReportType}.");
+            catch (Exception ex)
+            {
+                _logger.ReportException(ex);
+            }
         }
     }
 }

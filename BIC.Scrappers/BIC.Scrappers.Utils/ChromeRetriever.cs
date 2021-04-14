@@ -1,8 +1,6 @@
 ﻿using BIC.Foundation.Interfaces;
 using System;
 using System.Collections.Generic;
-using System;
-using System.Collections.Generic;
 using System.IO;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -36,7 +34,7 @@ namespace BIC.Scrappers.Utils
             {
                 BinaryLocation = Settings.GetInstance().ChromeLocation
             };
-            options.AddArguments(new List<string>() { "headless", "disable-gpu" });
+            options.AddArguments(new List<string>() { "headless", "disable-gpu", "silent" });
             /// Cloud Flare problem to resolve
             /// https://www.api2pdf.com/solved-access-denied-v2018-api2pdf-com-used-cloudflare-to-restrict-access/
             options.AddArgument("--user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36");
