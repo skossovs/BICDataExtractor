@@ -33,6 +33,7 @@
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Messaging" />
     <Reference Include="System.Reactive.Core, Version=3.0.0.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Reactive.Core.3.0.0\lib\net45\System.Reactive.Core.dll</HintPath>
     </Reference>
@@ -70,6 +71,8 @@
     <Compile Include="Logger\SimpleLogger.cs" />
     <Compile Include="Monads\Maybe.cs" />
     <Compile Include="Monads\RefAndStructMaybe.cs" />
+    <Compile Include="MSMQ\Signal.cs" />
+    <Compile Include="MSMQ\SenderReciever.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RxQueuePubSub.cs" />
     <Compile Include="SettingProcessors\AppSettingsProcessor.cs" />
@@ -83,5 +86,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

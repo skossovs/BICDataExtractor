@@ -224,6 +224,24 @@ ON          k.SecurityID = s.SecurityID
         AND k.[Year]     = b.[Year]
 		AND k.[Quarter]  = b.[Quarter]
 GO
+
+-- 1.1. Statistics
+SELECT [SectorID] ,[Sector]
+  FROM [BIC].[dbo].[Sector]
+
+SELECT s.Sector, i.Industry, Count(*) c FROM [Security] t
+INNER JOIN    Sector     s ON t.SectorID = s.SectorID
+INNER JOIN    Industry   i ON i.IndustryID = t.IndustryID
+LEFT  JOIN    BalanceSheetQuarterly b ON b.SecurityID = t.SecurityID
+WHERE b.Year = 2020 and b.Quarter = 4 AND  b.SecurityID is not null
+GROUP BY s.Sector, i.Industry
+ORDER BY s.Sector, i.Industry
+
+SELECT * FROM LevelZeroScreener
+WHERE Quarter = 4
+ORDER BY Sector, Industry, Ticker
+
+GO
 -- 2. Strategy "Value Stocks"
 
 ALTER VIEW [dbo].[LevelZeroScreener]

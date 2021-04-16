@@ -13,6 +13,7 @@ namespace BIC.Scrappers.FinvizScrapper
         // 2.     For Finviz KeyRatio need to Q := Q - 1, data is for previous quarter.Done
         // 3.     Create WPF UI >>
         // 3.1.   Command tree, yaml sectors, read the logs from the files. Start-Stop capability. Running indicator. Options to run windowless processes.
+        // 3.2.   Finish up MSMQ recieval >>
         // 4.     Reorganize tests.
         // 6.     Errors:
         // 6.1.   Merge fails on duplicates. The reason is companies late filling. Need to fix quarters.
