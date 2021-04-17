@@ -26,7 +26,5 @@ namespace BIC.Utils
         [Mandatory]
         public string LogDirectory { get; set; }
         public string UseFileLog { get; set; }
-        [Mandatory]
-        public int    ReadMessageWaitMSec { get; set; }
     }
 }

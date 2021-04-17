@@ -14,11 +14,9 @@ namespace BIC.Utils.MSMQ
     {
         public readonly string SenderQueueName;    // TODO: //= ".\\Private$\\bic-commands"; //= ".\\Private$\\bic-status";
         public readonly string RecieverQueueName;
-        public readonly int    ReadMessageWaitMSec = Settings.GetInstance().ReadMessageWaitMSec;
+        public readonly int    ReadMessageWaitMSec;
 
-//        private Task                    _watchingTask;
         private CancellationTokenSource _tokenSource;
-
         private object                  _startStopLock;
         static EventWaitHandle          _waitHandle;
 
@@ -27,10 +25,11 @@ namespace BIC.Utils.MSMQ
 
         public List<Exception> ExceptionLog;
 
-        public SenderReciever(string senderQueueName, string recieverQueueName)
+        public SenderReciever(string senderQueueName, string recieverQueueName, int readMessageWaitMSec)
         {
-            RecieverQueueName = recieverQueueName;
-            SenderQueueName   = senderQueueName;
+            RecieverQueueName   = recieverQueueName;
+            SenderQueueName     = senderQueueName;
+            ReadMessageWaitMSec = readMessageWaitMSec;
             // Threading
             _startStopLock    = new object();
             _waitHandle       = new AutoResetEvent(false);

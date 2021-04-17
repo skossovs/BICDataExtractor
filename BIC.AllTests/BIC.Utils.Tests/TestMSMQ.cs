@@ -25,13 +25,13 @@ namespace BIC.Utils.Tests
         public void TestSendingRecievingStatusZero()
         {
             // send c to s
-            using (var sr = new MSMQ.SenderReciever<CommandTest, StatusTest>(".\\Private$\\bic-commands", ".\\Private$\\bic-status"))
+            using (var sr = new MSMQ.SenderReciever<CommandTest, StatusTest>(".\\Private$\\bic-commands", ".\\Private$\\bic-status", 200))
             {
                 sr.Send(new StatusTest() { Status = "0" });
             }
 
             // recieve
-            using (var rs = new MSMQ.SenderReciever<StatusTest, CommandTest>(".\\Private$\\bic-status", ".\\Private$\\bic-commands"))
+            using (var rs = new MSMQ.SenderReciever<StatusTest, CommandTest>(".\\Private$\\bic-status", ".\\Private$\\bic-commands", 200))
             {
                 rs.MessageRecievedEvent += Sr_MessageRecievedEvent;
                 rs.StartWatching();
@@ -43,7 +43,7 @@ namespace BIC.Utils.Tests
         public void TestRecievingOnly()
         {
             // recieve
-            using (var rs = new MSMQ.SenderReciever<StatusTest, CommandTest>(".\\Private$\\bic-status", ".\\Private$\\bic-commands"))
+            using (var rs = new MSMQ.SenderReciever<StatusTest, CommandTest>(".\\Private$\\bic-status", ".\\Private$\\bic-commands", 200))
             {
                 rs.MessageRecievedEvent += Sr_MessageRecievedEvent;
                 rs.StartWatching();
