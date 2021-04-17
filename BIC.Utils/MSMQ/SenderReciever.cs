@@ -15,22 +15,33 @@ namespace BIC.Utils.MSMQ
         public readonly string SenderQueueName;    // TODO: //= ".\\Private$\\bic-commands"; //= ".\\Private$\\bic-status";
         public readonly string RecieverQueueName;
 
-        private Task                    _watchingTask;
+//        private Task                    _watchingTask;
         private CancellationTokenSource _tokenSource;
+
+        private object                  _startStopLock;
+        static EventWaitHandle          _waitHandle;
 
         public delegate void MessageRecievedHandler(TR body);
         public event         MessageRecievedHandler MessageRecievedEvent;
+
+        public List<Exception> ExceptionLog;
 
         public SenderReciever(string senderQueueName, string recieverQueueName)
         {
             RecieverQueueName = recieverQueueName;
             SenderQueueName   = senderQueueName;
+            // Threading
+            _startStopLock    = new object();
+            _waitHandle       = new AutoResetEvent(false);
+            _waitHandle.Set();
+
+            ExceptionLog = new List<Exception>();
         }
 
         public void Send(TS body)
         {
             if (!MessageQueue.Exists(SenderQueueName))
-                throw new Exception("Queue doesn't exist");
+                throw new Exception("Queue doesn't exist: " + SenderQueueName);
 
             Message msg       = new Message() { Body = body };
             MessageQueue msgQ = new MessageQueue(SenderQueueName);
@@ -40,35 +51,41 @@ namespace BIC.Utils.MSMQ
 
         public void StartWatching()
         {
-            if(_tokenSource == null)
+            lock (_startStopLock)
             {
-                _tokenSource         = new CancellationTokenSource();
-                _watchingTask        = Task.Run(() => Watch(), _tokenSource.Token);
+                if (_tokenSource == null)
+                {
+                    _tokenSource = new CancellationTokenSource();
+                    Task.Run(() => Watch(), _tokenSource.Token);
+                }
             }
         }
 
         public void StopWatching()
         {
-            _tokenSource?.Cancel();
-
-            do
+            lock (_startStopLock)
             {
-                Thread.Sleep(50);
+                _tokenSource?.Cancel();
+                _waitHandle?.WaitOne();
             }
-            while (_tokenSource != null);
         }
 
         public void Watch()
         {
             try
             {
+                _waitHandle.Reset();
+
+                if (!MessageQueue.Exists(RecieverQueueName))
+                    throw new Exception("Queue doesn't exist: " + RecieverQueueName);
+
                 MessageQueue msgQ = new MessageQueue(RecieverQueueName);
                 msgQ.Formatter = new XmlMessageFormatter(new Type[] { typeof(TR) });
                 CancellationToken ct = _tokenSource.Token;
 
                 do
                 {
-                    if (msgQ.CanRead)
+                    if (msgQ.CanRead && msgQ.GetAllMessages().Length > 0)
                     {
                         var body = (TR)msgQ.Receive().Body;
                         MessageRecievedEvent?.Invoke(body);
@@ -79,11 +96,11 @@ namespace BIC.Utils.MSMQ
             }
             catch (Exception ex)
             {
-
+                ExceptionLog.Add(ex);
             }
             finally
             {
-                _tokenSource = null; // reset watching
+                _waitHandle.Set();
             }
         }
 

@@ -29,7 +29,6 @@ namespace BIC.Utils.Tests
             using (var sr = new MSMQ.SenderReciever<CommandTest, StatusTest>(".\\Private$\\bic-commands", ".\\Private$\\bic-status"))
             {
                 sr.Send(new StatusTest() { Status = "0" });
-                Thread.Sleep(2000);
             }
 
             // recieve
@@ -50,7 +49,7 @@ namespace BIC.Utils.Tests
             {
                 rs.MessageRecievedEvent += Sr_MessageRecievedEvent;
                 rs.StartWatching();
-                rs.StopWatching();
+                Thread.Sleep(2000);
             }
         }
 
