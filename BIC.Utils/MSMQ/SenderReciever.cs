@@ -14,6 +14,7 @@ namespace BIC.Utils.MSMQ
     {
         public readonly string SenderQueueName;    // TODO: //= ".\\Private$\\bic-commands"; //= ".\\Private$\\bic-status";
         public readonly string RecieverQueueName;
+        public readonly int    ReadMessageWaitMSec = Settings.GetInstance().ReadMessageWaitMSec;
 
 //        private Task                    _watchingTask;
         private CancellationTokenSource _tokenSource;
@@ -90,7 +91,7 @@ namespace BIC.Utils.MSMQ
                         var body = (TR)msgQ.Receive().Body;
                         MessageRecievedEvent?.Invoke(body);
                     }
-                    Thread.Sleep(200); // TODO: in Setup
+                    Thread.Sleep(ReadMessageWaitMSec);
                 }
                 while (!ct.IsCancellationRequested);
             }
