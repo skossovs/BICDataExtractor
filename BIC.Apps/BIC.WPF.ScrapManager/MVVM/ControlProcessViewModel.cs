@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BIC.WPF.ScrapManager.Data;
 
 namespace BIC.WPF.ScrapManager.MVVM
 {
@@ -20,33 +21,34 @@ namespace BIC.WPF.ScrapManager.MVVM
     {
         private DelegateCommand<string> _startCommand;
         private DelegateCommand<string> _stopCommand;
-        private string _processFilePath;
+        private string _processType;
 
         public ControlProcessViewModel()
         {
             _startCommand = new DelegateCommand<string>(
                 (arguments) =>
                 {
-                    GalaSoft.MvvmLight.Messaging.Messenger.Default.Send(new ProcessStartMessage(this.ProcessFilePath, arguments));
+                    var e = (EProcessType)Enum.Parse(typeof(EProcessType), this.ProcessType);
+                    GalaSoft.MvvmLight.Messaging.Messenger.Default.Send(new ProcessStartMessage(arguments, e));
                 });
             _stopCommand = new DelegateCommand<string>(
                 (_) =>
                 {
-                    GalaSoft.MvvmLight.Messaging.Messenger.Default.Send(new ProcessStopMessage(this.ProcessFilePath));
+                    var e = (EProcessType)Enum.Parse(typeof(EProcessType), this.ProcessType);
+                    GalaSoft.MvvmLight.Messaging.Messenger.Default.Send(new ProcessStopMessage(e));
                 });
-
         }
 
-        public string ProcessFilePath
+        public string ProcessType
         {
             get
             {
-                return _processFilePath;
+                return _processType;
             }
             set
             {
-                _processFilePath = value;
-                OnPropertyChanged("ProcessFilePath");
+                _processType = value;
+                OnPropertyChanged("ProcessType");
             }
         }
 

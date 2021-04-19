@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BIC.WPF.ScrapManager.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,10 +9,10 @@ namespace BIC.WPF.ScrapManager.MVVM.Messages
 {
     public class ProcessStopMessage
     {
-        public ProcessStopMessage(string processFilePath)
+        public ProcessStopMessage(EProcessType processType)
         {
-            ProcessFilePath = processFilePath;
+            ProcessType     = processType;
         }
-        public string ProcessFilePath { get; set; }
+        public EProcessType ProcessType { get; set; }
     }
 }

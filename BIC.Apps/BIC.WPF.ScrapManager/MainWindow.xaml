@@ -10,8 +10,8 @@
     <Window.Resources>
         <!-- create 2 instances of View models one for scrapper and one for etl -->
         <!-- TODO: provide proper paths in constructors -->
-        <mvvm:ControlProcessViewModel x:Key="processControlVMScrapper" ProcessFilePath="scrapper"/>
-        <mvvm:ControlProcessViewModel x:Key="processControlVMetl"      ProcessFilePath="etl"/>
+        <mvvm:ControlProcessViewModel x:Key="processControlVMScrapper" ProcessType="Scrapper"/>
+        <mvvm:ControlProcessViewModel x:Key="processControlVMetl"      ProcessType="ETL"/>
 
         <ControlTemplate x:Key="ProcessControlTemplate" TargetType="ContentControl">
             <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center">

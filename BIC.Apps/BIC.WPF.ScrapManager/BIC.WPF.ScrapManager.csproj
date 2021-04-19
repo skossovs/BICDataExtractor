@@ -69,9 +69,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Data\Enums.cs" />
+    <Compile Include="Data\ProcessDetails.cs" />
     <Compile Include="MVVM\ControlProcessViewModel.cs" />
     <Compile Include="MVVM\Messages\ProcessStartMessage.cs" />
     <Compile Include="MVVM\Messages\ProcessStopMessage.cs" />
+    <Compile Include="ServiceLayer\ProcessUtils.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Page Include="MainWindow.xaml">
@@ -118,7 +121,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Converters\" />
-    <Folder Include="Data\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
