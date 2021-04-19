@@ -4,8 +4,22 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BIC.WPF.ScrapManager"
+        xmlns:mvvm="clr-namespace:BIC.WPF.ScrapManager.MVVM"
         mc:Ignorable="d"
         Title="BIC Scrap Manager" Height="1050" Width="1450">
+    <Window.Resources>
+        <!-- create 2 instances of View models one for scrapper and one for etl -->
+        <!-- TODO: provide proper paths in constructors -->
+        <mvvm:ControlProcessViewModel x:Key="processControlVMScrapper" ProcessFilePath="scrapper"/>
+        <mvvm:ControlProcessViewModel x:Key="processControlVMetl"      ProcessFilePath="etl"/>
+
+        <ControlTemplate x:Key="ProcessControlTemplate" TargetType="ContentControl">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center">
+                <Button Width="30" Height="20" Command="{Binding StartCommand}" CommandParameter="X"></Button>
+                <Button Width="30" Height="20" Command="{Binding StopCommand}"></Button>
+            </StackPanel>
+        </ControlTemplate>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
@@ -17,9 +31,21 @@
                     <ColumnDefinition Width="1*"></ColumnDefinition>
                     <ColumnDefinition Width="8*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" DataContext="{StaticResource processControlVMScrapper}">
+                    <ContentControl Template="{StaticResource ProcessControlTemplate}"></ContentControl>
+                </StackPanel>
             </Grid>
         </DockPanel>
         <DockPanel Grid.Row="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="8*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" DataContext="{StaticResource processControlVMetl}">
+                    <ContentControl Template="{StaticResource ProcessControlTemplate}"></ContentControl>
+                </StackPanel>
+            </Grid>
         </DockPanel>
     </Grid>
 </Window>
