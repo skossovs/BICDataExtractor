@@ -7,6 +7,19 @@
         mc:Ignorable="d"
         Title="BIC Scrap Manager" Height="1050" Width="1450">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <DockPanel Grid.Row="0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="8*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+            </Grid>
+        </DockPanel>
+        <DockPanel Grid.Row="1">
+        </DockPanel>
     </Grid>
 </Window>
