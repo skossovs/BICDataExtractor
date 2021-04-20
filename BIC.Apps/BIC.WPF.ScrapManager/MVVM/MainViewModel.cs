@@ -23,6 +23,8 @@ namespace BIC.WPF.ScrapManager.MVVM
     {
         private ProcessDetails _processDetailsScrapper;
         private ProcessDetails _processDetailsEtl;
+
+        private Utils.MSMQ.SenderReciever<StatusMessage, CommandMessage> _mq;
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
@@ -35,21 +37,34 @@ namespace BIC.WPF.ScrapManager.MVVM
             else
             {
                 _processDetailsScrapper = new ProcessDetails()
-                {// TODO:
+                {
                     IsRunning       = false,
-                    ProcessInfo     = new ProcessStartInfo(@"C:\Users\Stan\Documents\GitHub\BICDataExtractor\BIC.Apps\BIC.Apps.MSMQExtractorCommander\bin\Debug\BIC.Apps.MSMQExtractorCommander.exe")
+                    ProcessInfo     = new ProcessStartInfo(Settings.GetInstance().ScrapperFilePath)
                 };
 
                 _processDetailsEtl = new ProcessDetails()
-                { // TODO:
+                {
                     IsRunning       = false,
-                    ProcessInfo     = new ProcessStartInfo(@"C:\Users\Stan\Documents\GitHub\BICDataExtractor\BIC.Apps\BIC.Apps.MSMQEtlProcess\bin\Debug\BIC.Apps.MSMQEtlProcess.exe")
+                    ProcessInfo     = new ProcessStartInfo(Settings.GetInstance().EtlProcessFilePath)
                 };
 
 
                 GalaSoft.MvvmLight.Messaging.Messenger.Default.Register<ProcessStartMessage>(this, ReceiveStartCommand);
                 GalaSoft.MvvmLight.Messaging.Messenger.Default.Register<ProcessStopMessage> (this, ReceiveStopCommand);
+
+                _mq = new Utils.MSMQ.SenderReciever<StatusMessage, CommandMessage>
+                    (Settings.GetInstance().MsmqNameCommands
+                    , Settings.GetInstance().MsmqNameStatus
+                    , Settings.GetInstance().SleepTimeMsmqReadMsec);
+
+                _mq.MessageRecievedEvent += MSMQ_Status_Receive;
+                _mq.StartWatching();
             }
+        }
+
+        private void MSMQ_Status_Receive(StatusMessage body)
+        {
+            // TODO: signal status change to UI elements
         }
 
         private void ReceiveStartCommand(ProcessStartMessage processStartMessage)
@@ -63,7 +78,7 @@ namespace BIC.WPF.ScrapManager.MVVM
 
         private void StopProcess(EProcessType processOption)
         {
-            // TODO: send MSMQ message to stop
+            _mq.Send(new CommandMessage() { ProcessCommand = EProcessCommand.Stop });
         }
         private void StartProcess(EProcessType processOption)
         {
@@ -97,17 +112,22 @@ namespace BIC.WPF.ScrapManager.MVVM
 
         private void ScrapperProcessExited(object sender, System.EventArgs e)
         {
-            //TODO:
+            //TODO: signal to other elements 
             _processDetailsScrapper.IsRunning    = false;
             _processDetailsScrapper.LastExitCode = (ProcessResult)((Process)sender).ExitCode;
         }
 
         private void EtlProcessExited(object sender, System.EventArgs e)
         {
-            //TODO:
+            //TODO: signal to other elements 
             _processDetailsEtl.IsRunning    = false;
             _processDetailsEtl.LastExitCode = (ProcessResult)((Process)sender).ExitCode;
         }
 
+
+        ~MainViewModel()
+        {
+            _mq.Dispose();
+        }
     }
 }

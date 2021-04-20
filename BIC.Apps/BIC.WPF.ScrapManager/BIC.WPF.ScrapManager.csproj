@@ -69,13 +69,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Data\CommandMessage.cs" />
     <Compile Include="Data\Enums.cs" />
     <Compile Include="Data\ProcessDetails.cs" />
+    <Compile Include="Data\StatusMessage.cs" />
     <Compile Include="MVVM\ControlProcessViewModel.cs" />
     <Compile Include="MVVM\Messages\ProcessStartMessage.cs" />
     <Compile Include="MVVM\Messages\ProcessStopMessage.cs" />
     <Compile Include="ServiceLayer\ProcessUtils.cs" />
     <Compile Include="MVVM\MainViewModel.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -127,9 +130,9 @@
       <Project>{5b2c1550-32a6-4fe1-80da-b7f6bce7d366}</Project>
       <Name>BIC.Foundation</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\BIC.Scrappers\BIC.Scrappers.Utils\BIC.Scrappers.Utils.csproj">
-      <Project>{c4cb8249-5756-4b29-9217-12b8aa7bb38f}</Project>
-      <Name>BIC.Scrappers.Utils</Name>
+    <ProjectReference Include="..\..\BIC.Utils\BIC.Utils.csproj">
+      <Project>{1fd4c7b7-7ea9-4f9a-91f6-09ff4aedd208}</Project>
+      <Name>BIC.Utils</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
