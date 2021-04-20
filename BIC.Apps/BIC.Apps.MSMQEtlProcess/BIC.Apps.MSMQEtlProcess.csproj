@@ -48,5 +48,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\BIC.Interfaces\BIC.Foundation.csproj">
+      <Project>{5b2c1550-32a6-4fe1-80da-b7f6bce7d366}</Project>
+      <Name>BIC.Foundation</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

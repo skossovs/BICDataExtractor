@@ -1,10 +1,11 @@
+using BIC.Foundation.Interfaces;
 using BIC.WPF.ScrapManager.Data;
 using BIC.WPF.ScrapManager.MVVM.Messages;
 using GalaSoft.MvvmLight;
 using System;
 using System.Diagnostics;
 
-namespace BIC.WPF.ScrapManager.ViewModel
+namespace BIC.WPF.ScrapManager.MVVM
 {
     /// <summary>
     /// This class contains properties that the main View can data bind to.
@@ -53,14 +54,17 @@ namespace BIC.WPF.ScrapManager.ViewModel
 
         private void ReceiveStartCommand(ProcessStartMessage processStartMessage)
         {
-
+            StartProcess(processStartMessage.ProcessType);
         }
         private void ReceiveStopCommand(ProcessStopMessage processStopMessage)
         {
-
+            StopProcess(processStopMessage.ProcessType);
         }
 
-
+        private void StopProcess(EProcessType processOption)
+        {
+            // TODO: send MSMQ message to stop
+        }
         private void StartProcess(EProcessType processOption)
         {
             ProcessDetails procDetails = null;
@@ -74,6 +78,7 @@ namespace BIC.WPF.ScrapManager.ViewModel
                     break;
             }
 
+            procDetails.ProcessInfo.UseShellExecute = false;
             procDetails.ProcessObject = Process.Start(procDetails.ProcessInfo);
             procDetails.ProcessObject.EnableRaisingEvents = true;
 
@@ -93,13 +98,15 @@ namespace BIC.WPF.ScrapManager.ViewModel
         private void ScrapperProcessExited(object sender, System.EventArgs e)
         {
             //TODO:
-            _processDetailsScrapper.IsRunning = false;
+            _processDetailsScrapper.IsRunning    = false;
+            _processDetailsScrapper.LastExitCode = (ProcessResult)((Process)sender).ExitCode;
         }
 
         private void EtlProcessExited(object sender, System.EventArgs e)
         {
             //TODO:
-            _processDetailsEtl.IsRunning = false;
+            _processDetailsEtl.IsRunning    = false;
+            _processDetailsEtl.LastExitCode = (ProcessResult)((Process)sender).ExitCode;
         }
 
     }

@@ -20,6 +20,9 @@
             </StackPanel>
         </ControlTemplate>
     </Window.Resources>
+    <Window.DataContext>
+        <mvvm:MainViewModel/>
+    </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>

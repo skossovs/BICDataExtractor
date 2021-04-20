@@ -8,8 +8,11 @@ namespace BIC.Apps.MSMQExtractorCommander
 {
     class Program
     {
-        static void Main(string[] args)
+        static int Main(string[] args)
         {
+            System.Threading.Thread.Sleep(10000);
+
+            return (int) BIC.Foundation.Interfaces.ProcessResult.SUCCESS;
         }
     }
 }

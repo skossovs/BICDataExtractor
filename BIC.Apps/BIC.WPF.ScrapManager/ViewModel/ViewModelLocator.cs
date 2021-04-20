@@ -12,6 +12,7 @@
   See http://www.galasoft.ch/mvvm
 */
 
+using BIC.WPF.ScrapManager.MVVM;
 using CommonServiceLocator;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;

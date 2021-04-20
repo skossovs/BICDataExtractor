@@ -59,7 +59,7 @@ namespace BIC.WPF.ScrapManager.MVVM
 
         public DelegateCommand<string> StopCommand
         {
-            get { return _startCommand; }
+            get { return _stopCommand; }
         }
 
         #region INotifyPropertyChanged

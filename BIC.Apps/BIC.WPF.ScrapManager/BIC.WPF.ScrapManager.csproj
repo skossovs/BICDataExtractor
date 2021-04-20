@@ -75,7 +75,7 @@
     <Compile Include="MVVM\Messages\ProcessStartMessage.cs" />
     <Compile Include="MVVM\Messages\ProcessStopMessage.cs" />
     <Compile Include="ServiceLayer\ProcessUtils.cs" />
-    <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="MVVM\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -121,6 +121,16 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Converters\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\BIC.Interfaces\BIC.Foundation.csproj">
+      <Project>{5b2c1550-32a6-4fe1-80da-b7f6bce7d366}</Project>
+      <Name>BIC.Foundation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\BIC.Scrappers\BIC.Scrappers.Utils\BIC.Scrappers.Utils.csproj">
+      <Project>{c4cb8249-5756-4b29-9217-12b8aa7bb38f}</Project>
+      <Name>BIC.Scrappers.Utils</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
