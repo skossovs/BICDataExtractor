@@ -15,8 +15,16 @@
 
         <ControlTemplate x:Key="ProcessControlTemplate" TargetType="ContentControl">
             <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center">
-                <Button Width="30" Height="20" Command="{Binding StartCommand}" CommandParameter="X"></Button>
-                <Button Width="30" Height="20" Command="{Binding StopCommand}"></Button>
+                <Button Width="30" Height="30" Command="{Binding StartCommand}" CommandParameter="X">
+                    <Button.Background>
+                        <ImageBrush ImageSource="Resources/play.png"/>
+                    </Button.Background>
+                </Button>
+                <Button Width="30" Height="30" Command="{Binding StopCommand}">
+                    <Button.Background>
+                        <ImageBrush ImageSource="Resources/stop.png"/>
+                    </Button.Background>
+                </Button>
             </StackPanel>
         </ControlTemplate>
     </Window.Resources>

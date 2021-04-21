@@ -12,7 +12,7 @@ namespace BIC.Utils.MSMQ
         where TR : Signal
         where TS : Signal
     {
-        public readonly string SenderQueueName;    // TODO: //= ".\\Private$\\bic-commands"; //= ".\\Private$\\bic-status";
+        public readonly string SenderQueueName;
         public readonly string RecieverQueueName;
         public readonly int    ReadMessageWaitMSec;
 
