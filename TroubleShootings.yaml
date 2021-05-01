@@ -1,2 +1,4 @@
 1. Too many "chromes" keep hanging in memory: FIXED
    taskkill /F /IM chrome.exe
+2. The following MSMQs must be created:
+  bic-status-etl, bic-status-scrap, bic-commands, bic-status (for testing purposes only)

@@ -8,6 +8,6 @@ namespace BIC.Utils.MSMQ
 {
     public class Signal
     {
-
+        public int ChannelID { get; set; }
     }
 }

@@ -8,32 +8,32 @@ using System.Threading.Tasks;
 
 namespace BIC.Utils.MSMQ
 {
-    public class SenderReciever<TR,TS> : IDisposable
+
+    public class OneToManySenderReceiver<TR, TS> : IDisposable
         where TR : Signal
         where TS : Signal
     {
-        public readonly string SenderQueueName;
-        public readonly string RecieverQueueName;
-        public readonly int    ReadMessageWaitMSec;
+        public readonly string                  ReceiverQueueName;
+        public readonly Dictionary<int, string> SenderQueueNames;
+        public readonly int                     ReadMessageWaitMSec;
 
+        private static EventWaitHandle  _waitHandle;
         private CancellationTokenSource _tokenSource;
         private object                  _startStopLock;
-        static EventWaitHandle          _waitHandle;
 
         public delegate void MessageRecievedHandler(TR body);
-        public event         MessageRecievedHandler MessageRecievedEvent;
-
+        public event MessageRecievedHandler MessageRecievedEvent;
         public List<Exception> ExceptionLog;
 
-        public SenderReciever(string senderQueueName, string receiverQueueName, int readMessageWaitMSec)
+        public OneToManySenderReceiver(int readMessageWaitMSec, Dictionary<int, string> senderQueueNames, string receiverQueueName)
         {
-            RecieverQueueName   = receiverQueueName;
-            SenderQueueName     = senderQueueName;
+            ReceiverQueueName   = receiverQueueName;
+            SenderQueueNames    = senderQueueNames;
             ReadMessageWaitMSec = readMessageWaitMSec;
 
             // Threading
-            _startStopLock    = new object();
-            _waitHandle       = new AutoResetEvent(false);
+            _startStopLock = new object();
+            _waitHandle    = new AutoResetEvent(false);
             _waitHandle.Set();
 
             ExceptionLog = new List<Exception>();
@@ -41,11 +41,13 @@ namespace BIC.Utils.MSMQ
 
         public void Send(TS body)
         {
-            if (!MessageQueue.Exists(SenderQueueName))
-                throw new Exception("Queue doesn't exist: " + SenderQueueName);
+            var senderQueueName = SenderQueueNames[body.ChannelID];
 
-            Message msg       = new Message() { Body = body };
-            MessageQueue msgQ = new MessageQueue(SenderQueueName);
+            if (!MessageQueue.Exists(senderQueueName))
+                throw new Exception("Queue doesn't exist: " + senderQueueName);
+
+            Message msg = new Message() { Body = body };
+            MessageQueue msgQ = new MessageQueue(senderQueueName);
 
             msgQ.Send(msg);
         }
@@ -61,7 +63,6 @@ namespace BIC.Utils.MSMQ
                 }
             }
         }
-
         public void StopWatching()
         {
             lock (_startStopLock)
@@ -77,10 +78,10 @@ namespace BIC.Utils.MSMQ
             {
                 _waitHandle.Reset();
 
-                if (!MessageQueue.Exists(RecieverQueueName))
-                    throw new Exception("Queue doesn't exist: " + RecieverQueueName);
+                if (!MessageQueue.Exists(ReceiverQueueName))
+                    throw new Exception("Queue doesn't exist: " + ReceiverQueueName);
 
-                MessageQueue msgQ = new MessageQueue(RecieverQueueName);
+                MessageQueue msgQ = new MessageQueue(ReceiverQueueName);
                 msgQ.Formatter = new XmlMessageFormatter(new Type[] { typeof(TR) });
                 CancellationToken ct = _tokenSource.Token;
 

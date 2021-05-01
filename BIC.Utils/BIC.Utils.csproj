@@ -71,6 +71,7 @@
     <Compile Include="Logger\SimpleLogger.cs" />
     <Compile Include="Monads\Maybe.cs" />
     <Compile Include="Monads\RefAndStructMaybe.cs" />
+    <Compile Include="MSMQ\OneToManySenderReceiver.cs" />
     <Compile Include="MSMQ\Signal.cs" />
     <Compile Include="MSMQ\SenderReciever.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
