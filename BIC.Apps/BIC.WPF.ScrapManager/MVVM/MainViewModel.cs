@@ -3,6 +3,7 @@ using BIC.WPF.ScrapManager.Data;
 using BIC.WPF.ScrapManager.MVVM.Messages;
 using GalaSoft.MvvmLight;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace BIC.WPF.ScrapManager.MVVM
@@ -24,7 +25,7 @@ namespace BIC.WPF.ScrapManager.MVVM
         private ProcessDetails _processDetailsScrapper;
         private ProcessDetails _processDetailsEtl;
 
-        private Utils.MSMQ.SenderReciever<StatusMessage, CommandMessage> _mq;
+        private Utils.MSMQ.OneToManySenderReceiver<StatusMessage, CommandMessage> _mq;
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
@@ -52,10 +53,16 @@ namespace BIC.WPF.ScrapManager.MVVM
                 GalaSoft.MvvmLight.Messaging.Messenger.Default.Register<ProcessStartMessage>(this, ReceiveStartCommand);
                 GalaSoft.MvvmLight.Messaging.Messenger.Default.Register<ProcessStopMessage> (this, ReceiveStopCommand);
 
-                _mq = new Utils.MSMQ.SenderReciever<StatusMessage, CommandMessage>
-                    (Settings.GetInstance().MsmqNameCommands
-                    , Settings.GetInstance().MsmqNameStatus
-                    , Settings.GetInstance().SleepTimeMsmqReadMsec);
+                var receivers = new Dictionary<int, string>()
+                {
+                    {(int) EProcessType.ETL     , Settings.GetInstance().MsmqNameStatusEtl   },
+                    {(int) EProcessType.Scrapper, Settings.GetInstance().MsmqNameStatusScrap }
+                };
+
+                _mq = new Utils.MSMQ.OneToManySenderReceiver<StatusMessage, CommandMessage>
+                    ( Settings.GetInstance().SleepTimeMsmqReadMsec
+                    , receivers
+                    , Settings.GetInstance().MsmqNameCommands);
 
                 _mq.MessageRecievedEvent += MSMQ_Status_Receive;
                 _mq.StartWatching();
@@ -64,7 +71,8 @@ namespace BIC.WPF.ScrapManager.MVVM
 
         private void MSMQ_Status_Receive(StatusMessage body)
         {
-            // TODO: signal status change to UI elements
+            var processOption = (EProcessType)body.ChannelID;
+            GalaSoft.MvvmLight.Messaging.Messenger.Default.Send(new ProcessStatusMessage(body.ProcessStatus, (EProcessType) body.ChannelID));
         }
 
         private void ReceiveStartCommand(ProcessStartMessage processStartMessage)
@@ -78,7 +86,7 @@ namespace BIC.WPF.ScrapManager.MVVM
 
         private void StopProcess(EProcessType processOption)
         {
-            _mq.Send(new CommandMessage() { ProcessCommand = EProcessCommand.Stop });
+            _mq.Send(new CommandMessage() { ProcessCommand = EProcessCommand.Stop, ChannelID = (int) processOption });
         }
         private void StartProcess(EProcessType processOption)
         {
@@ -112,16 +120,24 @@ namespace BIC.WPF.ScrapManager.MVVM
 
         private void ScrapperProcessExited(object sender, System.EventArgs e)
         {
-            //TODO: signal to other elements 
             _processDetailsScrapper.IsRunning    = false;
             _processDetailsScrapper.LastExitCode = (ProcessResult)((Process)sender).ExitCode;
+
+            if(_processDetailsScrapper.LastExitCode == ProcessResult.FORCIBLY_CLOSED)
+                GalaSoft.MvvmLight.Messaging.Messenger.Default.Send(new ProcessStatusMessage(EProcessStatus.Killed, EProcessType.Scrapper));
+            else
+                GalaSoft.MvvmLight.Messaging.Messenger.Default.Send(new ProcessStatusMessage(EProcessStatus.Finished, EProcessType.Scrapper));
         }
 
         private void EtlProcessExited(object sender, System.EventArgs e)
         {
-            //TODO: signal to other elements 
             _processDetailsEtl.IsRunning    = false;
             _processDetailsEtl.LastExitCode = (ProcessResult)((Process)sender).ExitCode;
+
+            if (_processDetailsScrapper.LastExitCode == ProcessResult.FORCIBLY_CLOSED)
+                GalaSoft.MvvmLight.Messaging.Messenger.Default.Send(new ProcessStatusMessage(EProcessStatus.Killed, EProcessType.ETL));
+            else
+                GalaSoft.MvvmLight.Messaging.Messenger.Default.Send(new ProcessStatusMessage(EProcessStatus.Finished, EProcessType.ETL));
         }
 
 

@@ -11,4 +11,5 @@ namespace BIC.Foundation.Interfaces
 
     public enum EProcessCommand { Stop = 1, Kill = 2 };
     public enum EProcessStatus  { Finished = 0, Running = 1,  Stopped = 2, Killed = 3 };
+    public enum EProcessType    { Scrapper, ETL };
 }

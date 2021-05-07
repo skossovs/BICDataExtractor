@@ -12,7 +12,8 @@ namespace BIC.Apps.MSMQEtlProcess
         private static bool _isInterrupted;
         static int Main(string[] args)
         {
-            using (var mq = new Utils.MSMQ.SenderReciever<CommandMessage, StatusMessage >(".\\Private$\\bic-status", ".\\Private$\\bic-commands", 200))
+            // TODO: Settings
+            using (var mq = new Utils.MSMQ.SenderReciever<CommandMessage, StatusMessage >(".\\Private$\\bic-commands", ".\\Private$\\bic-status-etl", 200))
             {
                 mq.MessageRecievedEvent += ReceiveCommandMessage;
                 mq.StartWatching();
@@ -30,10 +31,22 @@ namespace BIC.Apps.MSMQEtlProcess
                         mq.ExceptionLog.Remove(ex);
                     }
 
+                    mq.Send(new StatusMessage()
+                    {
+                        ChannelID     = (int) Foundation.Interfaces.EProcessType.ETL,
+                        ProcessStatus = Foundation.Interfaces.EProcessStatus.Running
+                    });
+
                     if (_isInterrupted)
                         break;
                 }
+                mq.Send(new StatusMessage()
+                {
+                    ChannelID = (int)Foundation.Interfaces.EProcessType.ETL,
+                    ProcessStatus = Foundation.Interfaces.EProcessStatus.Finished
+                });
             }
+
             return (int)BIC.Foundation.Interfaces.ProcessResult.SUCCESS;
         }
 

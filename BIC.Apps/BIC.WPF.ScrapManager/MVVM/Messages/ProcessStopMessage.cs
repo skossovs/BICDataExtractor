@@ -1,4 +1,5 @@
-﻿using BIC.WPF.ScrapManager.Data;
+﻿using BIC.Foundation.Interfaces;
+using BIC.WPF.ScrapManager.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace BIC.WPF.ScrapManager.Data
 {
-    public enum EProcessType { Scrapper, ETL };
+    // TODO: drop it
 }

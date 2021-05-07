@@ -75,6 +75,7 @@
     <Compile Include="Data\StatusMessage.cs" />
     <Compile Include="MVVM\ControlProcessViewModel.cs" />
     <Compile Include="MVVM\Messages\ProcessStartMessage.cs" />
+    <Compile Include="MVVM\Messages\ProcessStatusMessage.cs" />
     <Compile Include="MVVM\Messages\ProcessStopMessage.cs" />
     <Compile Include="ServiceLayer\ProcessUtils.cs" />
     <Compile Include="MVVM\MainViewModel.cs" />

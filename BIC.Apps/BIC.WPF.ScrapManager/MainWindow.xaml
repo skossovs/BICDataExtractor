@@ -25,6 +25,20 @@
                         <ImageBrush ImageSource="Resources/stop.png"/>
                     </Button.Background>
                 </Button>
+                <Rectangle Width="30" Height="30" Fill="Blue">
+                    <Rectangle.Triggers>
+                        <EventTrigger RoutedEvent="Rectangle.Loaded">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation
+                                      Storyboard.TargetProperty="Opacity"
+                                      From="1.0" To="0.0" Duration="0:0:5" 
+                                      AutoReverse="True" RepeatBehavior="Forever" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Rectangle.Triggers>
+                </Rectangle>
             </StackPanel>
         </ControlTemplate>
     </Window.Resources>

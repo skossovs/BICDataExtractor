@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BIC.WPF.ScrapManager.Data;
+using BIC.Foundation.Interfaces;
 
 namespace BIC.WPF.ScrapManager.MVVM
 {

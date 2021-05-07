@@ -30,7 +30,10 @@ namespace BIC.WPF.ScrapManager
         public string EtlProcessFilePath { get; set; }
 
         [Mandatory]
-        public string MsmqNameStatus { get; set; }
+        public string MsmqNameStatusEtl { get; set; }
+
+        [Mandatory]
+        public string MsmqNameStatusScrap { get; set; }
 
         [Mandatory]
         public string MsmqNameCommands { get; set; }
