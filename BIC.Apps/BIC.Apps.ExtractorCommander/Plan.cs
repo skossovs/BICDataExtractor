@@ -9,11 +9,8 @@ namespace BIC.Scrappers.FinvizScrapper
     // This class is for planning only doesn't do anything, just thoughts in here
     class Plan
     {
-        // 1.     Implement skip ticker option. DONE.
-        // 1.1.   for all scrappers if ticker fails, skip it or try again, or stop the app and create a file where to continue. >>
-        // 1.2.   Create Excel UI that slices and dices report data by Sectors and Industries. Done
-        // 1.2.1. Implement Average Ratios calculatons for Sectors and Industries. Done.
-        // 2.     For Finviz KeyRatio need to Q := Q - 1, data is for previous quarter.Done
+        // 1.     Security Master is broken along with all finviz processes.
+        //          FATATL failure with message: Object reference not set to an instance of an object.
         // 3.     Create WPF UI
         // 3.1.   Command tree, yaml sectors, read the logs from the files. Start-Stop capability. Running indicator. Options to run windowless processes.
         // 4.     Reorganize tests.
