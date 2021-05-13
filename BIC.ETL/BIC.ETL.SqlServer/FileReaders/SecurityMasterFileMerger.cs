@@ -32,42 +32,54 @@ namespace BIC.ETL.SqlServer.FileReaders
             // configure connection string
             var options = builder.UseSqlServer(connectionString).Build();
 
-            // TODO: use LINQ2DB Merge instead
             using (var db = new DataLayer.BICDB(options))
             {
                 // 1. Merge Sector information
-                var existingSectors = db.Sectors.Select(s => s.SectorColumn);
-                var toBeInserted = newData
-                    .GroupBy(o => o.Sector)
-                    .Select(kv => new DataLayer.Sector { SectorColumn = kv.Key })
-                    .Where(s => !existingSectors.Contains(s.SectorColumn));
+                var qNewSectors = (from fvz in newData
+                                   select new DataLayer.Sector() { SectorColumn = fvz.Sector }).Distinct();
 
-                db.Insert(toBeInserted);
+                db.Sectors
+                    .Merge()
+                    .Using(qNewSectors)
+                    .OnTargetKey()
+                    .InsertWhenNotMatched(f => new DataLayer.Sector() { SectorColumn = f.SectorColumn });
 
                 // 2. Merge Industry information
-                var existingIndustries = db.Industries.Select(s => new { s.SectorID, s.IndustryColumn });
-                var qIndustry = from data in newData
-                                join sector in db.Sectors.Select(t => new { t.SectorID, t.SectorColumn }) on data.Sector equals sector.SectorColumn
-                                select new { data.Industry, sector.SectorID };
-                var toBeInsertedIndustries = qIndustry
-                    .GroupBy(x => new { x.SectorID, x.Industry }, (key, group) => new { key.SectorID, key.Industry })
-                    .Select(kv => new DataLayer.Industry { SectorID = kv.SectorID, IndustryColumn = kv.Industry })
-                    .Where(s => !existingIndustries.Contains(new { s.SectorID, s.IndustryColumn }));
+                var qNewIndustries = (from fvz in newData
+                                      join s in db.Sectors.Select(s1 => new { s1.SectorID, s1.SectorColumn }) on fvz.Sector equals s.SectorColumn
+                                      select new DataLayer.Industry() { SectorID = s.SectorID, IndustryColumn = fvz.Industry });
 
-                db.Insert(toBeInsertedIndustries);
+                db.Industries
+                    .Merge()
+                    .Using(qNewIndustries)
+                    .OnTargetKey()
+                    .InsertWhenNotMatched(f => new DataLayer.Industry() { SectorID = f.SectorID, IndustryColumn = f.IndustryColumn });
+
                 // 3. Merge Security information
-                var existingSecurities = db.Securities.Select(s => new { s.SectorID, s.IndustryID, s.Ticker });
-                var qSecurity = from data        in newData
+                var qnewSecurity = from data        in newData
                                 join sector      in db.Sectors.Select   (t => new { t.SectorID, t.SectorColumn })
                                 on   data.Sector equals sector.SectorColumn
                                 join industry    in db.Industries.Select(t1 =>     new { t1.IndustryID, t1.IndustryColumn, t1.SectorID })
                                 on   new { data.Industry, sector.SectorID } equals new { Industry = industry.IndustryColumn, industry.SectorID }
-                                select new { data.Ticker, data.FullName, data.Country, industry.SectorID, industry.IndustryID };
-                var toBeInsertedSecurities = qSecurity
-                    .Select(s => new DataLayer.Security { SectorID = s.SectorID, IndustryID = s.IndustryID, Ticker = s.Ticker, Company = s.FullName, Country = s.Country })
-                    .Where(s1 => !existingSecurities.Contains(new { s1.SectorID, s1.IndustryID, s1.Ticker }));
+                                select new DataLayer.Security() {
+                                    Ticker     = data.Ticker,
+                                    Company    = data.FullName,
+                                    Country    = data.Country,
+                                    SectorID   = industry.SectorID,
+                                    IndustryID = industry.IndustryID };
 
-                db.Insert(toBeInsertedSecurities);
+                db.Securities
+                    .Merge()
+                    .Using(qnewSecurity)
+                    .OnTargetKey()
+                    .InsertWhenNotMatched(s => new DataLayer.Security
+                    {
+                        Ticker     = s.Ticker,
+                        Company    = s.Company,
+                        Country    = s.Country,
+                        SectorID   = s.SectorID,
+                        IndustryID = s.IndustryID
+                    });
             }
         }
 

@@ -11,7 +11,7 @@ GO
 
 CREATE TABLE [dbo].[Sector](
 	[SectorID] [int] IDENTITY(1,1) NOT NULL,
-	[Sector] [nvarchar](200) NULL
+	[Sector] [nvarchar](200) NOT NULL
 ) ON [PRIMARY]
 
 GO
@@ -76,10 +76,10 @@ CREATE TABLE [dbo].[KeyRatio](
 GO
 
 ALTER TABLE dbo.[Industry]
-ADD CONSTRAINT PK_Industry PRIMARY KEY (IndustryID)
+ADD CONSTRAINT PK_Industry PRIMARY KEY (SectorID, Industry)
 
 ALTER TABLE dbo.[Sector]
-ADD CONSTRAINT PK_Sector PRIMARY KEY (SectorID)
+ADD CONSTRAINT PK_Sector PRIMARY KEY (Sector)
 
 ALTER TABLE dbo.[Security]
 ADD CONSTRAINT PK_Security PRIMARY KEY (SecurityID)
