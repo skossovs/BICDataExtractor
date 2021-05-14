@@ -69,6 +69,16 @@ namespace BIC.Scrappers.Utils.TableScrapping
                 T obj = new T();
                 foreach (var m in _propertyMapping)
                 {
+                    Action<string> fCreateErrorMessage = (msg) => 
+                    {
+                        var s = new StringBuilder();
+                        s.Append("Value:" + obj + ";");
+                        s.Append("PropertyName:" + props[m.PropertyIndex].Name + ";");
+                        s.Append("PropertyIndex:" + Convert.ToString(m.PropertyIndex) + ";");
+                        s.Append("ErrorMessage: " + msg);
+                        _logger.Error(s.ToString());
+                    };
+
                     if(m.ColumnIndex == -1)
                     {
                         _logger.Error($"Column index is -1 for the following property : {props[m.PropertyIndex].Name}");
@@ -77,13 +87,13 @@ namespace BIC.Scrappers.Utils.TableScrapping
                     switch(m.PropertyType)
                     {
                         case AllowedTypes.DateType:
-                            props[m.PropertyIndex].SetValue(obj, record[m.ColumnIndex].StringToDate(e => _logger.Error(e.Message), EmptyCharacters));
+                            props[m.PropertyIndex].SetValue(obj, record[m.ColumnIndex].StringToDate(e => fCreateErrorMessage(e.Message), EmptyCharacters));
                             break;
                         case AllowedTypes.DecimalType:
-                            props[m.PropertyIndex].SetValue(obj, record[m.ColumnIndex].AllSpecialsStringToDecimal(e => _logger.Error(e.Message), EmptyCharacters));
+                            props[m.PropertyIndex].SetValue(obj, record[m.ColumnIndex].AllSpecialsStringToDecimal(e => fCreateErrorMessage(e.Message), EmptyCharacters));
                             break;
                         case AllowedTypes.IntType:
-                            props[m.PropertyIndex].SetValue(obj, record[m.ColumnIndex].StringToInt(e => _logger.Error(e.Message), EmptyCharacters));
+                            props[m.PropertyIndex].SetValue(obj, record[m.ColumnIndex].StringToInt(e => fCreateErrorMessage(e.Message), EmptyCharacters));
                             break;
                         case AllowedTypes.StringType:
                             props[m.PropertyIndex].SetValue(obj, record[m.ColumnIndex]);
