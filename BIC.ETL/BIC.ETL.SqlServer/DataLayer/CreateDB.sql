@@ -200,6 +200,26 @@ CREATE TABLE [dbo].[IncomeStatementQuarterly](
 
 GO
 
+CREATE TABLE [dbo].[FxUsdRates](
+	[FxRateId] [int] IDENTITY(1,1) NOT NULL,
+	[Year] [int] NOT NULL,
+	[Quarter] [int] NOT NULL,
+	[Currency] [nvarchar](3) NOT NULL,
+	[Country] [nvarchar](100) NOT NULL,
+	[Rate] [decimal](18, 6) NOT NULL,
+ CONSTRAINT [PK_FxUsdRates] PRIMARY KEY CLUSTERED 
+(
+	[Year] ASC,
+	[Quarter] ASC,
+	[Currency] ASC,
+	[Country] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+
+
 -- * * * * * * * *          R E P O R T S      * * * * * * * *
 -- 1. join tables
 SELECT
@@ -226,6 +246,7 @@ ON          k.SecurityID = s.SecurityID
 GO
 -- 2. Strategy "Value Stocks"
 
+
 ALTER VIEW [dbo].[LevelZeroScreener]
 AS
 SELECT        
@@ -235,28 +256,29 @@ SELECT
 , ids.Industry
 , b.Year
 , b.Quarter
-, (b.totalStockholderEquity - COALESCE (b.goodWill, 0) + COALESCE (b.retainedEarnings, 0)) / k.MarketCap AS Worthiness
-, COALESCE(b.intangibleAssets, b.goodWill) / netTangibleAssets AS intagnibleRatio
-, b.totalStockholderEquity AS Equity
-, b.retainedEarnings
+, fx.Rate * (b.totalStockholderEquity - COALESCE (b.goodWill, 0) + COALESCE (b.retainedEarnings, 0)) / k.MarketCap AS Worthiness
+, COALESCE(b.intangibleAssets, b.goodWill) / NULLIF(netTangibleAssets,0) AS intagnibleRatio
+, fx.Rate * b.totalStockholderEquity AS Equity
+, fx.Rate * b.retainedEarnings AS RetainedEarnings
 , k.MarketCap
-, COALESCE(k.CurrentRatio, totalCurrentAssets/totalCurrentLiabilities) AS CurrentRatio
+, COALESCE(k.CurrentRatio, totalCurrentAssets/NULLIF(totalCurrentLiabilities,0)) AS CurrentRatio
 , k.QuickRatio
 , k.LongTermDebtToEquity
-, b.longTermDebt / (b.[totalAssets] - b.[totalCurrentAssets]) AS DebtToAssets
+, b.longTermDebt / NULLIF((b.[totalAssets] - b.[totalCurrentAssets]),0) AS DebtToAssets
 , k.DebtToEquity
 , k.GrossMargin
 , k.OperationMargin
 , k.ProfitMargin
 , k.Volume
-, ((b.commonStock * 1000)/k.Volume) AS Liquidity
+, ((b.commonStock * 1000)/NULLIF(k.Volume,0)) AS Liquidity
 FROM    dbo.Security AS s INNER JOIN
 		dbo.Sector AS sc ON s.SectorID = sc.SectorID INNER JOIN
 		dbo.Industry AS ids ON s.IndustryID = ids.IndustryID LEFT OUTER JOIN
 		dbo.BalanceSheetQuarterly AS b ON b.SecurityID = s.SecurityID LEFT OUTER JOIN
 		dbo.IncomeStatementQuarterly AS i ON i.SecurityID = s.SecurityID AND i.Year = b.Year AND i.Quarter = b.Quarter LEFT OUTER JOIN
 		dbo.CashFlowQuarterly AS c ON c.SecurityID = s.SecurityID AND c.Year = b.Year AND c.Quarter = b.Quarter LEFT OUTER JOIN
-		dbo.KeyRatio AS k ON k.SecurityID = s.SecurityID AND k.Year = b.Year AND k.Quarter = b.Quarter
+		dbo.KeyRatio AS k ON k.SecurityID = s.SecurityID AND k.Year = b.Year AND k.Quarter = b.Quarter LEFT OUTER JOIN
+		dbo.FxUsdRates fx ON fx.Country = s.Country AND fx.[Year] = b.Year AND fx.Quarter = b.Quarter
 
 GO
 
