@@ -43,6 +43,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Reports", "Reports", "{F060
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BIC.Apps.EtlProcess", "BIC.Apps\BIC.Apps.EtlProcess\BIC.Apps.EtlProcess.csproj", "{574373DE-C3AE-4DA9-AEFE-F17834DEC743}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BIC.MoneyConverterScrapper", "BIC.Scrappers\BIC.MoneyConverterScrapper\BIC.MoneyConverterScrapper.csproj", "{FEDB40F8-130C-4D66-92AA-33053AB023BE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -93,6 +95,10 @@ Global
 		{574373DE-C3AE-4DA9-AEFE-F17834DEC743}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{574373DE-C3AE-4DA9-AEFE-F17834DEC743}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{574373DE-C3AE-4DA9-AEFE-F17834DEC743}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FEDB40F8-130C-4D66-92AA-33053AB023BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEDB40F8-130C-4D66-92AA-33053AB023BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEDB40F8-130C-4D66-92AA-33053AB023BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEDB40F8-130C-4D66-92AA-33053AB023BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -109,5 +115,6 @@ Global
 		{56109268-3256-49DE-8269-7B6D526C366B} = {18792F9E-3FDC-44B2-B39D-3708822A924D}
 		{F06070E6-F457-4D65-92B1-10D46F5068D6} = {99B1A906-C228-4DB2-A339-F810594926E6}
 		{574373DE-C3AE-4DA9-AEFE-F17834DEC743} = {99B1A906-C228-4DB2-A339-F810594926E6}
+		{FEDB40F8-130C-4D66-92AA-33053AB023BE} = {18792F9E-3FDC-44B2-B39D-3708822A924D}
 	EndGlobalSection
 EndGlobal
