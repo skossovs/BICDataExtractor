@@ -9,11 +9,9 @@ namespace BIC.Scrappers.FinvizScrapper
     // This class is for planning only doesn't do anything, just thoughts in here
     class Plan
     {
-        // 1.     Implement Forex Ratios scrap. >>
-        // 1.1.   Include fx number recalculation in the report.
-        // 1.2.   Implement automatic feed itself.
-        // 2.     Security Master is broken along with all finviz processes. Done
-        //          FATATL failure with message: Object reference not set to an instance of an object.
+        // 1.     Implement Forex Ratios scrap. DONE
+        // 1.1.   Include fx number recalculation in the report. DONE
+        // 1.2.   Implement automatic feed itself. DONE
         // 3.     Create WPF UI
         // 3.1.   Command tree, yaml sectors, read the logs from the files. Start-Stop capability. Running indicator. Options to run windowless processes.
         // 4.     Reorganize tests.
