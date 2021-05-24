@@ -25,6 +25,7 @@ namespace BIC.Apps.ExtractorCommander
                 //  -rs finviz -etl finance -sec healthcare                   -- download one sector
                 //  -rs yahoo  -etl finance -sec healthcare                   -- download one sector
                 //  -rs yahoo  -etl finance -sec "Consumer Defensive" -at DL    -- download one sector
+                //  -rs fx
                 #endregion
 
                 #region Option description
@@ -83,6 +84,10 @@ namespace BIC.Apps.ExtractorCommander
                                         throw new Exception("Neither -all nor sector specified command (-sec) was entered");
                                 }
                             }
+                        }
+                        else if (resource == Commands.Constants.FxResource)
+                        {
+                            Commands.FxRates.Scrap();
                         }
                     }
                     else

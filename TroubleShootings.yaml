@@ -1,4 +1,14 @@
 1. Too many "chromes" keep hanging in memory: FIXED
    taskkill /F /IM chrome.exe
+2. Chrome periodic hidden updates breaks scrapping with following:
+  - FATATL failure with message:
+    - session not created:
+      This version of ChromeDriver only supports Chrome version 88 Current browser version is 90.0.4430.93 with binary path C:\Program Files (x86)\Google\Chrome\Application\chrome.exe (SessionNotCreated)
+Solution:
+  - go to chrome driver site: https://sites.google.com/chromium.org/driver/
+  - download latest chrome Driver
+  - replace chromedriver.zip in BIC.ScrapperTests and in BIC.Apps.ExtractorCommander project
+  - make sure chromedriver.exe is not hanging in task process otherwise it will be locked by windows file system, check Date Modified in Debug folder.
+   taskkill /F /IM chrome.exe
 2. The following MSMQs must be created:
   bic-status-etl, bic-status-scrap, bic-commands, bic-status (for testing purposes only)
