@@ -147,6 +147,19 @@ namespace BIC.ETL.SqlServer
                                 throw new Exception("Unsupported class: " + ft.ClassName);
                         }
                         break;
+                    case Foundation.Interfaces.DataSources.MoneyConverter:
+                        switch (ft.ClassName)
+                        {
+                            case "FxUsdData":
+                                var fx = new FileReaders.MoneyConverterFxMerger(ft.FilePath);
+                                var fxObjects = fx.Read();
+                                fx.Merge(fxObjects);
+                                break;
+                            default:
+                                throw new Exception("Unsupported class: " + ft.ClassName);
+
+                        }
+                        break;
                 }
             }
             catch (Exception ex)

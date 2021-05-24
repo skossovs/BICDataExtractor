@@ -25,6 +25,7 @@ namespace BIC.ETL.SqlServer.DataLayer
     {
         public ITable<BalanceSheetQuarterly> BalanceSheetQuarterlies { get { return this.GetTable<BalanceSheetQuarterly>(); } }
         public ITable<CashFlowQuarterly> CashFlowQuarterlies { get { return this.GetTable<CashFlowQuarterly>(); } }
+        public ITable<FxUsdRate> FxUsdRates { get { return this.GetTable<FxUsdRate>(); } }
         public ITable<IncomeStatementQuarterly> IncomeStatementQuarterlies { get { return this.GetTable<IncomeStatementQuarterly>(); } }
         public ITable<Industry> Industries { get { return this.GetTable<Industry>(); } }
         public ITable<KeyRatio> KeyRatios { get { return this.GetTable<KeyRatio>(); } }
@@ -119,6 +120,17 @@ namespace BIC.ETL.SqlServer.DataLayer
         [Column("capitalExpenditures"), Nullable] public decimal? CapitalExpenditures { get; set; } // numeric(38, 0)
     }
 
+    [Table(Schema = "dbo", Name = "FxUsdRates")]
+    public partial class FxUsdRate
+    {
+        [Identity] public int FxRateId { get; set; } // int
+        [PrimaryKey(1), NotNull] public int Year { get; set; } // int
+        [PrimaryKey(2), NotNull] public int Quarter { get; set; } // int
+        [PrimaryKey(3), NotNull] public string Currency { get; set; } // nvarchar(3)
+        [PrimaryKey(4), NotNull] public string Country { get; set; } // nvarchar(100)
+        [Column, NotNull] public decimal Rate { get; set; } // decimal(18, 6)
+    }
+
     [Table(Schema = "dbo", Name = "IncomeStatementQuarterly")]
     public partial class IncomeStatementQuarterly
     {
@@ -187,14 +199,15 @@ namespace BIC.ETL.SqlServer.DataLayer
     {
         [Column(), NotNull] public int SecurityID { get; set; } // int
         [Column(), NotNull] public string Ticker { get; set; } // nvarchar(6)
-        [Column(), Nullable] public string Sector { get; set; } // nvarchar(200)
+        [Column(), NotNull] public string Sector { get; set; } // nvarchar(200)
         [Column(), NotNull] public string Industry { get; set; } // nvarchar(200)
+        [Column(), Nullable] public string Currency { get; set; } // nvarchar(3)
         [Column(), Nullable] public int? Year { get; set; } // int
         [Column(), Nullable] public int? Quarter { get; set; } // int
         [Column(), Nullable] public decimal? Worthiness { get; set; } // numeric(38, 6)
         [Column("intagnibleRatio"), Nullable] public decimal? IntagnibleRatio { get; set; } // decimal(38, 6)
-        [Column(), Nullable] public decimal? Equity { get; set; } // decimal(38, 0)
-        [Column("retainedEarnings"), Nullable] public decimal? RetainedEarnings { get; set; } // decimal(38, 0)
+        [Column(), Nullable] public decimal? Equity { get; set; } // decimal(38, 6)
+        [Column(), Nullable] public decimal? RetainedEarnings { get; set; } // decimal(38, 6)
         [Column(), Nullable] public decimal? MarketCap { get; set; } // numeric(38, 6)
         [Column(), Nullable] public decimal? CurrentRatio { get; set; } // numeric(38, 6)
         [Column(), Nullable] public decimal? QuickRatio { get; set; } // numeric(18, 6)
@@ -250,6 +263,15 @@ namespace BIC.ETL.SqlServer.DataLayer
                 t.SecurityID == SecurityID &&
                 t.Year == Year &&
                 t.Quarter == Quarter);
+        }
+
+        public static FxUsdRate Find(this ITable<FxUsdRate> table, int Year, int Quarter, string Currency, string Country)
+        {
+            return table.FirstOrDefault(t =>
+                t.Year == Year &&
+                t.Quarter == Quarter &&
+                t.Currency == Currency &&
+                t.Country == Country);
         }
 
         public static IncomeStatementQuarterly Find(this ITable<IncomeStatementQuarterly> table, int SecurityID, int Year, int Quarter)
