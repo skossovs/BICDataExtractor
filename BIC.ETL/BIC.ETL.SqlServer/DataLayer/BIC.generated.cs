@@ -25,6 +25,7 @@ namespace BIC.ETL.SqlServer.DataLayer
     {
         public ITable<BalanceSheetQuarterly> BalanceSheetQuarterlies { get { return this.GetTable<BalanceSheetQuarterly>(); } }
         public ITable<CashFlowQuarterly> CashFlowQuarterlies { get { return this.GetTable<CashFlowQuarterly>(); } }
+        public ITable<CurrencyCountryMap> CurrencyCountryMaps { get { return this.GetTable<CurrencyCountryMap>(); } }
         public ITable<FxUsdRate> FxUsdRates { get { return this.GetTable<FxUsdRate>(); } }
         public ITable<IncomeStatementQuarterly> IncomeStatementQuarterlies { get { return this.GetTable<IncomeStatementQuarterly>(); } }
         public ITable<Industry> Industries { get { return this.GetTable<Industry>(); } }
@@ -118,6 +119,13 @@ namespace BIC.ETL.SqlServer.DataLayer
         [Column("totalCashFromFinancingActivities"), Nullable] public decimal? TotalCashFromFinancingActivities { get; set; } // numeric(38, 0)
         [Column("totalCashFromOperatingActivities"), Nullable] public decimal? TotalCashFromOperatingActivities { get; set; } // numeric(38, 0)
         [Column("capitalExpenditures"), Nullable] public decimal? CapitalExpenditures { get; set; } // numeric(38, 0)
+    }
+
+    [Table(Schema = "dbo", Name = "CurrencyCountryMap")]
+    public partial class CurrencyCountryMap
+    {
+        [PrimaryKey(1), NotNull] public string Currency { get; set; } // nvarchar(5)
+        [PrimaryKey(2), NotNull] public string Country { get; set; } // nvarchar(100)
     }
 
     [Table(Schema = "dbo", Name = "FxUsdRates")]
@@ -263,6 +271,13 @@ namespace BIC.ETL.SqlServer.DataLayer
                 t.SecurityID == SecurityID &&
                 t.Year == Year &&
                 t.Quarter == Quarter);
+        }
+
+        public static CurrencyCountryMap Find(this ITable<CurrencyCountryMap> table, string Currency, string Country)
+        {
+            return table.FirstOrDefault(t =>
+                t.Currency == Currency &&
+                t.Country == Country);
         }
 
         public static FxUsdRate Find(this ITable<FxUsdRate> table, int Year, int Quarter, string Currency, string Country)

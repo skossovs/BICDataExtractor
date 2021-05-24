@@ -40,9 +40,17 @@ namespace BIC.ETL.SqlServer
             var lstFiles = new List<FileType>();
             foreach(var f in System.IO.Directory.EnumerateFiles(path).Where(j => j.EndsWith("json")))
             {
-                // 1. Recognize the file
-                var fileType = Recognize(f);
-                lstFiles.Add(fileType);
+                try
+                {
+                    // Recognize the file
+                    var fileType = Recognize(f);
+                    lstFiles.Add(fileType);
+                }
+                catch(Exception ex)
+                {
+                    _logger.ReportException(ex);
+                    continue; // just go to the next file
+                }
             }
 
             ct.ThrowIfCancellationRequested();
@@ -85,6 +93,9 @@ namespace BIC.ETL.SqlServer
                         break;
                     case "YahooScrapper":
                         result = Foundation.Interfaces.DataSources.Yahoo;
+                        break;
+                    case "MoneyConverterScrapper":
+                        result = Foundation.Interfaces.DataSources.MoneyConverter;
                         break;
                     default:
                         throw new Exception("Unsupported file type: " + s);
