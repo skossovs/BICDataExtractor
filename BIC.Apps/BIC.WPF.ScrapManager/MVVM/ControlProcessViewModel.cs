@@ -22,7 +22,8 @@ namespace BIC.WPF.ScrapManager.MVVM
     {
         private DelegateCommand<string> _startCommand;
         private DelegateCommand<string> _stopCommand;
-        private string _processType;
+        private string         _processType;
+        private EProcessStatus _status;
 
         public ControlProcessViewModel()
         {
@@ -38,6 +39,13 @@ namespace BIC.WPF.ScrapManager.MVVM
                     var e = (EProcessType)Enum.Parse(typeof(EProcessType), this.ProcessType);
                     GalaSoft.MvvmLight.Messaging.Messenger.Default.Send(new ProcessStopMessage(e));
                 });
+
+            GalaSoft.MvvmLight.Messaging.Messenger.Default.Register<ProcessStatusMessage>(this, ReceiveStatus);
+        }
+
+        private void ReceiveStatus(ProcessStatusMessage s)
+        {
+            Status = s.ProcessStatus;
         }
 
         public string ProcessType
@@ -61,6 +69,19 @@ namespace BIC.WPF.ScrapManager.MVVM
         public DelegateCommand<string> StopCommand
         {
             get { return _stopCommand; }
+        }
+
+        public EProcessStatus Status
+        {
+            get
+            {
+                return _status;
+            }
+            set
+            {
+                _status = value;
+                OnPropertyChanged("Status");
+            }
         }
 
         #region INotifyPropertyChanged

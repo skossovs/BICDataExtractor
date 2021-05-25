@@ -69,6 +69,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\StatusConverter.cs" />
     <Compile Include="Data\CommandMessage.cs" />
     <Compile Include="Data\Enums.cs" />
     <Compile Include="Data\ProcessDetails.cs" />
@@ -123,9 +124,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Converters\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\..\BIC.Interfaces\BIC.Foundation.csproj">
       <Project>{5b2c1550-32a6-4fe1-80da-b7f6bce7d366}</Project>

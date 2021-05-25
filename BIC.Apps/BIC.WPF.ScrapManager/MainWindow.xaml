@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BIC.WPF.ScrapManager"
+        xmlns:conv="clr-namespace:BIC.WPF.ScrapManager.Converters"
         xmlns:mvvm="clr-namespace:BIC.WPF.ScrapManager.MVVM"
         mc:Ignorable="d"
         Title="BIC Scrap Manager" Height="1050" Width="1450">
@@ -12,6 +13,7 @@
         <!-- TODO: provide proper paths in constructors -->
         <mvvm:ControlProcessViewModel x:Key="processControlVMScrapper" ProcessType="Scrapper"/>
         <mvvm:ControlProcessViewModel x:Key="processControlVMetl"      ProcessType="ETL"/>
+        <conv:StatusConverter         x:Key="ProcessorStatusToString"></conv:StatusConverter>
 
         <ControlTemplate x:Key="ProcessControlTemplate" TargetType="ContentControl">
             <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center">
@@ -25,19 +27,43 @@
                         <ImageBrush ImageSource="Resources/stop.png"/>
                     </Button.Background>
                 </Button>
-                <Rectangle Width="30" Height="30" Fill="Blue">
-                    <Rectangle.Triggers>
+                <Rectangle Width="30" Height="30">
+                    
+                        <!--
                         <EventTrigger RoutedEvent="Rectangle.Loaded">
                             <BeginStoryboard>
                                 <Storyboard>
                                     <DoubleAnimation
                                       Storyboard.TargetProperty="Opacity"
-                                      From="1.0" To="0.0" Duration="0:0:5" 
+                                      From="1.0" To="0.0" Duration="0:0:5"
                                       AutoReverse="True" RepeatBehavior="Forever" />
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
-                    </Rectangle.Triggers>
+
+                        -->
+                        <Rectangle.Style>
+                            <Style TargetType="{x:Type Rectangle}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Path=Status, Converter={StaticResource ProcessorStatusToString}}"
+                                         Value="Killed">
+                                        <Setter Property="Fill" Value="Red"></Setter>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Path=Status, Converter={StaticResource ProcessorStatusToString}}"
+                                             Value="Finished">
+                                        <Setter Property="Fill" Value="Green"></Setter>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Path=Status, Converter={StaticResource ProcessorStatusToString}}"
+                                             Value="Running">
+                                        <Setter Property="Fill" Value="Yellow"></Setter>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Path=Status, Converter={StaticResource ProcessorStatusToString}}"
+                                             Value="Stopped">
+                                        <Setter Property="Fill" Value="Gray"></Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Rectangle.Style>
                 </Rectangle>
             </StackPanel>
         </ControlTemplate>
