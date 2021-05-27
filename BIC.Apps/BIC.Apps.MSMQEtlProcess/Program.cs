@@ -43,7 +43,7 @@ namespace BIC.Apps.MSMQEtlProcess
                 mq.Send(new StatusMessage()
                 {
                     ChannelID = (int)Foundation.Interfaces.EProcessType.ETL,
-                    ProcessStatus = Foundation.Interfaces.EProcessStatus.Finished
+                    ProcessStatus = _isInterrupted ? Foundation.Interfaces.EProcessStatus.Stopped : Foundation.Interfaces.EProcessStatus.Finished
                 });
             }
 

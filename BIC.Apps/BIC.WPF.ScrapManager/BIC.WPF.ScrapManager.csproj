@@ -70,10 +70,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\StatusConverter.cs" />
-    <Compile Include="Data\CommandMessage.cs" />
+    <Compile Include="MVVM\Messages\CommandMessage.cs" />
     <Compile Include="Data\Enums.cs" />
     <Compile Include="Data\ProcessDetails.cs" />
     <Compile Include="Data\StatusMessage.cs" />
+    <Compile Include="MVVM\CommandTreeViewModel.cs" />
     <Compile Include="MVVM\ControlProcessViewModel.cs" />
     <Compile Include="MVVM\Messages\ProcessStartMessage.cs" />
     <Compile Include="MVVM\Messages\ProcessStatusMessage.cs" />

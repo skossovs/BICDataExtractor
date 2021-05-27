@@ -45,7 +45,8 @@ namespace BIC.WPF.ScrapManager.MVVM
 
         private void ReceiveStatus(ProcessStatusMessage s)
         {
-            Status = s.ProcessStatus;
+            if(s.ProcessType == (EProcessType)Enum.Parse(typeof(EProcessType), _processType))
+                Status = s.ProcessStatus;
         }
 
         public string ProcessType

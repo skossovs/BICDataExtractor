@@ -11,7 +11,7 @@ namespace BIC.WPF.ScrapManager.Common
     {
         public int Key { get; set; }
         public TreeNodeType Type { get; set; }
-        public Dictionary<string, string> Properties { get; set; }
+        public string Value { get; set; }
 
     }
 }

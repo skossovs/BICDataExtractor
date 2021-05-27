@@ -84,6 +84,7 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0" DataContext="{StaticResource processControlVMScrapper}">
                     <ContentControl Template="{StaticResource ProcessControlTemplate}"></ContentControl>
+                    <TreeView></TreeView>
                 </StackPanel>
             </Grid>
         </DockPanel>

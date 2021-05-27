@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BIC.WPF.ScrapManager.Data
+namespace BIC.WPF.ScrapManager.MVVM.Messages
 {
     public class CommandMessage : Signal, ICommandMessage
     {
