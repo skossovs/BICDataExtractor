@@ -69,16 +69,24 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Common\ApplicationCommands.cs" />
     <Compile Include="Converters\StatusConverter.cs" />
+    <Compile Include="Data\CommandCache.cs" />
+    <Compile Include="Data\TreeNode.cs" />
+    <Compile Include="Data\TreeStructure.cs" />
+    <Compile Include="MVVM\Behaviors\BindableSelectedItemBehavior.cs" />
+    <Compile Include="MVVM\Messages\CommandCacheFileMessage.cs" />
     <Compile Include="MVVM\Messages\CommandMessage.cs" />
     <Compile Include="Data\Enums.cs" />
     <Compile Include="Data\ProcessDetails.cs" />
-    <Compile Include="Data\StatusMessage.cs" />
+    <Compile Include="MVVM\Messages\StatusMessage.cs" />
     <Compile Include="MVVM\CommandTreeViewModel.cs" />
     <Compile Include="MVVM\ControlProcessViewModel.cs" />
     <Compile Include="MVVM\Messages\ProcessStartMessage.cs" />
     <Compile Include="MVVM\Messages\ProcessStatusMessage.cs" />
     <Compile Include="MVVM\Messages\ProcessStopMessage.cs" />
+    <Compile Include="MVVM\Messages\TreeViewPopulatedMessage.cs" />
+    <Compile Include="MVVM\Messages\TreeViewSelectionMessage.cs" />
     <Compile Include="ServiceLayer\ProcessUtils.cs" />
     <Compile Include="MVVM\MainViewModel.cs" />
     <Compile Include="Settings.cs" />
@@ -92,7 +100,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Common\DelegateCommand.cs" />
-    <Compile Include="Common\TreeNode.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

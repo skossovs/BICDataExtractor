@@ -1,4 +1,7 @@
-﻿using System;
+﻿using BIC.WPF.ScrapManager.Common;
+using BIC.WPF.ScrapManager.Data;
+using BIC.WPF.ScrapManager.MVVM.Messages;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -17,6 +20,45 @@ namespace BIC.WPF.ScrapManager.MVVM
         }
         #endregion
 
+        private CommandCache _content;
+        private List<Group>  _treeViewContentRepresentation;
 
+
+        public CommandTreeViewModel()
+        {
+            GalaSoft.MvvmLight.Messaging.Messenger.Default.Register<CommandCacheFileMessage>(this, ReceiveFileCommand);
+        }
+
+        private void ReceiveFileCommand(CommandCacheFileMessage commandCacheFileMessage)
+        {
+            switch (commandCacheFileMessage.Command)
+            {
+                case "OPEN":
+                    _content = (CommandCache)ApplicationCommands.ReadYamlObject(commandCacheFileMessage.Path, typeof(CommandCache));
+                    if (_content != null)
+                        TreeData = ConvertFromCommandCacheToGroups();
+                    break;
+                default:
+                    throw new Exception($"Unknnown File command {commandCacheFileMessage.Command}");
+            }
+        }
+
+        public List<Group> ConvertFromCommandCacheToGroups()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Group> TreeData
+        {
+            get
+            {
+                return _treeViewContentRepresentation;
+            }
+            set
+            {
+                _treeViewContentRepresentation = value;
+                OnPropertyChanged("TreeData");
+            }
+        }
     }
 }

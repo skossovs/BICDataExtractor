@@ -6,5 +6,10 @@ using System.Threading.Tasks;
 
 namespace BIC.WPF.ScrapManager.Data
 {
-    public enum TreeNodeType { Invalid = -1, Root = 0, Command = 1, Parameter = 2 };
+    /// <summary>
+    /// in-Memory Command representation
+    /// </summary>
+    class CommandCache
+    {
+    }
 }

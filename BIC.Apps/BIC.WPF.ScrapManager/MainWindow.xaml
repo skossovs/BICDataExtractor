@@ -13,6 +13,7 @@
         <!-- TODO: provide proper paths in constructors -->
         <mvvm:ControlProcessViewModel x:Key="processControlVMScrapper" ProcessType="Scrapper"/>
         <mvvm:ControlProcessViewModel x:Key="processControlVMetl"      ProcessType="ETL"/>
+        <mvvm:CommandTreeViewModel    x:Key="commandTreeViewModel"></mvvm:CommandTreeViewModel>
         <conv:StatusConverter         x:Key="ProcessorStatusToString"></conv:StatusConverter>
 
         <ControlTemplate x:Key="ProcessControlTemplate" TargetType="ContentControl">
@@ -84,7 +85,9 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0" DataContext="{StaticResource processControlVMScrapper}">
                     <ContentControl Template="{StaticResource ProcessControlTemplate}"></ContentControl>
-                    <TreeView></TreeView>
+                    <TreeView Name ="tvCommands"  DataContext="{Binding Source={StaticResource commandTreeViewModel}}"
+                                                  ItemsSource="{Binding TreeData}">
+                    </TreeView>
                 </StackPanel>
             </Grid>
         </DockPanel>
