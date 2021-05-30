@@ -72,6 +72,8 @@
     <Compile Include="Common\ApplicationCommands.cs" />
     <Compile Include="Converters\StatusConverter.cs" />
     <Compile Include="Data\CommandCache.cs" />
+    <Compile Include="Data\CommandExe.cs" />
+    <Compile Include="Data\CommandParameter.cs" />
     <Compile Include="Data\TreeNode.cs" />
     <Compile Include="Data\TreeStructure.cs" />
     <Compile Include="MVVM\Behaviors\BindableSelectedItemBehavior.cs" />
@@ -89,6 +91,7 @@
     <Compile Include="MVVM\Messages\TreeViewSelectionMessage.cs" />
     <Compile Include="ServiceLayer\ProcessUtils.cs" />
     <Compile Include="MVVM\MainViewModel.cs" />
+    <Compile Include="ServiceLayer\Utils.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Page Include="MainWindow.xaml">
@@ -123,6 +126,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Content Include="CommandFile.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

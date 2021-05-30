@@ -9,7 +9,12 @@ namespace BIC.WPF.ScrapManager.Data
     /// <summary>
     /// in-Memory Command representation
     /// </summary>
-    class CommandCache
+    public class CommandCache
     {
+        public CommandCache()
+        {
+            CommandLines = new List<CommandExe>();
+        }
+        public List<CommandExe> CommandLines;
     }
 }

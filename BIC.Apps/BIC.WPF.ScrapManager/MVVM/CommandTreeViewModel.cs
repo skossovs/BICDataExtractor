@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace BIC.WPF.ScrapManager.MVVM
 {
@@ -27,20 +28,44 @@ namespace BIC.WPF.ScrapManager.MVVM
         public CommandTreeViewModel()
         {
             GalaSoft.MvvmLight.Messaging.Messenger.Default.Register<CommandCacheFileMessage>(this, ReceiveFileCommand);
+            // TODO: Temporary send reload message to itself
+            SendLoadFileMessage();
+        }
+
+        // TODO: drop it
+        private void SendLoadFileMessage()
+        {
+            var m = new CommandCacheFileMessage("OPEN", "CommandFile.yaml");
+            GalaSoft.MvvmLight.Messaging.Messenger.Default.Send(m);
         }
 
         private void ReceiveFileCommand(CommandCacheFileMessage commandCacheFileMessage)
         {
-            switch (commandCacheFileMessage.Command)
+            try
             {
-                case "OPEN":
-                    _content = (CommandCache)ApplicationCommands.ReadYamlObject(commandCacheFileMessage.Path, typeof(CommandCache));
-                    if (_content != null)
-                        TreeData = ConvertFromCommandCacheToGroups();
-                    break;
-                default:
-                    throw new Exception($"Unknnown File command {commandCacheFileMessage.Command}");
+                switch (commandCacheFileMessage.Command)
+                {
+                    case "OPEN":
+                        _content = (CommandCache)ApplicationCommands.ReadYamlObject(commandCacheFileMessage.Path, typeof(CommandCache));
+                        if (_content != null)
+                            TreeData = ConvertFromCommandCacheToGroups();
+                        break;
+                    default:
+                        throw new Exception($"Unknnown File command {commandCacheFileMessage.Command}");
+                }
             }
+            catch(Exception ex)
+            {
+                MessageBox.Show("A handled exception just occurred: " + ex.Message
+                    , "Failed To Process File Command"
+                    , MessageBoxButton.OK
+                    , MessageBoxImage.Warning);
+            }
+        }
+
+        private void ReloadCommandFile()
+        {
+
         }
 
         public List<Group> ConvertFromCommandCacheToGroups()

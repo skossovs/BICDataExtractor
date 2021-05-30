@@ -1,5 +1,8 @@
-﻿using System;
+﻿using BIC.WPF.ScrapManager.Data;
+using BIC.WPF.ScrapManager.ServiceLayer;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +18,15 @@ namespace BIC.WPF.ScrapManager.Common
 
         public static Object ReadYamlObject(string fullPath, Type t)
         {
-            throw new NotImplementedException();
+            CommandCache objectFromYaml = new CommandCache();
+            objectFromYaml.ReadCommandYaml("CommandFile.yaml");
+            //using (StreamReader rd = new StreamReader("CommandFile.yaml"))
+            //{
+
+            //    objectFromYaml = Utils.YamlOperations<CommandCache>.ReadObjectFromStream(rd);
+            //}
+
+            return objectFromYaml;
         }
 
         // TODO: Drop it

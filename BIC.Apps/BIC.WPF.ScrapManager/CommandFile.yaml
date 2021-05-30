@@ -1,0 +1,26 @@
+﻿BIC.Apps.ExtractorCommander.exe:
+  - "-rs finviz":
+    - "-etl secmaster"
+    - "-etl finance":
+      - "-sec basicmaterials"
+      - "-sec energy"
+      - "-sec industrials"
+      - "-sec communicationservices"
+      - "-sec consumercyclical"
+      - "-sec consumerdefensive"
+      - "-sec financial"
+      - "-sec healthcare"
+      - "-sec realestate"
+      - "-sec technology"
+  - "-rs yahoo":
+    - "-etl finance":
+      - "-sec \"Basic Materials\""
+      - "-sec energy"
+      - "-sec industrials"
+      - "-sec \"Communication Services\""
+      - "-sec \"Consumer Cyclical\""
+      - "-sec \"Consumer Defensive\""
+      - "-sec financial"
+      - "-sec healthcare"
+      - "-sec realestate"
+      - "-sec technology"
