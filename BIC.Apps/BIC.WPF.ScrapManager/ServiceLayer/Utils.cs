@@ -16,7 +16,8 @@ namespace BIC.WPF.ScrapManager.ServiceLayer
 
             string     currentCommandLine;
             CommandExe currentCommand = null;
-            for (int i = 0; i < lines.Count(); i++)
+            int i = 0;
+            while(i < lines.Count())
             {
                 var depth = GetDepth(lines[i]);
                 if (depth == 0) // first line must be command anyway
@@ -29,33 +30,36 @@ namespace BIC.WPF.ScrapManager.ServiceLayer
                 {
                     currentCommand.CommandParameters = ReadParameters(lines, ref i, depth);
                 }
+
+                i++;
             }
         }
 
         private static List<CommandParameter> ReadParameters(string[] lines, ref int currentI, int currentDepth)
         {
             List<CommandParameter> newCommandParameters = new List<CommandParameter>();
-
-            for (int i = currentI; i < lines.Count(); i++)
+            CommandParameter       currentParameter = null;
+            int i = currentI;
+            while (i < lines.Count())
             {
                 var depth = GetDepth(lines[i]);
                 if (depth == currentDepth)
                 {
-                    var p = new CommandParameter() { ParameterLine = lines[i] };
-                    currentI = i;
-                    newCommandParameters.Add(p);
+                    currentParameter = new CommandParameter() { ParameterLine = lines[i] };
+                    newCommandParameters.Add(currentParameter);
                 }
                 else if (depth == currentDepth + 1)
                 {
-                    newCommandParameters.Last().DrillDownParameters = ReadParameters(lines, ref i, depth);
+                    currentParameter.DrillDownParameters = ReadParameters(lines, ref i, depth);
+                    continue;
                 }
-                else if (depth == currentDepth - 1)
+                else if (depth <= currentDepth - 1)
                 {
-                    currentI = i;
-                    return newCommandParameters;
+                    break;
                 }
+                i++;
             }
-
+            currentI = i;
             return newCommandParameters;
         }
         private static int GetDepth(string line)
