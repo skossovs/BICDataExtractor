@@ -75,6 +75,7 @@
     <Compile Include="MSMQ\Signal.cs" />
     <Compile Include="MSMQ\SenderReciever.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RegExSimple.cs" />
     <Compile Include="RxQueuePubSub.cs" />
     <Compile Include="SettingProcessors\AppSettingsProcessor.cs" />
     <Compile Include="SettingProcessors\AppSettingsProcessorLogger.cs" />

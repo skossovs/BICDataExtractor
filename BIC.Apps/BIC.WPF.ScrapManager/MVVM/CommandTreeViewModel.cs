@@ -1,4 +1,5 @@
-﻿using BIC.WPF.ScrapManager.Common;
+﻿using BIC.Utils;
+using BIC.WPF.ScrapManager.Common;
 using BIC.WPF.ScrapManager.Data;
 using BIC.WPF.ScrapManager.MVVM.Messages;
 using System;
@@ -96,14 +97,17 @@ namespace BIC.WPF.ScrapManager.MVVM
 
             _content?.CommandLines?.ForEach(c =>
             {
+                string commandLine = c.CommandLine.ApplyRegex(".*:$");
+                commandLine = commandLine.Remove(commandLine.Length - 1);
+
                 Group g = new Group();
-                g.Name  = c.CommandLine;
-                g.Key   = c.CommandLine.GetHashCode();
-                g.Path  = parentPath + (char)0x00 + c.CommandLine;
+                g.Name  = commandLine;
+                g.Key   = commandLine.GetHashCode();
+                g.Path  = parentPath + (char)0x00 + commandLine;
 
                 c.CommandParameters?.ForEach(p =>
                 {
-                    FillParametersRecursive(g, p, parentPath + (char)0x00 + c.CommandLine);
+                    FillParametersRecursive(g, p, parentPath + (char)0x00 + commandLine);
                 });
 
                 RootGroup.SubGroups.Add(g);
@@ -149,8 +153,14 @@ namespace BIC.WPF.ScrapManager.MVVM
         private void FillParametersRecursive(Group gCurrent, CommandParameter currentParameter, string parentPath)
         {
             Group g = new Group();
-            g.Name = currentParameter.ParameterLine;
-            string curentPath = gCurrent.Path + (char)0x00 + currentParameter.ParameterLine;
+
+            if(currentParameter.DrillDownParameters.Count() > 0)
+                g.Name = currentParameter.ParameterLine.RegexGetSqueeze("- \"", "\":");
+            else
+                g.Name = currentParameter.ParameterLine.RegexGetSqueeze("- \"", "\"");
+
+
+            string curentPath = gCurrent.Path + (char)0x00 + g.Name;
             g.Key = curentPath.GetHashCode();
             g.Path = curentPath;
 
