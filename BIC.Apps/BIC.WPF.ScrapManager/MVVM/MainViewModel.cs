@@ -77,7 +77,7 @@ namespace BIC.WPF.ScrapManager.MVVM
 
         private void ReceiveStartCommand(ProcessStartMessage processStartMessage)
         {
-            StartProcess(processStartMessage.ProcessType);
+            StartProcess(processStartMessage.ProcessType, processStartMessage.Arguments);
         }
         private void ReceiveStopCommand(ProcessStopMessage processStopMessage)
         {
@@ -88,7 +88,7 @@ namespace BIC.WPF.ScrapManager.MVVM
         {
             _mq.Send(new CommandMessage() { ProcessCommand = EProcessCommand.Stop, ChannelID = (int) processOption });
         }
-        private void StartProcess(EProcessType processOption)
+        private void StartProcess(EProcessType processOption, string arguments)
         {
             ProcessDetails procDetails = null;
             switch(processOption)
@@ -102,6 +102,7 @@ namespace BIC.WPF.ScrapManager.MVVM
             }
 
             procDetails.ProcessInfo.UseShellExecute = false;
+            procDetails.ProcessInfo.Arguments = arguments;
             procDetails.ProcessObject = Process.Start(procDetails.ProcessInfo);
             procDetails.ProcessObject.EnableRaisingEvents = true;
 

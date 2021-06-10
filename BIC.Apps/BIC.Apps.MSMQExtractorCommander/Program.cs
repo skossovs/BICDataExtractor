@@ -10,6 +10,11 @@ namespace BIC.Apps.MSMQExtractorCommander
     {
         static int Main(string[] args)
         {
+            for(int i = 0; i < args.Count(); i++)
+            {
+                Console.WriteLine(args[i]);
+            }
+
             System.Threading.Thread.Sleep(10000);
 
             return (int) BIC.Foundation.Interfaces.ProcessResult.SUCCESS;
