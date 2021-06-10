@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BIC.WPF.ScrapManager.Data
 {
-    class TreeNode
+    public class TreeNode
     {
         public int Key { get; set; }
         public TreeNodeType Type { get; set; }

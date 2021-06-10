@@ -83,7 +83,8 @@ namespace BIC.WPF.ScrapManager.MVVM
             };
 
             var properties = new Dictionary<string, string>();
-            properties.Add("Root", "Root");
+            properties.Add("name", "Root");
+            properties.Add("path", "Root");
 
             lstNodes.Add(new TreeNode()
             {
@@ -102,55 +103,29 @@ namespace BIC.WPF.ScrapManager.MVVM
 
                 Group g = new Group();
                 g.Name  = commandLine;
-                g.Key   = commandLine.GetHashCode();
+                g.Key   = (parentPath + (char)0x00 + commandLine).GetHashCode();
                 g.Path  = parentPath + (char)0x00 + commandLine;
+
+                lstNodes.Add(new TreeNode()
+                {
+                    Type = TreeNodeType.Command,
+                    Key = g.Key,
+                    Properties = new Dictionary<string, string>() { { "name", g.Name },  {"path", g.Path } }
+                });
 
                 c.CommandParameters?.ForEach(p =>
                 {
-                    FillParametersRecursive(g, p, parentPath + (char)0x00 + commandLine);
+                    FillParametersRecursive(g, p, parentPath + (char)0x00 + commandLine, lstNodes);
                 });
 
                 RootGroup.SubGroups.Add(g);
-
-                // TODO: DROP IT!!
-                //properties = new Dictionary<string, string>();
-                //properties.Add(ExcelContentConstants.ExcelFilePathNodeName, f.ExcelFileFullPath);
-
-                //lstNodes.Add(new TreeNode()
-                //{
-                //    Type = TreeNodeType.ExcelFile,
-                //    Key = g.Key,
-                //    Properties = properties
-                //});
-
-                //f?.Sheets?.ForEach(s =>
-                //{
-                //    g.Entries.Add(new Entry()
-                //    {
-                //        Name = s.SheetName,
-                //        Path = g.Path + (char)0x00 + s.SheetName,
-                //        Key = (g.Path + (char)0x00 + s.SheetName).GetHashCode()
-                //    });
-
-                //    properties = new Dictionary<string, string>();
-                //    properties.Add(ExcelContentConstants.ExcelFilePathNodeName, f.ExcelFileFullPath);
-                //    properties.Add(ExcelContentConstants.SheetNameNode, s.SheetName);
-                //    properties.Add(ExcelContentConstants.ClassNameNode, s.ClassName);
-
-                //    lstNodes.Add(new TreeNode()
-                //    {
-                //        Type = TreeNodeType.ExcelSheet,
-                //        Key = (g.Path + (char)0x00 + s.SheetName).GetHashCode(),
-                //        Properties = properties
-                //    });
-                //});
             });
 
             GalaSoft.MvvmLight.Messaging.Messenger.Default.Send(new TreeViewPopulatedMessage(lstNodes));
             return RootGroups;
         }
 
-        private void FillParametersRecursive(Group gCurrent, CommandParameter currentParameter, string parentPath)
+        private void FillParametersRecursive(Group gCurrent, CommandParameter currentParameter, string parentPath, List<TreeNode> lstNodes)
         {
             Group g = new Group();
 
@@ -159,14 +134,20 @@ namespace BIC.WPF.ScrapManager.MVVM
             else
                 g.Name = currentParameter.ParameterLine.RegexGetSqueeze("- \"", "\"");
 
-
             string curentPath = gCurrent.Path + (char)0x00 + g.Name;
             g.Key = curentPath.GetHashCode();
             g.Path = curentPath;
 
+            lstNodes.Add(new TreeNode()
+            {
+                Type = TreeNodeType.Parameter,
+                Key  = g.Key,
+                Properties = new Dictionary<string, string>() { { "name", g.Name }, { "path", g.Path } }
+            });
+
             currentParameter.DrillDownParameters.ForEach(p =>
             {
-                FillParametersRecursive(g, p, curentPath);
+                FillParametersRecursive(g, p, curentPath, lstNodes);
             });
 
             gCurrent.SubGroups.Add(g);

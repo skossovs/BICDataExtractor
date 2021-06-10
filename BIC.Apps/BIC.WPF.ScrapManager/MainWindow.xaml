@@ -16,12 +16,13 @@
         <!-- TODO: provide proper paths in constructors -->
         <mvvm:ControlProcessViewModel x:Key="processControlVMScrapper" ProcessType="Scrapper"/>
         <mvvm:ControlProcessViewModel x:Key="processControlVMetl"      ProcessType="ETL"/>
-        <mvvm:CommandTreeViewModel    x:Key="commandTreeViewModel"></mvvm:CommandTreeViewModel>
+        <mvvm:CommandTreeViewModel    x:Key="commandTreeViewModel">   </mvvm:CommandTreeViewModel>
         <conv:StatusConverter         x:Key="ProcessorStatusToString"></conv:StatusConverter>
+        <conv:IntToStringConverter    x:Key="IntToString">            </conv:IntToStringConverter>
 
         <ControlTemplate x:Key="ProcessControlTemplate" TargetType="ContentControl">
             <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center">
-                <Button Width="30" Height="30" Command="{Binding StartCommand}" CommandParameter="X">
+                <Button Width="30" Height="30" Command="{Binding StartCommand}" CommandParameter="{Binding SelectedNodeKey, Converter={StaticResource IntToString}}">
                     <Button.Background>
                         <ImageBrush ImageSource="Resources/play.png"/>
                     </Button.Background>
