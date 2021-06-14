@@ -9,11 +9,10 @@ namespace BIC.Scrappers.FinvizScrapper
     // This class is for planning only doesn't do anything, just thoughts in here
     class Plan
     {
+        // 1.     Implement already loaded tickers exclusion
         // 3.     Create WPF UI
-        // 3.1.   Command tree, yaml sectors, read the logs from the files. Start-Stop capability. Running indicator. Options to run windowless processes. DONE.
-        // 3.2.   Finish up MSMQ recieval. DONE.
-        // 3.3.   Design is still ugly.
-        // 3.4.   Reflect log in UI.
+        // 3.1.   Design is still ugly.
+        // 3.2.   Reflect log in UI.
         // 4.     Reorganize tests.
 
         // 6.     Errors:
