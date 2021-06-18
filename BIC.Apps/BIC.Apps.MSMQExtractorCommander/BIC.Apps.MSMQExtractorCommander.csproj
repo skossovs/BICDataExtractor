@@ -45,7 +45,6 @@
     <Compile Include="FinvizBridgeComponents.cs" />
     <Compile Include="FxRatesBridgeComponents.cs" />
     <Compile Include="IBridgeComponents.cs" />
-    <Compile Include="NoParamScrapCommand.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScrapCommand.cs" />
