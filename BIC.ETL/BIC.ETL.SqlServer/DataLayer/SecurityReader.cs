@@ -22,7 +22,7 @@ namespace BIC.ETL.SqlServer.DataLayer
 
         static SecurityReader()
         {
-            var yq  = DateTime.Now.DateToYearQuarter();
+            var yq  = DateTime.Now.DateToYearQuarter(-1);
             Year    = yq.Item1;
             Quarter = yq.Item2;
         }
