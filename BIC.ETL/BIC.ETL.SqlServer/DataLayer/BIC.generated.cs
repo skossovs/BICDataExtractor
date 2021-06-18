@@ -31,6 +31,7 @@ namespace BIC.ETL.SqlServer.DataLayer
         public ITable<Industry> Industries { get { return this.GetTable<Industry>(); } }
         public ITable<KeyRatio> KeyRatios { get { return this.GetTable<KeyRatio>(); } }
         public ITable<LevelZeroScreener> LevelZeroScreeners { get { return this.GetTable<LevelZeroScreener>(); } }
+        public ITable<LoadConsistency> LoadConsistencies { get { return this.GetTable<LoadConsistency>(); } }
         public ITable<Sector> Sectors { get { return this.GetTable<Sector>(); } }
         public ITable<Security> Securities { get { return this.GetTable<Security>(); } }
         public ITable<TimeDimmension> TimeDimmensions { get { return this.GetTable<TimeDimmension>(); } }
@@ -216,6 +217,7 @@ namespace BIC.ETL.SqlServer.DataLayer
         [Column("intagnibleRatio"), Nullable] public decimal? IntagnibleRatio { get; set; } // decimal(38, 6)
         [Column(), Nullable] public decimal? Equity { get; set; } // decimal(38, 6)
         [Column(), Nullable] public decimal? RetainedEarnings { get; set; } // decimal(38, 6)
+        [Column(), Nullable] public decimal? PE { get; set; } // numeric(38, 6)
         [Column(), Nullable] public decimal? MarketCap { get; set; } // numeric(38, 6)
         [Column(), Nullable] public decimal? CurrentRatio { get; set; } // numeric(38, 6)
         [Column(), Nullable] public decimal? QuickRatio { get; set; } // numeric(18, 6)
@@ -227,6 +229,18 @@ namespace BIC.ETL.SqlServer.DataLayer
         [Column(), Nullable] public decimal? ProfitMargin { get; set; } // numeric(18, 6)
         [Column(), Nullable] public decimal? Volume { get; set; } // numeric(38, 6)
         [Column(), Nullable] public decimal? Liquidity { get; set; } // numeric(38, 6)
+    }
+
+    [Table(Schema = "dbo", Name = "LOAD_CONSISTENCY", IsView = true)]
+    public partial class LoadConsistency
+    {
+        [Column, Nullable] public int? Year { get; set; } // int
+        [Column, NotNull] public int Quarter { get; set; } // int
+        [Column, NotNull] public int SecurityID { get; set; } // int
+        [Column, NotNull] public string Ticker { get; set; } // nvarchar(6)
+        [Column, NotNull] public int BalanceSheetQuarterly { get; set; } // int
+        [Column, NotNull] public int IncomeStatementQuarterly { get; set; } // int
+        [Column, NotNull] public int CashFlowQuarterly { get; set; } // int
     }
 
     [Table(Schema = "dbo", Name = "Sector")]
@@ -333,5 +347,4 @@ namespace BIC.ETL.SqlServer.DataLayer
         }
     }
 }
-
 #pragma warning restore 1591

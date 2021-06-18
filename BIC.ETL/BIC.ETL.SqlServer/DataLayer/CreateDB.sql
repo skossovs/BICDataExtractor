@@ -312,6 +312,44 @@ FROM    dbo.Security AS s INNER JOIN
 
 GO
 
+ALTER VIEW LOAD_CONSISTENCY
+AS
+With Q As
+(
+      SELECT 1 AS Quarter
+UNION SELECT 2 AS Quarter
+UNION SELECT 3 AS Quarter
+UNION SELECT 4 AS Quarter)
+, Y AS
+(
+	  SELECT DatePart(YEAR,GETDATE()) - 4 AS Year
+UNION SELECT DatePart(YEAR,GETDATE()) - 3 AS Year
+UNION SELECT DatePart(YEAR,GETDATE()) - 2 AS Year
+UNION SELECT DatePart(YEAR,GETDATE()) - 1 AS Year
+UNION SELECT DatePart(YEAR,GETDATE()) AS Year)
+, QY AS
+(
+SELECT Year, Quarter FROM Y
+CROSS JOIN Q)
+, SEC AS
+(
+SELECT s.SecurityID, s.Ticker, QY.Year, QY.Quarter
+FROM Security s CROSS JOIN QY)
+SELECT 
+	s.Year
+,   s.Quarter
+,	s.SecurityID
+,   s.Ticker
+,	(CASE WHEN b.SecurityID IS NULL THEN 0 ELSE 1 END) AS BalanceSheetQuarterly
+,	(CASE WHEN i.SecurityID IS NULL THEN 0 ELSE 1 END) AS IncomeStatementQuarterly
+,	(CASE WHEN c.SecurityID IS NULL THEN 0 ELSE 1 END) AS CashFlowQuarterly
+FROM	  SEC s
+LEFT JOIN [BalanceSheetQuarterly]  b ON s.SecurityID = b.SecurityID AND s.Year = b.Year AND s.Quarter = b.Quarter
+LEFT JOIN IncomeStatementQuarterly i ON s.SecurityID = i.SecurityID AND s.Year = i.Year AND s.Quarter = i.Quarter
+LEFT JOIN CashFlowQuarterly        c ON s.SecurityID = c.SecurityID AND s.Year = c.Year AND s.Quarter = c.Quarter
+--WHERE s.Year = 2020 AND s.Quarter = 4
+GO
+
 -- 3. Strategy "Growth Stocks"
 -- 4. Strategy "Penny Stocks"
 

@@ -26,9 +26,12 @@ namespace BIC.Apps.ExtractorCommander.Commands
         {
             foreach (var security in ETL.SqlServer.DataLayer.SecurityReader.GetSecurities(sector))
             {
-                Scrap<IncomeStatementDataQuarterly>(security.Ticker, true);
-                Scrap<BalanceSheetDataQuarterly>   (security.Ticker, true);
-                Scrap<CashFlowDataQuarterly>       (security.Ticker, true);
+                if(security.IsIncomeStatementQuarterly)
+                    Scrap<IncomeStatementDataQuarterly>(security.Ticker, true);
+                if (security.IsBalanceSheetQuarterly)
+                    Scrap<BalanceSheetDataQuarterly>   (security.Ticker, true);
+                if (security.IsCashFlowQuarterly)
+                    Scrap<CashFlowDataQuarterly>       (security.Ticker, true);
             }
         }
 
@@ -46,9 +49,12 @@ namespace BIC.Apps.ExtractorCommander.Commands
                 if (skipTheStep)
                     continue;
 
-                Scrap<IncomeStatementDataQuarterly>(security.Ticker, true);
-                Scrap<BalanceSheetDataQuarterly>   (security.Ticker, true);
-                Scrap<CashFlowDataQuarterly>       (security.Ticker, true);
+                if (security.IsIncomeStatementQuarterly)
+                    Scrap<IncomeStatementDataQuarterly>(security.Ticker, true);
+                if (security.IsBalanceSheetQuarterly)
+                    Scrap<BalanceSheetDataQuarterly>(security.Ticker, true);
+                if (security.IsCashFlowQuarterly)
+                    Scrap<CashFlowDataQuarterly>(security.Ticker, true);
             }
         }
 
@@ -66,9 +72,12 @@ namespace BIC.Apps.ExtractorCommander.Commands
                 if (skipTheStep)
                     continue;
 
-                Scrap<IncomeStatementDataQuarterly>(security.Ticker, true);
-                Scrap<BalanceSheetDataQuarterly>(security.Ticker, true);
-                Scrap<CashFlowDataQuarterly>(security.Ticker, true);
+                if (security.IsIncomeStatementQuarterly)
+                    Scrap<IncomeStatementDataQuarterly>(security.Ticker, true);
+                if (security.IsBalanceSheetQuarterly)
+                    Scrap<BalanceSheetDataQuarterly>(security.Ticker, true);
+                if (security.IsCashFlowQuarterly)
+                    Scrap<CashFlowDataQuarterly>(security.Ticker, true);
             }
         }
 

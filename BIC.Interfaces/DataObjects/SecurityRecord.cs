@@ -8,11 +8,14 @@ namespace BIC.Foundation.DataObjects
 {
     public class SecurityRecord
     {
-        public int    SecurityID       { get; set; }
-        public string Ticker           { get; set; }
-        public int    SectorID         { get; set; }
-        public string Sector           { get; set; }
-        public int    IndustryID       { get; set; }
-        public string Industry         { get; set; }
+        public int    SecurityID                 { get; set; }
+        public string Ticker                     { get; set; }
+        public int    SectorID                   { get; set; }
+        public string Sector                     { get; set; }
+        public int    IndustryID                 { get; set; }
+        public string Industry                   { get; set; }
+        public bool   IsBalanceSheetQuarterly    { get; set; }
+        public bool   IsIncomeStatementQuarterly { get; set; }
+        public bool   IsCashFlowQuarterly        { get; set; }
     }
 }
