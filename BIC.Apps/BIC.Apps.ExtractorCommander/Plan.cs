@@ -10,6 +10,7 @@ namespace BIC.Scrappers.FinvizScrapper
     class Plan
     {
         // 1.     Implement already loaded tickers exclusion
+        // 2.     Exclude ETFs from fundamentals loading.
         // 3.     Create WPF UI
         // 3.1.   Design is still ugly.
         // 3.2.   Reflect log in UI.
