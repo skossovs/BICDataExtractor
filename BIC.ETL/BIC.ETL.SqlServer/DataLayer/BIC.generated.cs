@@ -259,6 +259,7 @@ namespace BIC.ETL.SqlServer.DataLayer
         [PrimaryKey(3), NotNull] public string Ticker { get; set; } // nvarchar(6)
         [Column, NotNull] public string Company { get; set; } // nvarchar(200)
         [Column, NotNull] public string Country { get; set; } // nvarchar(50)
+        [Column, NotNull] public string Type { get; set; } // char(3)
     }
 
     [Table(Schema = "dbo", Name = "TimeDimmension")]
