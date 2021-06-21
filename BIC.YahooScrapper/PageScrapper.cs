@@ -113,7 +113,7 @@ namespace BIC.Scrappers.YahooScrapper
                 else if(typeof(QT).Name == "BalanceSheetDataQuarterly")
                     jsonPath = "context.dispatcher.stores.QuoteSummaryStore.balanceSheetHistoryQuarterly";
                 else if (typeof(QT).Name == "CashFlowDataQuarterly")
-                    jsonPath = "context.dispatcher.stores.QuoteSummaryStore.cashflowStatementHistory";
+                    jsonPath = "context.dispatcher.stores.QuoteSummaryStore.cashflowStatementHistoryQuarterly";
                 else
                 {
                     _logger.Error("Unsupported type: {0}", typeof(QT).Name);
