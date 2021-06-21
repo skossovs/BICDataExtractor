@@ -90,7 +90,6 @@
     <Compile Include="MVVM\Messages\ProcessStopMessage.cs" />
     <Compile Include="MVVM\Messages\TreeViewPopulatedMessage.cs" />
     <Compile Include="MVVM\Messages\TreeViewSelectionMessage.cs" />
-    <Compile Include="ServiceLayer\ProcessUtils.cs" />
     <Compile Include="MVVM\MainViewModel.cs" />
     <Compile Include="ServiceLayer\Utils.cs" />
     <Compile Include="Settings.cs" />
