@@ -17,7 +17,7 @@ namespace BIC.Scrappers.FinvizScrapper
         // 4.     Reorganize tests.
 
         // 6.     Errors:
-        // 6.1.   Cash flow for 1st quarter is not present, so we are not updating others and reprocess cash flow again.
+        // 6.1.   Cash flow for 1st quarter is not present, so we are not updating others and reprocess cash flow again. DONE.
         // 6.1.   Merge fails on duplicates. The reason is companies late filling. Need to fix quarters.
         //        sometimes yearly data came instead of quarterly.
         // 6.1.2. Queue doesn't have enough time to process last item, before finished.
