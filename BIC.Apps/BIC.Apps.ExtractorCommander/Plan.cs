@@ -15,6 +15,8 @@ namespace BIC.Scrappers.FinvizScrapper
         // 3.1.   Design is still ugly.
         // 3.2.   Reflect log in UI.
         // 4.     Reorganize tests.
+        // 5.     Make load all sheets at one load, since all 3 sheets are contained in one Json.
+        // 5.1    Do yearly load as well.
 
         // 6.     Errors:
         // 6.1.   Cash flow for 1st quarter is not present, so we are not updating others and reprocess cash flow again. DONE.
