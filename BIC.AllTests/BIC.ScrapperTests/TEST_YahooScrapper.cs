@@ -1,4 +1,5 @@
 ﻿using BIC.Scrappers.YahooScrapper;
+using BIC.YahooScrapper;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -54,6 +55,15 @@ namespace BIC.ScrapperTests
             var yp = CreateYahooParametersInstance("cash-flow", "MSFT", false);
             var pager = new PageScrapper<YahooParameters>();
             bool result = pager.Scrap(yp);
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void TestYahooOneShotScrapper()
+        {
+            var oneShot = new OneShotScrapper();
+            var yp      = new YahooParameters() { Ticker = "MLR", ReportType = "balance-sheet" };
+            bool result = oneShot.Scrap(yp);
             Assert.IsTrue(result);
         }
 

@@ -19,7 +19,8 @@ namespace BIC.YahooScrapper.Chain
         {
             var r = new HttpRequestData()
             {
-                Ticker = ctx.Parameters.Ticker
+                Ticker     = ctx.Parameters.Ticker,
+                ReportType = ctx.Parameters.ReportType
             };
             var generatedAddress = r.GenerateAddressRequest();
 
@@ -46,6 +47,7 @@ namespace BIC.YahooScrapper.Chain
                 jsonString = jsonString.Replace("&quot;", @"""");
                 ctx.JsonContentLines.Add(jsonString);
             }
+
 
             if (Next != null)
                 return Next.Do(ctx);

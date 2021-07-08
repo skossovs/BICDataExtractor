@@ -25,14 +25,15 @@ namespace BIC.YahooScrapper.Chain
 
         public bool Do(Context ctx)
         {
-            var ticker = ctx.Parameters.Ticker;
+            bool result = false;
+            var  ticker = ctx.Parameters.Ticker;
 
             foreach (var jsonString in ctx.JsonContentLines)
             {
                 var jsonObject = JObject.Parse(jsonString);
 
                 var jToken = jsonObject.SelectToken(json_path);
-                if (jToken.Count() == 0)
+                if (jToken == null || jToken.Count() == 0)
                     continue;
 
                 var lst = new List<T>();
@@ -51,17 +52,19 @@ namespace BIC.YahooScrapper.Chain
                 _logger.Info("Saving data into json file: " + fullPath);
 
                 Exception ex;
-                var result = BIC.Scrappers.Utils.FileHelper.SaveAsJSON(allPageData, fullPath, out ex);
+                result = BIC.Scrappers.Utils.FileHelper.SaveAsJSON(allPageData, fullPath, out ex);
                 if (result == false)
                 {
                     _logger.Warning("Failed to extract table data");
                     _logger.ReportException(ex);
+                    break;
                 }
-
-                return result;
             }
 
-            return false;
+            if (Next != null)
+                return Next.Do(ctx); // TODO : only last status matters
+            else
+                return true;
         }
     }
 }
