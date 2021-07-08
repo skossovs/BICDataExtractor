@@ -52,8 +52,8 @@
     <Compile Include="DataObjects\BalanceSheetData.cs" />
     <Compile Include="DataObjects\CashFlowData.cs" />
     <Compile Include="DataObjects\IncomeStatementData.cs" />
-    <Compile Include="DataObjects\QuarterData.cs" />
-    <Compile Include="DataObjects\QuarterNumber.cs" />
+    <Compile Include="DataObjects\YahooFinanceData.cs" />
+    <Compile Include="DataObjects\YahooFinanceNumber.cs" />
     <Compile Include="HttpRequestData.cs" />
     <Compile Include="OneShotScrapper.cs" />
     <Compile Include="PageScrapper.cs" />

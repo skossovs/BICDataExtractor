@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace BIC.Scrappers.YahooScrapper.DataObjects
 {
-    // TODO: rename, doesn't really a quarter but Yahoo json format
-    public class QuarterNumber
+    public class YahooFinanceNumber
     {
         public string raw     { get; set; }
         public string fmt     { get; set; }

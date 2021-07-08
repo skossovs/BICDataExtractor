@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace BIC.YahooScrapper.Chain
 {
-    public class JsonObjectExtractor<T> : IActor where T : QuarterData, new()
+    public class JsonObjectExtractor<T> : IActor where T : YahooFinanceData, new()
     {
         public string json_path;
         private ILog _logger = LogServiceProvider.Logger;
