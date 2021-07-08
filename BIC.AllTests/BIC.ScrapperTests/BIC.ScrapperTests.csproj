@@ -58,6 +58,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TEST_HttpRequestData.cs" />
     <Compile Include="TEST_TableReaderBasedOnFinviz.cs" />
+    <Compile Include="TEST_YahooJsonExtractors.cs" />
     <Compile Include="TEST_YahooScrapper.cs" />
     <Compile Include="TEST_YamlOperations.cs" />
     <Compile Include="TEST_FxScrappers.cs" />
@@ -68,6 +69,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />
+    <Content Include="TestData\Yahoo_MLR.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BIC.Scrappers\BIC.FinvizScrapper\BIC.FinvizScrapper.csproj">
