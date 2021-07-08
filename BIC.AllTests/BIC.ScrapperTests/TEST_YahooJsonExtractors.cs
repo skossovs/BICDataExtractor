@@ -18,26 +18,62 @@ namespace BIC.ScrapperTests
         }
 
         [TestMethod]
-        public void TestExtractor()
+        public void TestIncomeQuarterlyExtractor()
         {
-/*
-                jsonPath = "context.dispatcher.stores.QuoteSummaryStore.incomeStatementHistoryQuarterly";
-                jsonPath = "context.dispatcher.stores.QuoteSummaryStore.balanceSheetHistoryQuarterly";
-                jsonPath = "context.dispatcher.stores.QuoteSummaryStore.cashflowStatementHistoryQuarterly";
-*/
-
             var extractor = new JsonObjectExtractor<IncomeStatementDataQuarterly>("context.dispatcher.stores.QuoteSummaryStore.incomeStatementHistoryQuarterly");
+            var result = RunTest(extractor, "MLR", true);
+            Assert.IsTrue(result);
+        }
+        [TestMethod]
+        public void TestBalanceQuarterlyExtractor()
+        {
+            var extractor = new JsonObjectExtractor<BalanceSheetDataQuarterly>("context.dispatcher.stores.QuoteSummaryStore.balanceSheetHistoryQuarterly");
+            var result = RunTest(extractor, "MLR", true);
+            Assert.IsTrue(result);
+        }
+        [TestMethod]
+        public void TestCashFlowQuarterlyExtractor()
+        {
+            var extractor = new JsonObjectExtractor<CashFlowDataQuarterly>("context.dispatcher.stores.QuoteSummaryStore.cashflowStatementHistoryQuarterly");
+            var result = RunTest(extractor, "MLR", true);
+            Assert.IsTrue(result);
+        }
 
+        [TestMethod]
+        public void TestIncomeYearlyExtractor()
+        {
+            var extractor = new JsonObjectExtractor<IncomeStatementData>("context.dispatcher.stores.QuoteSummaryStore.incomeStatementHistory");
+            var result = RunTest(extractor, "MLR", true);
+            Assert.IsTrue(result);
+        }
+        [TestMethod]
+        public void TestBalanceYearlyExtractor()
+        {
+            var extractor = new JsonObjectExtractor<BalanceSheetData>("context.dispatcher.stores.QuoteSummaryStore.balanceSheetHistory");
+            var result = RunTest(extractor, "MLR", true);
+            Assert.IsTrue(result);
+        }
+        [TestMethod]
+        public void TestCashFlowYearlyExtractor()
+        {
+            var extractor = new JsonObjectExtractor<CashFlowData>("context.dispatcher.stores.QuoteSummaryStore.cashflowStatementHistory");
+            var result = RunTest(extractor, "MLR", true);
+            Assert.IsTrue(result);
+        }
+
+        private bool RunTest(IActor extractor, string ticker, bool isQuarterly)
+        {
             Context ctx = new Context()
             {
                 Parameters = new Scrappers.YahooScrapper.YahooParameters()
                 {
-                    IsQuarterly = true,
-                    Ticker = "MLR"
+                    IsQuarterly = isQuarterly,
+                    Ticker = ticker
                 },
                 JsonContentLines = lst_json_content_lines
             };
-            extractor.Do(ctx);
+            return extractor.Do(ctx);
         }
+
     }
 }

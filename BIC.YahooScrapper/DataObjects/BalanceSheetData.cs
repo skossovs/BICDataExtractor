@@ -6,11 +6,7 @@ using System.Threading.Tasks;
 
 namespace BIC.Scrappers.YahooScrapper.DataObjects
 {
-    class BalanceSheetData
-    {
-    }
-
-    public class BalanceSheetDataQuarterly : QuarterData
+    public class BalanceSheetData : QuarterData
     {
         public QuarterNumber intangibleAssets        { get; set; }
         public QuarterNumber totalLiab               { get; set; }
@@ -39,5 +35,9 @@ namespace BIC.Scrappers.YahooScrapper.DataObjects
         public QuarterNumber longTermDebt            { get; set; }
         public QuarterNumber inventory               { get; set; }
         public QuarterNumber accountsPayable         { get; set; }
+    }
+
+    public class BalanceSheetDataQuarterly : BalanceSheetData
+    {
     }
 }
