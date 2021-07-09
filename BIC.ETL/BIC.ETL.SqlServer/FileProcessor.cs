@@ -154,6 +154,22 @@ namespace BIC.ETL.SqlServer
                                 var cfqObjects = cfq.Read();
                                 cfq.Merge(cfqObjects);
                                 break;
+                            case "BalanceSheetData":
+                                var bs = new FileReaders.YahooBalanceSheetMerger(ft.FilePath);
+                                var bsObjects = bs.Read();
+                                bs.Merge(bsObjects);
+                                break;
+                            case "IncomeStatementData":
+                                var ist = new FileReaders.YahooIncomeStatementMerger(ft.FilePath);
+                                var istObjects = ist.Read();
+                                ist.Merge(istObjects);
+                                break;
+                            case "CashFlowData":
+                                var cf = new FileReaders.YahooCashFlowMerger(ft.FilePath);
+                                var cfObjects = cf.Read();
+                                cf.Merge(cfObjects);
+                                break;
+
                             default:
                                 throw new Exception("Unsupported class: " + ft.ClassName);
                         }
