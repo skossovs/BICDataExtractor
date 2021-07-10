@@ -15,11 +15,10 @@ namespace BIC.Scrappers.FinvizScrapper
         // 3.1.   Design is still ugly.
         // 3.2.   Reflect log in UI.
         // 4.     Reorganize tests.
-        // 5.     Make load all sheets at one load, since all 3 sheets are contained in one Json.
-        // 5.1    Do yearly load as well.
+        // 5.     Make load all sheets at one load, since all 3 sheets are contained in one Json. DONE
+        // 5.1    Do yearly load as well. DONE
 
         // 6.     Errors:
-        // 6.1.   Cash flow for 1st quarter is not present, so we are not updating others and reprocess cash flow again. DONE.
         // 6.1.   Merge fails on duplicates. The reason is companies late filling. Need to fix quarters.
         //        sometimes yearly data came instead of quarterly.
         // 6.1.2. Queue doesn't have enough time to process last item, before finished.
@@ -27,7 +26,7 @@ namespace BIC.Scrappers.FinvizScrapper
         // 6.2.   Populate field Earnings Date in Finviz extract. There is a dirt in Date field.
 
         // 7.     Implement Reports for different strategies. Next Levels.
-        // 8.     Yahoo.Finance Scrapper for yearly
+        // 8.     Yahoo.Finance Scrapper for yearly. DONE
         // 9.     Fix linq2db issue with connection object. Specifically for Merge. Looks like Merge operation happens after connection object is closed.
         // 10.    StackFrame.Debug instead of object name in logging
         // 11.    Block Chrome logs if possible.
