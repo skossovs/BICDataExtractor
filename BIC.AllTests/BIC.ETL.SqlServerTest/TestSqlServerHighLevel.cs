@@ -9,8 +9,10 @@ namespace BIC.ETL.SqlServerTest
         [TestMethod]
         public void TestFileProcessor()
         {
-            var processor = new SqlServer.FileProcessor();
-            processor.Do();
+            using (var processor = new ETL.SqlServer.FileProcessor())
+            {
+                processor.Do();
+            }
         }
     }
 }

@@ -11,7 +11,7 @@ GO
 
 CREATE TABLE [dbo].[Sector](
 	[SectorID] [int] IDENTITY(1,1) NOT NULL,
-	[Sector] [nvarchar](200) NULL
+	[Sector] [nvarchar](200) NOT NULL
 ) ON [PRIMARY]
 
 GO
@@ -76,10 +76,10 @@ CREATE TABLE [dbo].[KeyRatio](
 GO
 
 ALTER TABLE dbo.[Industry]
-ADD CONSTRAINT PK_Industry PRIMARY KEY (IndustryID)
+ADD CONSTRAINT PK_Industry PRIMARY KEY (SectorID, Industry)
 
 ALTER TABLE dbo.[Sector]
-ADD CONSTRAINT PK_Sector PRIMARY KEY (SectorID)
+ADD CONSTRAINT PK_Sector PRIMARY KEY (Sector)
 
 ALTER TABLE dbo.[Security]
 ADD CONSTRAINT PK_Security PRIMARY KEY (SecurityID)
@@ -200,6 +200,38 @@ CREATE TABLE [dbo].[IncomeStatementQuarterly](
 
 GO
 
+CREATE TABLE [dbo].[FxUsdRates](
+	[FxRateId] [int] IDENTITY(1,1) NOT NULL,
+	[Year] [int] NOT NULL,
+	[Quarter] [int] NOT NULL,
+	[Currency] [nvarchar](3) NOT NULL,
+	[Country] [nvarchar](100) NOT NULL,
+	[Rate] [decimal](18, 6) NOT NULL,
+ CONSTRAINT [PK_FxUsdRates] PRIMARY KEY CLUSTERED 
+(
+	[Year] ASC,
+	[Quarter] ASC,
+	[Currency] ASC,
+	[Country] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+CREATE TABLE [dbo].[CurrencyCountryMap](
+	[Currency] [nvarchar](5) NOT NULL,
+	[Country] [nvarchar](100) NOT NULL,
+ CONSTRAINT [PK_CurrencyCountryMap] PRIMARY KEY CLUSTERED 
+(
+	[Currency] ASC,
+	[Country] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+
+
 -- * * * * * * * *          R E P O R T S      * * * * * * * *
 -- 1. join tables
 SELECT
@@ -223,47 +255,101 @@ LEFT   JOIN [dbo].[KeyRatio]  k
 ON          k.SecurityID = s.SecurityID
         AND k.[Year]     = b.[Year]
 		AND k.[Quarter]  = b.[Quarter]
+GO
 
+-- 1.1. Statistics
+SELECT [SectorID] ,[Sector]
+  FROM [BIC].[dbo].[Sector]
+
+SELECT s.Sector, i.Industry, Count(*) c FROM [Security] t
+INNER JOIN    Sector     s ON t.SectorID = s.SectorID
+INNER JOIN    Industry   i ON i.IndustryID = t.IndustryID
+LEFT  JOIN    BalanceSheetQuarterly b ON b.SecurityID = t.SecurityID
+WHERE b.Year = 2020 and b.Quarter = 4 AND  b.SecurityID is not null
+GROUP BY s.Sector, i.Industry
+ORDER BY s.Sector, i.Industry
+
+SELECT * FROM LevelZeroScreener
+WHERE Quarter = 4
+ORDER BY Sector, Industry, Ticker
+
+GO
 -- 2. Strategy "Value Stocks"
-SELECT 
+
+
+ALTER VIEW [dbo].[LevelZeroScreener]
+AS
+SELECT        
 	s.SecurityID
 ,	s.Ticker
-,   sc.Sector
-,   ids.Industry
-,	b.[Year]
-,   b.[Quarter]
-,   (b.[totalStockholderEquity] - COALESCE(b.goodWill,0) + COALESCE(b.retainedEarnings,0))/k.MarketCap as Worthiness
-,   b.[totalStockholderEquity] as Equity
-,   b.retainedEarnings
-,   k.MarketCap
-,   k.CurrentRatio
-,   k.QuickRatio
-,   k.LongTermDebtToEquity
-,   k.DebtToEquity
-,   k.GrossMargin
-,   k.OperationMargin
-,   k.ProfitMargin
-,   k.Volume
-FROM		Security s
-INNER JOIN  Sector   sc
-ON          s.SectorID = sc.SectorID
-INNER JOIN  Industry ids
-ON          s.IndustryID = ids.IndustryID
-LEFT  JOIN  BalanceSheetQuarterly b
-ON			b.SecurityID = s.SecurityID
-LEFT  JOIN  IncomeStatementQuarterly i
-ON          i.SecurityID = s.SecurityID
-        AND i.[Year]     = b.[Year]
-		AND i.[Quarter]  = b.[Quarter]
-LEFT  JOIN  CashFlowQuarterly c
-ON          c.SecurityID = s.SecurityID
-        AND c.[Year]     = b.[Year]
-		AND c.[Quarter]  = b.[Quarter]
-LEFT   JOIN [dbo].[KeyRatio]  k
-ON          k.SecurityID = s.SecurityID
-        AND k.[Year]     = b.[Year]
-		AND k.[Quarter]  = b.[Quarter]
-WHERE b.Quarter = 4
+, sc.Sector
+, ids.Industry
+, b.Year
+, b.Quarter
+, fx.Rate * (b.totalStockholderEquity - COALESCE (b.goodWill, 0) + COALESCE (b.retainedEarnings, 0)) / k.MarketCap AS Worthiness
+, COALESCE(b.intangibleAssets, b.goodWill) / NULLIF(netTangibleAssets,0) AS intagnibleRatio
+, fx.Rate * b.totalStockholderEquity AS Equity
+, fx.Rate * b.retainedEarnings AS RetainedEarnings
+, k.MarketCap
+, COALESCE(k.CurrentRatio, totalCurrentAssets/NULLIF(totalCurrentLiabilities,0)) AS CurrentRatio
+, k.QuickRatio
+, k.LongTermDebtToEquity
+, b.longTermDebt / NULLIF((b.[totalAssets] - b.[totalCurrentAssets]),0) AS DebtToAssets
+, k.DebtToEquity
+, k.GrossMargin
+, k.OperationMargin
+, k.ProfitMargin
+, k.Volume
+, ((b.commonStock * 1000)/NULLIF(k.Volume,0)) AS Liquidity
+FROM    dbo.Security AS s INNER JOIN
+		dbo.Sector AS sc ON s.SectorID = sc.SectorID INNER JOIN
+		dbo.Industry AS ids ON s.IndustryID = ids.IndustryID LEFT OUTER JOIN
+		dbo.BalanceSheetQuarterly AS b ON b.SecurityID = s.SecurityID LEFT OUTER JOIN
+		dbo.IncomeStatementQuarterly AS i ON i.SecurityID = s.SecurityID AND i.Year = b.Year AND i.Quarter = b.Quarter LEFT OUTER JOIN
+		dbo.CashFlowQuarterly AS c ON c.SecurityID = s.SecurityID AND c.Year = b.Year AND c.Quarter = b.Quarter LEFT OUTER JOIN
+		dbo.KeyRatio AS k ON k.SecurityID = s.SecurityID AND k.Year = b.Year AND k.Quarter = b.Quarter LEFT OUTER JOIN
+		dbo.FxUsdRates fx ON fx.Country = s.Country AND fx.[Year] = b.Year AND fx.Quarter = b.Quarter
+
+GO
+
+ALTER VIEW LOAD_CONSISTENCY
+AS
+With Q As
+(
+      SELECT 1 AS Quarter
+UNION SELECT 2 AS Quarter
+UNION SELECT 3 AS Quarter
+UNION SELECT 4 AS Quarter)
+, Y AS
+(
+	  SELECT DatePart(YEAR,GETDATE()) - 4 AS Year
+UNION SELECT DatePart(YEAR,GETDATE()) - 3 AS Year
+UNION SELECT DatePart(YEAR,GETDATE()) - 2 AS Year
+UNION SELECT DatePart(YEAR,GETDATE()) - 1 AS Year
+UNION SELECT DatePart(YEAR,GETDATE()) AS Year)
+, QY AS
+(
+SELECT Year, Quarter FROM Y
+CROSS JOIN Q)
+, SEC AS
+(
+SELECT s.SecurityID, s.Ticker, QY.Year, QY.Quarter
+FROM Security s CROSS JOIN QY)
+SELECT 
+	s.Year
+,   s.Quarter
+,	s.SecurityID
+,   s.Ticker
+,	(CASE WHEN b.SecurityID IS NULL THEN 0 ELSE 1 END) AS BalanceSheetQuarterly
+,	(CASE WHEN i.SecurityID IS NULL THEN 0 ELSE 1 END) AS IncomeStatementQuarterly
+,	(CASE WHEN c.SecurityID IS NULL THEN 0 ELSE 1 END) AS CashFlowQuarterly
+FROM	  SEC s
+LEFT JOIN [BalanceSheetQuarterly]  b ON s.SecurityID = b.SecurityID AND s.Year = b.Year AND s.Quarter = b.Quarter
+LEFT JOIN IncomeStatementQuarterly i ON s.SecurityID = i.SecurityID AND s.Year = i.Year AND s.Quarter = i.Quarter
+LEFT JOIN CashFlowQuarterly        c ON s.SecurityID = c.SecurityID AND s.Year = c.Year AND s.Quarter = c.Quarter
+--WHERE s.Year = 2020 AND s.Quarter = 4
+GO
+
 -- 3. Strategy "Growth Stocks"
 -- 4. Strategy "Penny Stocks"
 

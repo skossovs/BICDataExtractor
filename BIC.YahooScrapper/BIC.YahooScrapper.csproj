@@ -44,12 +44,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Chain\ChainFactory.cs" />
+    <Compile Include="Chain\Context.cs" />
+    <Compile Include="Chain\IActor.cs" />
+    <Compile Include="Chain\JsonObjectExtractor.cs" />
+    <Compile Include="Chain\JsonObjectScrapper.cs" />
     <Compile Include="DataObjects\BalanceSheetData.cs" />
     <Compile Include="DataObjects\CashFlowData.cs" />
     <Compile Include="DataObjects\IncomeStatementData.cs" />
-    <Compile Include="DataObjects\QuarterData.cs" />
-    <Compile Include="DataObjects\QuarterNumber.cs" />
+    <Compile Include="DataObjects\YahooFinanceData.cs" />
+    <Compile Include="DataObjects\YahooFinanceNumber.cs" />
     <Compile Include="HttpRequestData.cs" />
+    <Compile Include="OneShotScrapper.cs" />
     <Compile Include="PageScrapper.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

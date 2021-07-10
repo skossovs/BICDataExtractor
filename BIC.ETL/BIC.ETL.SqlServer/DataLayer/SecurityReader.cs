@@ -1,4 +1,5 @@
 ﻿using BIC.Foundation.DataObjects;
+using BIC.Utils;
 using LinqToDB.Configuration;
 using System;
 using System.Collections.Generic;
@@ -10,17 +11,21 @@ namespace BIC.ETL.SqlServer.DataLayer
 {
     public static class SecurityReader
     {
-        // TODO: drop it
-        //private static LinqToDbConnectionOptions _options;
+        public class CompareCondition
+        {
+            public int SecurityID;
+            public int? Year;
+            public int Quarter;
+        }
+        public static int Year { get; set; }
+        public static int Quarter { get; set; }
 
-        //static SecurityReader()
-        //{
-        //    var connectionString = Settings.GetInstance().SQLConnectionString;
-        //    // create options builder
-        //    var builder = new LinqToDbConnectionOptionsBuilder();
-        //    // configure connection string
-        //    _options = builder.UseSqlServer(connectionString).Build();
-        //}
+        static SecurityReader()
+        {
+            var yq  = DateTime.Now.DateToYearQuarter(-1);
+            Year    = yq.Item1;
+            Quarter = yq.Item2;
+        }
 
         public static IEnumerable<SectorRecord> GetSectors()
         {
@@ -38,12 +43,17 @@ namespace BIC.ETL.SqlServer.DataLayer
         {
             var db = DataConnectionFactory.CreateInstance();
             var q = from s  in db.Securities
-                    join i  in db.Industries on s.IndustryID equals i.IndustryID
-                    join sc in db.Sectors    on s.SectorID   equals sc.SectorID
+                    join i  in db.Industries         on s.IndustryID equals i.IndustryID
+                    join sc in db.Sectors            on s.SectorID   equals sc.SectorID
+                    join chk in db.LoadConsistencies on new CompareCondition() { SecurityID = s.SecurityID, Year = SecurityReader.Year, Quarter = SecurityReader.Quarter } equals new CompareCondition() { SecurityID = chk.SecurityID, Year = chk.Year, Quarter = chk.Quarter }
+                    where s.Type == "SEC"
                     select new SecurityRecord() {
-                        SecurityID = s.SecurityID, Ticker = s.Ticker
-                      , SectorID = s.SectorID, Sector = sc.SectorColumn
+                        SecurityID = s.SecurityID, Ticker   = s.Ticker
+                      , SectorID   = s.SectorID,   Sector   = sc.SectorColumn
                       , IndustryID = i.IndustryID, Industry = i.IndustryColumn
+                      , IsBalanceSheetQuarterly    = (chk.BalanceSheetQuarterly == 1)
+                      , IsCashFlowQuarterly        = (chk.CashFlowQuarterly == 1)
+                      , IsIncomeStatementQuarterly = (chk.IncomeStatementQuarterly == 1)
                     };
 
             return q.AsEnumerable();
@@ -52,14 +62,18 @@ namespace BIC.ETL.SqlServer.DataLayer
         public static IEnumerable<SecurityRecord> GetSecurities(string sector)
         {
             var db = DataConnectionFactory.CreateInstance();
-            var q = from s  in db.Securities
-                    join i  in db.Industries on s.IndustryID equals i.IndustryID
-                    join sc in db.Sectors    on s.SectorID   equals sc.SectorID
-                    where sc.SectorColumn == sector
+            var q = from s   in db.Securities
+                    join i   in db.Industries        on s.IndustryID equals i.IndustryID
+                    join sc  in db.Sectors           on s.SectorID   equals sc.SectorID
+                    join chk in db.LoadConsistencies on new CompareCondition() { SecurityID = s.SecurityID, Year = SecurityReader.Year, Quarter = SecurityReader.Quarter } equals new CompareCondition() { SecurityID = chk.SecurityID, Year = chk.Year, Quarter = chk.Quarter }
+                    where sc.SectorColumn == sector && s.Type == "SEC"
                     select new SecurityRecord() {
-                        SecurityID = s.SecurityID, Ticker = s.Ticker
-                        , SectorID = s.SectorID, Sector = sc.SectorColumn
-                        , IndustryID = i.IndustryID, Industry = i.IndustryColumn
+                        SecurityID = s.SecurityID, Ticker   = s.Ticker
+                      , SectorID   = s.SectorID,   Sector   = sc.SectorColumn
+                      , IndustryID = i.IndustryID, Industry = i.IndustryColumn
+                      , IsBalanceSheetQuarterly    = (chk.BalanceSheetQuarterly == 1)
+                      , IsCashFlowQuarterly        = (chk.CashFlowQuarterly == 1)
+                      , IsIncomeStatementQuarterly = (chk.IncomeStatementQuarterly == 1)
                     };
 
             return q.AsEnumerable();

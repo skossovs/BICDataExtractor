@@ -4,11 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BIC.ETL.SqlServer
 {
-    public class FileProcessor
+    public class FileProcessor :IDisposable
     {
         private ILog _logger = LogServiceProvider.Logger;
         private FileArchivarius _archivarius;
@@ -24,26 +25,51 @@ namespace BIC.ETL.SqlServer
             public string                            ClassName;
             public DateTime                          TimeStamp;
         }
+
         public void Do()
+        {
+            // nobody has access to this stop token
+            var tokenSource = new CancellationTokenSource();
+            Do(tokenSource.Token);
+        }
+
+        public void Do(CancellationToken ct)
         {
             var path = Settings.GetInstance().InputDirectory;
 
             var lstFiles = new List<FileType>();
             foreach(var f in System.IO.Directory.EnumerateFiles(path).Where(j => j.EndsWith("json")))
             {
-                // 1. Recognize the file
-                var fileType = Recognize(f);
-                lstFiles.Add(fileType);
+                try
+                {
+                    // Recognize the file
+                    var fileType = Recognize(f);
+                    lstFiles.Add(fileType);
+                }
+                catch(Exception ex)
+                {
+                    _logger.ReportException(ex);
+                    continue; // just go to the next file
+                }
             }
 
-            foreach(var ft in lstFiles.OrderBy(s => s.TimeStamp))
+            ct.ThrowIfCancellationRequested();
+
+            foreach (var ft in lstFiles.OrderBy(s => s.TimeStamp))
             {
                 // 1. Read and Merge it (IFileReaders)
                 _logger.Info("Start Processing file: {0} ..", ft.FilePath);
-                MergFileTypeObject(ft);
+                bool mergeResult = MergFileTypeObject(ft);
                 // 2. Archive it
-                _archivarius.Archive(ft.FilePath);
+                if (mergeResult)
+                    _archivarius.Archive(ft.FilePath);
+                else
+                    _logger.Warning("file {0} has been left for inspection", ft.FilePath);
+
+                if (ct.IsCancellationRequested)
+                    ct.ThrowIfCancellationRequested();
             }
+            _logger.Info("************************ All files in directory have been processed ************************ ");
         }
         private FileType Recognize(string fullFilePath)
         {
@@ -68,6 +94,9 @@ namespace BIC.ETL.SqlServer
                     case "YahooScrapper":
                         result = Foundation.Interfaces.DataSources.Yahoo;
                         break;
+                    case "MoneyConverterScrapper":
+                        result = Foundation.Interfaces.DataSources.MoneyConverter;
+                        break;
                     default:
                         throw new Exception("Unsupported file type: " + s);
                 }
@@ -84,7 +113,7 @@ namespace BIC.ETL.SqlServer
 
             return fileType;
         }
-        private void MergFileTypeObject(FileType ft)
+        private bool MergFileTypeObject(FileType ft)
         {
             try
             {
@@ -94,7 +123,6 @@ namespace BIC.ETL.SqlServer
                         switch (ft.ClassName)
                         {
                             case "OverviewData":
-                                // TODO: here is the problem, different types of data should be returned, current architecture doesn't solve it
                                 var secMasterReader = new FileReaders.SecurityMasterFileMerger(ft.FilePath, ft.TimeStamp);
                                 var overviewObjects = secMasterReader.Read();
                                 secMasterReader.Merge(overviewObjects);
@@ -126,8 +154,37 @@ namespace BIC.ETL.SqlServer
                                 var cfqObjects = cfq.Read();
                                 cfq.Merge(cfqObjects);
                                 break;
+                            case "BalanceSheetData":
+                                var bs = new FileReaders.YahooBalanceSheetMerger(ft.FilePath);
+                                var bsObjects = bs.Read();
+                                bs.Merge(bsObjects);
+                                break;
+                            case "IncomeStatementData":
+                                var ist = new FileReaders.YahooIncomeStatementMerger(ft.FilePath);
+                                var istObjects = ist.Read();
+                                ist.Merge(istObjects);
+                                break;
+                            case "CashFlowData":
+                                var cf = new FileReaders.YahooCashFlowMerger(ft.FilePath);
+                                var cfObjects = cf.Read();
+                                cf.Merge(cfObjects);
+                                break;
+
                             default:
                                 throw new Exception("Unsupported class: " + ft.ClassName);
+                        }
+                        break;
+                    case Foundation.Interfaces.DataSources.MoneyConverter:
+                        switch (ft.ClassName)
+                        {
+                            case "FxUsdData":
+                                var fx = new FileReaders.MoneyConverterFxMerger(ft.FilePath);
+                                var fxObjects = fx.Read();
+                                fx.Merge(fxObjects);
+                                break;
+                            default:
+                                throw new Exception("Unsupported class: " + ft.ClassName);
+
                         }
                         break;
                 }
@@ -136,8 +193,15 @@ namespace BIC.ETL.SqlServer
             {
                 _logger.Error(ex.Message);
                 _logger.Error(ex.StackTrace);
-                throw;
+                return false;
             }
+
+            return true;
+        }
+
+        public void Dispose()
+        {
+            _archivarius.Dispose();
         }
     }
 }

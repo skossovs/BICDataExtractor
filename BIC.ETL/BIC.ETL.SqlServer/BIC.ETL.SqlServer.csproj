@@ -56,10 +56,14 @@
     <Compile Include="FileArchivarius.cs" />
     <Compile Include="FileReaders\FileReader.cs" />
     <Compile Include="FileReaders\FinvizKeyRatioFileMerger.cs" />
+    <Compile Include="FileReaders\MoneyConverterFxMerger.cs" />
     <Compile Include="FileReaders\SecurityMasterFileMerger.cs" />
     <Compile Include="FileProcessor.cs" />
+    <Compile Include="FileReaders\YahooBalanceSheetMerger.cs" />
     <Compile Include="FileReaders\YahooBalanceSheetQuarterlyMerger.cs" />
+    <Compile Include="FileReaders\YahooCashFlowMerger.cs" />
     <Compile Include="FileReaders\YahooCashFlowQuarterlyMerger.cs" />
+    <Compile Include="FileReaders\YahooIncomeStatementMerger.cs" />
     <Compile Include="FileReaders\YahooIncomeStatementQuarterlyMerger.cs" />
     <Compile Include="IFileMerger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -73,6 +77,10 @@
     <ProjectReference Include="..\..\BIC.Scrappers\BIC.FinvizScrapper\BIC.FinvizScrapper.csproj">
       <Project>{e7ea4eb2-ffea-4a80-9369-5ef7576c628c}</Project>
       <Name>BIC.FinvizScrapper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\BIC.Scrappers\BIC.MoneyConverterScrapper\BIC.MoneyConverterScrapper.csproj">
+      <Project>{FEDB40F8-130C-4D66-92AA-33053AB023BE}</Project>
+      <Name>BIC.MoneyConverterScrapper</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\BIC.Utils\BIC.Utils.csproj">
       <Project>{1fd4c7b7-7ea9-4f9a-91f6-09ff4aedd208}</Project>

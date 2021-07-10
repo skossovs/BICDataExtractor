@@ -1,0 +1,120 @@
+﻿<Window x:Class="BIC.WPF.ScrapManager.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x     ="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d     ="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc    ="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local ="clr-namespace:BIC.WPF.ScrapManager"
+        xmlns:conv  ="clr-namespace:BIC.WPF.ScrapManager.Converters"
+        xmlns:mvvm  ="clr-namespace:BIC.WPF.ScrapManager.MVVM"
+        xmlns:data  ="clr-namespace:BIC.WPF.ScrapManager.Data"
+        xmlns:behaviours ="clr-namespace:BIC.WPF.ScrapManager.MVVM.Behaviors"
+        xmlns:i     ="http://schemas.microsoft.com/expression/2010/interactivity"
+        mc:Ignorable="d"
+        Title="BIC Scrap Manager" Height="1050" Width="1450" ShowInTaskbar="False">
+    <Window.Resources>
+        <!-- create 2 instances of View models one for scrapper and one for etl -->
+        <!-- TODO: provide proper paths in constructors -->
+        <mvvm:ControlProcessViewModel x:Key="processControlVMScrapper" ProcessType="Scrapper"/>
+        <mvvm:ControlProcessViewModel x:Key="processControlVMetl"      ProcessType="ETL"/>
+        <mvvm:CommandTreeViewModel    x:Key="commandTreeViewModel">   </mvvm:CommandTreeViewModel>
+        <conv:StatusConverter         x:Key="ProcessorStatusToString"></conv:StatusConverter>
+        <conv:IntToStringConverter    x:Key="IntToString">            </conv:IntToStringConverter>
+
+        <ControlTemplate x:Key="ProcessControlTemplate" TargetType="ContentControl">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center">
+                <Button Width="30" Height="30" Command="{Binding StartCommand}" CommandParameter="{Binding SelectedNodeKey, Converter={StaticResource IntToString}}">
+                    <Button.Background>
+                        <ImageBrush ImageSource="Resources/play.png"/>
+                    </Button.Background>
+                </Button>
+                <Button Width="30" Height="30" Command="{Binding StopCommand}">
+                    <Button.Background>
+                        <ImageBrush ImageSource="Resources/stop.png"/>
+                    </Button.Background>
+                </Button>
+                <Rectangle Width="30" Height="30">
+                        <!--
+                        <EventTrigger RoutedEvent="Rectangle.Loaded">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation
+                                      Storyboard.TargetProperty="Opacity"
+                                      From="1.0" To="0.0" Duration="0:0:5"
+                                      AutoReverse="True" RepeatBehavior="Forever" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+
+                        -->
+                        <Rectangle.Style>
+                            <Style TargetType="{x:Type Rectangle}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Path=Status, Converter={StaticResource ProcessorStatusToString}}"
+                                         Value="Killed">
+                                        <Setter Property="Fill" Value="Red"></Setter>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Path=Status, Converter={StaticResource ProcessorStatusToString}}"
+                                             Value="Finished">
+                                        <Setter Property="Fill" Value="Green"></Setter>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Path=Status, Converter={StaticResource ProcessorStatusToString}}"
+                                             Value="Running">
+                                        <Setter Property="Fill" Value="Yellow"></Setter>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Path=Status, Converter={StaticResource ProcessorStatusToString}}"
+                                             Value="Stopped">
+                                        <Setter Property="Fill" Value="Gray"></Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Rectangle.Style>
+                </Rectangle>
+            </StackPanel>
+        </ControlTemplate>
+    </Window.Resources>
+    <Window.DataContext>
+        <mvvm:MainViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <DockPanel Grid.Row="0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="8*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" DataContext="{StaticResource processControlVMScrapper}">
+                    <ContentControl Template="{StaticResource ProcessControlTemplate}"></ContentControl>
+                    <TreeView Name ="tvCommands"  DataContext="{Binding Source={StaticResource commandTreeViewModel}}"
+                                                  ItemsSource="{Binding TreeData}">
+                        <TreeView.Resources>
+                            <HierarchicalDataTemplate DataType="{x:Type data:Group}" ItemsSource="{Binding Items}">
+                                <TextBlock Text="{Binding Path=Name}" />
+                            </HierarchicalDataTemplate>
+                            <HierarchicalDataTemplate DataType="{x:Type data:Entry}" ItemsSource="{Binding Entry}">
+                                <TextBlock Text="{Binding Path=Name}" />
+                            </HierarchicalDataTemplate>
+                        </TreeView.Resources>
+                        <i:Interaction.Behaviors>
+                            <behaviours:BindableSelectedItemBehavior SelectedItem="{Binding SelectedItem, Mode=TwoWay}" />
+                        </i:Interaction.Behaviors>
+                    </TreeView>
+                </StackPanel>
+            </Grid>
+        </DockPanel>
+        <DockPanel Grid.Row="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="8*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" DataContext="{StaticResource processControlVMetl}">
+                    <ContentControl Template="{StaticResource ProcessControlTemplate}"></ContentControl>
+                </StackPanel>
+            </Grid>
+        </DockPanel>
+    </Grid>
+</Window>

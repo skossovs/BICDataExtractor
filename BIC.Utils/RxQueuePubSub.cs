@@ -16,7 +16,7 @@ namespace BIC.Utils
     {
     }
 
-    public class RxQueuePubSub
+    public class RxQueuePubSub : IDisposable
     {
         Subject<IRxQueueJob> _jobs = new Subject<IRxQueueJob>();
         private IConnectableObservable<IRxQueueJob> _connectableObservable;
@@ -25,6 +25,11 @@ namespace BIC.Utils
         {
             _connectableObservable = _jobs.ObserveOn(Scheduler.Default).Publish();
             _connectableObservable.Connect();
+        }
+
+        public void Dispose()
+        {
+            _jobs.Dispose();
         }
 
         public void Enqueue(IRxQueueJob job)
@@ -36,5 +41,6 @@ namespace BIC.Utils
         {
             _connectableObservable.OfType<T>().Subscribe(handleAction);
         }
+
     }
 }

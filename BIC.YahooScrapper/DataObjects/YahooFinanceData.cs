@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace BIC.Scrappers.YahooScrapper.DataObjects
 {
-    public class QuarterNumber
+    public class YahooFinanceData
     {
-        public string raw     { get; set; }
-        public string fmt     { get; set; }
-        public string longFmt { get; set; }
+        public string Ticker { get; set; }
     }
 }

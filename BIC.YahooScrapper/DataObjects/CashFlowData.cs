@@ -6,33 +6,33 @@ using System.Threading.Tasks;
 
 namespace BIC.Scrappers.YahooScrapper.DataObjects
 {
-    public class CashFlowData
+    public class CashFlowData : YahooFinanceData
     {
+        public YahooFinanceNumber investments                            { get; set; }
+        public YahooFinanceNumber changeToLiabilities                    { get; set; }
+        public YahooFinanceNumber totalCashflowsFromInvestingActivities  { get; set; }
+        public YahooFinanceNumber netBorrowings                          { get; set; }
+        public YahooFinanceNumber totalCashFromFinancingActivities       { get; set; }
+        public YahooFinanceNumber changeToOperatingActivities            { get; set; }
+        public YahooFinanceNumber issuanceOfStock                        { get; set; }
+        public YahooFinanceNumber netIncome                              { get; set; }
+        public YahooFinanceNumber changeInCash                           { get; set; }
+        public YahooFinanceNumber endDate                                { get; set; }
+        public YahooFinanceNumber repurchaseOfStock                      { get; set; }
+        public YahooFinanceNumber effectOfExchangeRate                   { get; set; }
+        public YahooFinanceNumber totalCashFromOperatingActivities       { get; set; }
+        public YahooFinanceNumber depreciation                           { get; set; }
+        public YahooFinanceNumber otherCashflowsFromInvestingActivities  { get; set; }
+        public YahooFinanceNumber dividendsPaid                          { get; set; }
+        public YahooFinanceNumber changeToInventory                      { get; set; }
+        public YahooFinanceNumber changeToAccountReceivables             { get; set; }
+        public YahooFinanceNumber otherCashflowsFromFinancingActivities  { get; set; }
+        public int maxAge                                           { get; set; }
+        public YahooFinanceNumber changeToNetincome                      { get; set; }
+        public YahooFinanceNumber capitalExpenditures                    { get; set; }
     }
 
-    public class CashFlowDataQuarterly : QuarterData
+    public class CashFlowDataQuarterly : CashFlowData
     {
-        public QuarterNumber investments                            { get; set; }
-        public QuarterNumber changeToLiabilities                    { get; set; }
-        public QuarterNumber totalCashflowsFromInvestingActivities  { get; set; }
-        public QuarterNumber netBorrowings                          { get; set; }
-        public QuarterNumber totalCashFromFinancingActivities       { get; set; }
-        public QuarterNumber changeToOperatingActivities            { get; set; }
-        public QuarterNumber issuanceOfStock                        { get; set; }
-        public QuarterNumber netIncome                              { get; set; }
-        public QuarterNumber changeInCash                           { get; set; }
-        public QuarterNumber endDate                                { get; set; }
-        public QuarterNumber repurchaseOfStock                      { get; set; }
-        public QuarterNumber effectOfExchangeRate                   { get; set; }
-        public QuarterNumber totalCashFromOperatingActivities       { get; set; }
-        public QuarterNumber depreciation                           { get; set; }
-        public QuarterNumber otherCashflowsFromInvestingActivities  { get; set; }
-        public QuarterNumber dividendsPaid                          { get; set; }
-        public QuarterNumber changeToInventory                      { get; set; }
-        public QuarterNumber changeToAccountReceivables             { get; set; }
-        public QuarterNumber otherCashflowsFromFinancingActivities  { get; set; }
-        public int maxAge                                           { get; set; }
-        public QuarterNumber changeToNetincome                      { get; set; }
-        public QuarterNumber capitalExpenditures                    { get; set; }
     }
 }

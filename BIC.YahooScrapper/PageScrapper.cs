@@ -60,7 +60,7 @@ namespace BIC.Scrappers.YahooScrapper
             return result;
         }
 
-        private bool ProcessData<QT>(YahooParameters requestParameters, string generatedAddress, out Exception ex) where QT : QuarterData
+        private bool ProcessData<QT>(YahooParameters requestParameters, string generatedAddress, out Exception ex) where QT : YahooFinanceData
         {
             IEnumerable<QT> allPageData;
             bool result = GetStringTableFromCurrentPageQuarterly(generatedAddress, requestParameters, out allPageData);
@@ -77,7 +77,7 @@ namespace BIC.Scrappers.YahooScrapper
         }
 
         private bool GetStringTableFromCurrentPageQuarterly<QT>(string generatedAddress, YahooParameters requestParameters, out IEnumerable<QT> data)
-            where QT:QuarterData
+            where QT:YahooFinanceData
         {
             var retriever = ContentRetrieverFactory.CreateInstance(ERetrieverType.Yahoo);
             var currentPagehtmlContent = retriever.GetData(generatedAddress);
@@ -113,7 +113,7 @@ namespace BIC.Scrappers.YahooScrapper
                 else if(typeof(QT).Name == "BalanceSheetDataQuarterly")
                     jsonPath = "context.dispatcher.stores.QuoteSummaryStore.balanceSheetHistoryQuarterly";
                 else if (typeof(QT).Name == "CashFlowDataQuarterly")
-                    jsonPath = "context.dispatcher.stores.QuoteSummaryStore.cashflowStatementHistory";
+                    jsonPath = "context.dispatcher.stores.QuoteSummaryStore.cashflowStatementHistoryQuarterly";
                 else
                 {
                     _logger.Error("Unsupported type: {0}", typeof(QT).Name);

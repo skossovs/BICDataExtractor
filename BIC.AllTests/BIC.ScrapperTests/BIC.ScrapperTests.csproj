@@ -58,20 +58,29 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TEST_HttpRequestData.cs" />
     <Compile Include="TEST_TableReaderBasedOnFinviz.cs" />
+    <Compile Include="TEST_YahooJsonExtractors.cs" />
     <Compile Include="TEST_YahooScrapper.cs" />
     <Compile Include="TEST_YamlOperations.cs" />
+    <Compile Include="TEST_FxScrappers.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <Content Include="chromedriver.zip">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />
+    <Content Include="TestData\Yahoo_MLR.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BIC.Scrappers\BIC.FinvizScrapper\BIC.FinvizScrapper.csproj">
       <Project>{e7ea4eb2-ffea-4a80-9369-5ef7576c628c}</Project>
       <Name>BIC.FinvizScrapper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\BIC.Scrappers\BIC.MoneyConverterScrapper\BIC.MoneyConverterScrapper.csproj">
+      <Project>{FEDB40F8-130C-4D66-92AA-33053AB023BE}</Project>
+      <Name>BIC.MoneyConverterScrapper</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\BIC.Scrappers\BIC.Scrappers.Utils\BIC.Scrappers.Utils.csproj">
       <Project>{C4CB8249-5756-4B29-9217-12B8AA7BB38F}</Project>

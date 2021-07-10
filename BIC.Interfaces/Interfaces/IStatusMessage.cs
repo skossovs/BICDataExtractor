@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BIC.Scrappers.YahooScrapper.DataObjects
+namespace BIC.Foundation.Interfaces
 {
-    public class QuarterData
+    public interface IStatusMessage
     {
-        public string Ticker { get; set; }
+        EProcessStatus ProcessStatus { get; set; }
     }
 }

@@ -28,5 +28,9 @@ namespace BIC.ETL.SqlServer
         public string InputDirectory { get; set; }
         [Mandatory]
         public string SQLConnectionString { get; set; }
+        [Mandatory]
+        public string ZipFileName { get; set; }
+        [Mandatory]
+        public int   ZipMaxFileLength { get; set; }
     }
 }

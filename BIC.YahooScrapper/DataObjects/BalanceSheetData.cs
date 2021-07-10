@@ -6,38 +6,38 @@ using System.Threading.Tasks;
 
 namespace BIC.Scrappers.YahooScrapper.DataObjects
 {
-    class BalanceSheetData
+    public class BalanceSheetData : YahooFinanceData
     {
+        public YahooFinanceNumber intangibleAssets        { get; set; }
+        public YahooFinanceNumber totalLiab               { get; set; }
+        public YahooFinanceNumber totalStockholderEquity  { get; set; }
+        public YahooFinanceNumber otherCurrentLiab        { get; set; }
+        public YahooFinanceNumber totalAssets             { get; set; }
+        public YahooFinanceNumber endDate                 { get; set; }
+        public YahooFinanceNumber commonStock             { get; set; }
+        public YahooFinanceNumber otherCurrentAssets      { get; set; }
+        public YahooFinanceNumber retainedEarnings        { get; set; }
+        public YahooFinanceNumber otherLiab               { get; set; }
+        public YahooFinanceNumber goodWill                { get; set; }
+        public YahooFinanceNumber treasuryStock           { get; set; }
+        public YahooFinanceNumber otherAssets             { get; set; }
+        public YahooFinanceNumber cash                    { get; set; }
+        public YahooFinanceNumber totalCurrentLiabilities { get; set; }
+        public YahooFinanceNumber shortLongTermDebt       { get; set; }
+        public YahooFinanceNumber otherStockholderEquity  { get; set; }
+        public YahooFinanceNumber propertyPlantEquipment  { get; set; }
+        public YahooFinanceNumber totalCurrentAssets      { get; set; }
+        public YahooFinanceNumber longTermInvestments     { get; set; }
+        public YahooFinanceNumber netTangibleAssets       { get; set; }
+        public YahooFinanceNumber shortTermInvestments    { get; set; }
+        public YahooFinanceNumber netReceivables          { get; set; }
+        public int           maxAge                  { get; set; }
+        public YahooFinanceNumber longTermDebt            { get; set; }
+        public YahooFinanceNumber inventory               { get; set; }
+        public YahooFinanceNumber accountsPayable         { get; set; }
     }
 
-    public class BalanceSheetDataQuarterly : QuarterData
+    public class BalanceSheetDataQuarterly : BalanceSheetData
     {
-        public QuarterNumber intangibleAssets        { get; set; }
-        public QuarterNumber totalLiab               { get; set; }
-        public QuarterNumber totalStockholderEquity  { get; set; }
-        public QuarterNumber otherCurrentLiab        { get; set; }
-        public QuarterNumber totalAssets             { get; set; }
-        public QuarterNumber endDate                 { get; set; }
-        public QuarterNumber commonStock             { get; set; }
-        public QuarterNumber otherCurrentAssets      { get; set; }
-        public QuarterNumber retainedEarnings        { get; set; }
-        public QuarterNumber otherLiab               { get; set; }
-        public QuarterNumber goodWill                { get; set; }
-        public QuarterNumber treasuryStock           { get; set; }
-        public QuarterNumber otherAssets             { get; set; }
-        public QuarterNumber cash                    { get; set; }
-        public QuarterNumber totalCurrentLiabilities { get; set; }
-        public QuarterNumber shortLongTermDebt       { get; set; }
-        public QuarterNumber otherStockholderEquity  { get; set; }
-        public QuarterNumber propertyPlantEquipment  { get; set; }
-        public QuarterNumber totalCurrentAssets      { get; set; }
-        public QuarterNumber longTermInvestments     { get; set; }
-        public QuarterNumber netTangibleAssets       { get; set; }
-        public QuarterNumber shortTermInvestments    { get; set; }
-        public QuarterNumber netReceivables          { get; set; }
-        public int           maxAge                  { get; set; }
-        public QuarterNumber longTermDebt            { get; set; }
-        public QuarterNumber inventory               { get; set; }
-        public QuarterNumber accountsPayable         { get; set; }
     }
 }
