@@ -62,6 +62,7 @@
     <Compile Include="TEST_YahooScrapper.cs" />
     <Compile Include="TEST_YamlOperations.cs" />
     <Compile Include="TEST_FxScrappers.cs" />
+    <Compile Include="TEST_YahooJsonExtractorsFinancials.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -70,6 +71,9 @@
     </Content>
     <None Include="packages.config" />
     <Content Include="TestData\Yahoo_MLR.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\Yahoo_Finance_BAC.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
