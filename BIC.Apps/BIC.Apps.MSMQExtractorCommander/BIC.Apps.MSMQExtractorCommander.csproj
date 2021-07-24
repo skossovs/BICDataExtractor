@@ -45,12 +45,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AllTickers.cs" />
     <Compile Include="FinvizBridgeComponents.cs" />
     <Compile Include="FxRatesBridgeComponents.cs" />
     <Compile Include="IBridgeComponents.cs" />
+    <Compile Include="ITickerGenerator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScrapCommand.cs" />
+    <Compile Include="TickersBySector.cs" />
     <Compile Include="YahooBridgeComponents.cs" />
   </ItemGroup>
   <ItemGroup>
