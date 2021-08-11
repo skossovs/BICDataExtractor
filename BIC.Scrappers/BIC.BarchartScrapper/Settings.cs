@@ -1,7 +1,12 @@
-﻿using BIC.Utils.Attributes;
+﻿using System;
+using BIC.Utils.Attributes;
 using BIC.Utils.SettingProcessors;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace BIC.Scrappers.FinvizScrapper
+namespace BIC.BarchartScrapper
 {
     [AppSettingsXML]
     public class Settings
@@ -19,9 +24,9 @@ namespace BIC.Scrappers.FinvizScrapper
             return _singletonSetings;
         }
         [Mandatory]
-        public string UrlRoot             { get; set; }
+        public string UrlRoot { get; set; }
         public int? DefaultDocumentsCount { get; set; }
         [Mandatory]
-        public string OutputDirectory     { get; set; }
+        public string OutputDirectory { get; set; }
     }
 }

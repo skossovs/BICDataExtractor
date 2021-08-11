@@ -51,6 +51,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BIC.Apps.MSMQEtlProcess", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BIC.Apps.MSMQExtractorCommander", "BIC.Apps\BIC.Apps.MSMQExtractorCommander\BIC.Apps.MSMQExtractorCommander.csproj", "{72BE2536-5F72-4797-B2B4-806035A8B630}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BIC.BarchartScrapper", "BIC.Scrappers\BIC.BarchartScrapper\BIC.BarchartScrapper.csproj", "{18150698-492F-44B4-9C09-FF5B6BB6DBDD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -117,6 +119,10 @@ Global
 		{72BE2536-5F72-4797-B2B4-806035A8B630}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72BE2536-5F72-4797-B2B4-806035A8B630}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72BE2536-5F72-4797-B2B4-806035A8B630}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18150698-492F-44B4-9C09-FF5B6BB6DBDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18150698-492F-44B4-9C09-FF5B6BB6DBDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18150698-492F-44B4-9C09-FF5B6BB6DBDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18150698-492F-44B4-9C09-FF5B6BB6DBDD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -137,5 +143,6 @@ Global
 		{35F2CCF1-B994-49AA-AC48-62BE7509904B} = {99B1A906-C228-4DB2-A339-F810594926E6}
 		{58AE6260-D64C-4428-B317-CD2A12442512} = {99B1A906-C228-4DB2-A339-F810594926E6}
 		{72BE2536-5F72-4797-B2B4-806035A8B630} = {99B1A906-C228-4DB2-A339-F810594926E6}
+		{18150698-492F-44B4-9C09-FF5B6BB6DBDD} = {18792F9E-3FDC-44B2-B39D-3708822A924D}
 	EndGlobalSection
 EndGlobal

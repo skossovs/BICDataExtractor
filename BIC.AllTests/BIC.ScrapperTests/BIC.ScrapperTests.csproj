@@ -52,6 +52,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TEST_BarchartScrapper.cs" />
     <Compile Include="TEST_CQHelper.cs" />
     <Compile Include="TEST_Delayers.cs" />
     <Compile Include="TEST_FinvizPager.cs" />
@@ -74,6 +75,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\BIC.Scrappers\BIC.BarchartScrapper\BIC.BarchartScrapper.csproj">
+      <Project>{18150698-492f-44b4-9c09-ff5b6bb6dbdd}</Project>
+      <Name>BIC.BarchartScrapper</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\BIC.Scrappers\BIC.FinvizScrapper\BIC.FinvizScrapper.csproj">
       <Project>{e7ea4eb2-ffea-4a80-9369-5ef7576c628c}</Project>
       <Name>BIC.FinvizScrapper</Name>
