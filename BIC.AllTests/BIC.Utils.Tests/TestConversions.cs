@@ -6,6 +6,38 @@ namespace BIC.Utils.Tests
     [TestClass]
     public class TestConversions
     {
+
+        [TestMethod]
+        public void TestDirtyDateStringFromFinvizAug03()
+        {
+            var dirtyDateString = "Aug 03/b";
+            int YearNow = DateTime.Now.Year;
+            var expectedDate = new DateTime(YearNow, 8, 3);
+
+            var resultDate = dirtyDateString.DirtyDateStringToDate(e => Assert.Fail(e.Message));
+            Assert.AreEqual(expectedDate, resultDate);
+        }
+
+        [TestMethod]
+        public void TestDirtyDateStringFromFinvizAug12()
+        {
+            var dirtyDateString = "Aug 12/a";
+            int YearNow = DateTime.Now.Year;
+            var expectedDate = new DateTime(YearNow, 8, 12);
+
+            var resultDate = dirtyDateString.DirtyDateStringToDate(e => Assert.Fail(e.Message));
+            Assert.AreEqual(expectedDate, resultDate);
+        }
+
+        [TestMethod]
+        public void TestDirtyDateStringFromFinvizEmpty()
+        {
+            var dirtyDateString = "-";
+            var resultDate = dirtyDateString.DirtyDateStringToDate(e => Assert.Fail(e.Message), new char[] { '-' });
+            Assert.IsNull(resultDate);
+        }
+
+
         [TestMethod]
         public void TestQuarters()
         {

@@ -58,53 +58,62 @@ namespace BIC.Scrappers.Utils.TableScrapping
 
         public IEnumerable<T> GenerateDataSet(IEnumerable<string[]> scrappedRecords)
         {
-            if (_propertyMapping == null)
-                throw new Exception("Mapping is not ready. One must call TableReader<T>.MapHeader method first.");
-
-            var props = typeof(T).GetProperties();
-            var results = new T[scrappedRecords.Count()];
-            int i = 0;
-            foreach (var record in scrappedRecords)
+            try
             {
-                T obj = new T();
-                foreach (var m in _propertyMapping)
+                if (_propertyMapping == null)
+                    throw new Exception("Mapping is not ready. One must call TableReader<T>.MapHeader method first.");
+
+                var props = typeof(T).GetProperties();
+                var results = new T[scrappedRecords.Count()];
+                int i = 0;
+                foreach (var record in scrappedRecords)
                 {
-                    Action<string> fCreateErrorMessage = (msg) => 
+                    T obj = new T();
+                    foreach (var m in _propertyMapping)
                     {
-                        var s = new StringBuilder();
-                        s.Append("Value:" + obj + ";");
-                        s.Append("PropertyName:" + props[m.PropertyIndex].Name + ";");
-                        s.Append("PropertyIndex:" + Convert.ToString(m.PropertyIndex) + ";");
-                        s.Append("ErrorMessage: " + msg);
-                        _logger.Error(s.ToString());
-                    };
+                        Action<string, AllowedTypes> fCreateErrorMessage = (msg, allowedTypes) =>
+                        {
+                            var s = new StringBuilder();
+                            s.Append("Type:" + allowedTypes.ToString() + ";");
+                            s.Append("Value:" + obj + ";");
+                            s.Append("PropertyName:" + props[m.PropertyIndex].Name + ";");
+                            s.Append("PropertyIndex:" + Convert.ToString(m.PropertyIndex) + ";");
+                            s.Append("ErrorMessage: " + msg);
+                            _logger.Error(s.ToString());
+                        };
 
-                    if(m.ColumnIndex == -1)
-                    {
-                        _logger.Error($"Column index is -1 for the following property : {props[m.PropertyIndex].Name}");
-                        continue;
+                        if (m.ColumnIndex == -1)
+                        {
+                            _logger.Error($"Column index is -1 for the following property : {props[m.PropertyIndex].Name}");
+                            continue;
+                        }
+                        switch (m.PropertyType)
+                        {
+                            case AllowedTypes.DateType:
+                                props[m.PropertyIndex].SetValue(obj, record[m.ColumnIndex].DirtyDateStringToDate(e => fCreateErrorMessage(e.Message, AllowedTypes.DateType), EmptyCharacters));
+                                break;
+                            case AllowedTypes.DecimalType:
+                                props[m.PropertyIndex].SetValue(obj, record[m.ColumnIndex].AllSpecialsStringToDecimal(e => fCreateErrorMessage(e.Message, AllowedTypes.DecimalType), EmptyCharacters));
+                                break;
+                            case AllowedTypes.IntType:
+                                props[m.PropertyIndex].SetValue(obj, record[m.ColumnIndex].StringToInt(e => fCreateErrorMessage(e.Message, AllowedTypes.IntType), EmptyCharacters));
+                                break;
+                            case AllowedTypes.StringType:
+                                props[m.PropertyIndex].SetValue(obj, record[m.ColumnIndex]);
+                                break;
+                        }
                     }
-                    switch(m.PropertyType)
-                    {
-                        case AllowedTypes.DateType:
-                            props[m.PropertyIndex].SetValue(obj, record[m.ColumnIndex].StringToDate(e => fCreateErrorMessage(e.Message), EmptyCharacters));
-                            break;
-                        case AllowedTypes.DecimalType:
-                            props[m.PropertyIndex].SetValue(obj, record[m.ColumnIndex].AllSpecialsStringToDecimal(e => fCreateErrorMessage(e.Message), EmptyCharacters));
-                            break;
-                        case AllowedTypes.IntType:
-                            props[m.PropertyIndex].SetValue(obj, record[m.ColumnIndex].StringToInt(e => fCreateErrorMessage(e.Message), EmptyCharacters));
-                            break;
-                        case AllowedTypes.StringType:
-                            props[m.PropertyIndex].SetValue(obj, record[m.ColumnIndex]);
-                            break;
-                    }
+
+                    results[i] = obj;
+                    i++;
                 }
-
-                results[i] = obj;
-                i++;
+                return results;
             }
-            return results;
+            catch(Exception ex)
+            {
+                _logger.ReportException(ex);
+                throw;
+            }
         }
     }
 }

@@ -61,11 +61,11 @@ CREATE TABLE [dbo].[KeyRatio](
 	[GrossMargin] [numeric](18, 6) NULL,
 	[OperationMargin] [numeric](18, 6) NULL,
 	[ProfitMargin] [numeric](18, 6) NULL,
-	[Earnings] [numeric](18, 6) NULL,
 	[Price] [numeric](18, 6) NULL,
 	[Change] [numeric](18, 6) NULL,
 	[Volume] [numeric](38, 6) NULL,
- CONSTRAINT [PK_KeyRatio] PRIMARY KEY CLUSTERED 
+	[Earnings] [date] NULL,
+ CONSTRAINT [PK_KeyRatio] PRIMARY KEY CLUSTERED
 (
 	[SecurityID] ASC,
 	[Year] ASC,

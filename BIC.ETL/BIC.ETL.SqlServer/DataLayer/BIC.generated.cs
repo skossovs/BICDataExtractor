@@ -197,10 +197,10 @@ namespace BIC.ETL.SqlServer.DataLayer
         [Column, Nullable] public decimal? GrossMargin { get; set; } // numeric(18, 6)
         [Column, Nullable] public decimal? OperationMargin { get; set; } // numeric(18, 6)
         [Column, Nullable] public decimal? ProfitMargin { get; set; } // numeric(18, 6)
-        [Column, Nullable] public decimal? Earnings { get; set; } // numeric(18, 6)
         [Column, Nullable] public decimal? Price { get; set; } // numeric(18, 6)
         [Column, Nullable] public decimal? Change { get; set; } // numeric(18, 6)
         [Column, Nullable] public decimal? Volume { get; set; } // numeric(38, 6)
+        [Column, Nullable] public DateTime? Earnings { get; set; } // date
     }
 
     [Table(Schema = "dbo", Name = "LevelZeroScreener", IsView = true)]
