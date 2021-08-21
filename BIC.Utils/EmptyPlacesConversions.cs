@@ -42,6 +42,10 @@ namespace BIC.Utils
         {
             return value.NullIfEmptyPlace(emptyPlaceCharacters)?.StringToDate(errorAction);
         }
+        public static DateTime? DirtyDateStringToDate(this string value, Action<Exception> errorAction, char[] emptyPlaceCharacters)
+        {
+            return value.NullIfEmptyPlace(emptyPlaceCharacters)?.DirtyDateStringToDate(errorAction);
+        }
 
         public static T? StringToT<T>(this string value, Func<string, T> f, Action<Exception> errorAction, char[] emptyPlaceCharacters)
             where T : struct

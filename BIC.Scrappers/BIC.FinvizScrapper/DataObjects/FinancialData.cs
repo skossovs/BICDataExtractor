@@ -34,7 +34,7 @@ namespace BIC.Scrappers.FinvizScrapper.DataObjects
         [PropertyMappingAttribute(ColumnNameOnTheSite = "Profit M")]
         public Decimal? ProfitMargin { get; set; }
         [PropertyMappingAttribute(ColumnNameOnTheSite = "Earnings")]
-        public Decimal? Earnings { get; set; }
+        public DateTime? Earnings { get; set; }
         [PropertyMappingAttribute(ColumnNameOnTheSite = "Price")]
         public Decimal? Price { get; set; }
         [PropertyMappingAttribute(ColumnNameOnTheSite = "Change")]
