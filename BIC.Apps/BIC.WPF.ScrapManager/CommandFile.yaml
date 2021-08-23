@@ -1,4 +1,5 @@
 ﻿BIC.Apps.ExtractorCommander.exe:
+  - "-rs fx"
   - "-rs finviz":
     - "-etl secmaster"
     - "-etl finance":
