@@ -48,6 +48,8 @@
     <Compile Include="Constants.cs" />
     <Compile Include="FinvizBridgeComponents.cs" />
     <Compile Include="IBridgeComponents.cs" />
+    <Compile Include="MSMQData\CommandMessage.cs" />
+    <Compile Include="MSMQData\StatusMessage.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Strategy\BICStrategy.cs" />
