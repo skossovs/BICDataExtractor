@@ -69,6 +69,7 @@
     <Compile Include="Logger\LogDelegator.cs" />
     <Compile Include="Logger\LogServiceProvider.cs" />
     <Compile Include="Logger\SimpleLogger.cs" />
+    <Compile Include="Monads\Cyclic.cs" />
     <Compile Include="Monads\Maybe.cs" />
     <Compile Include="Monads\RefAndStructMaybe.cs" />
     <Compile Include="MSMQ\OneToManySenderReceiver.cs" />

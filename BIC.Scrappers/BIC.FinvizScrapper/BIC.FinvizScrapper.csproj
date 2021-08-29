@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AllPageScrapper.cs" />
+    <Compile Include="AllPageScrapperStoppable.cs" />
     <Compile Include="Conversions.cs" />
     <Compile Include="DataObjects\FinancialData.cs" />
     <Compile Include="DataObjects\OverviewData.cs" />

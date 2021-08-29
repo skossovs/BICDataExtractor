@@ -13,8 +13,8 @@ namespace BIC.Scrappers.FinvizScrapper
 {
     public class AllPageScrapper<T> where T : class, new()
     {
-        private ILog _logger = LogServiceProvider.Logger;
-        public void Scrap(FinvizParameters requestParameters)
+        protected ILog _logger = LogServiceProvider.Logger;
+        public virtual void Scrap(FinvizParameters requestParameters)
         {
             var pageMetrics = GetFirstPageMetrics(requestParameters);
             var allPageData = new List<T>();
@@ -57,7 +57,7 @@ namespace BIC.Scrappers.FinvizScrapper
             }
         }
 
-        private PageMetric GetFirstPageMetrics(FinvizParameters requestParameters)
+        protected PageMetric GetFirstPageMetrics(FinvizParameters requestParameters)
         {
             var pager = new FinvizPager<FinvizParameters>();
             int recordsPerPage = 0;
@@ -69,7 +69,7 @@ namespace BIC.Scrappers.FinvizScrapper
 
             return new PageMetric() { NumberOfPages = maxPage };
         }
-        private bool GetStringTableFromCurrentPage(string generatedAddress, out string[] headers, out IEnumerable<string[]> data)
+        protected bool GetStringTableFromCurrentPage(string generatedAddress, out string[] headers, out IEnumerable<string[]> data)
         {
             var retriever = ContentRetrieverFactory.CreateInstance(ERetrieverType.Finviz);
             var currentPagehtmlContent = retriever.GetData(generatedAddress);
@@ -129,7 +129,7 @@ namespace BIC.Scrappers.FinvizScrapper
             data = lstCells.AsEnumerable();
             return true;
         }
-        private int? ConvertPageToR(int page)
+        protected int? ConvertPageToR(int page)
         {
             if (page == 1)
                 return null;
