@@ -10,15 +10,32 @@ using System.Threading.Tasks;
 
 namespace BIC.Scrappers.FinvizScrapper
 {
+    public delegate void StopperEventHandler();
+    public interface IStoppableStatusable
+    {
+        ILog OverrideLogger(ILog originalLogger);
+        bool IsStopped { get;  }
+    }
+
+    /// <summary>
+    /// If interrupted get out immediately
+    /// If Error save in the file whatever managed to process
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class AllPageScrapperStoppable<T> : AllPageScrapper<T> where T : class, new()
     {
-
-        public AllPageScrapperStoppable()
+        private IStoppableStatusable _comm;
+        public AllPageScrapperStoppable(IStoppableStatusable comm)
         {
-
+            _comm = comm;
+            // interfere into logging process in order to send statuses to UI
+            _logger = _comm.OverrideLogger(this._logger);
         }
         public override void Scrap(FinvizParameters requestParameters)
         {
+            var errorMessageList = new List<string>();
+            //_comm.SendStarted();
+            //_comm.SendProgress("Finviz Page Metrics", 0);
             var pageMetrics = GetFirstPageMetrics(requestParameters);
             var allPageData = new List<T>();
 
@@ -33,31 +50,49 @@ namespace BIC.Scrappers.FinvizScrapper
                 if (!GetStringTableFromCurrentPage(generatedAddress, out header, out cells))
                 {
                     _logger.Warning("Failed to extract table data");
-                    return;
+                    errorMessageList.Add("Failed to extract table data");
+                    break;
                 }
                 // 2.2. Convert string page into List of types
                 var tr = new TableArrayConverter<T>();
                 if (!tr.MapHeader(header))
                 {
                     _logger.Warning("Failed to map header to class object");
-                    return;
+                    errorMessageList.Add("Failed to map header to class object");
+                    break;
                 }
 
                 var data = tr.GenerateDataSet(cells);
                 allPageData.AddRange(data);
+
+                //_comm.SendProgress("Finviz Reading", 0); // TODO: implement percentage calc
+
+                if (_comm.IsStopped)
+                {
+                    // TODO: just log it
+                    //_comm.SendInterrupted();
+                    return;
+                }
             }
 
             // 3. Save List of types into file system as json file
-            var fileName = FileHelper.ComposeFileName(typeof(T), true, "json");
-            var fullPath = System.IO.Path.Combine(Settings.GetInstance().OutputDirectory, fileName);
-            _logger.Info("Saving data into json file: " + fullPath);
-
-            Exception ex = null;
-            if (!FileHelper.SaveAsJSON(allPageData, fullPath, out ex))
+            if (allPageData.Count() > 0)
             {
-                _logger.Error(ex.StackTrace);
-                _logger.Error(ex.Message);
+                //_comm.SendProgress("Save File", 0);
+                var fileName = FileHelper.ComposeFileName(typeof(T), true, "json");
+                var fullPath = System.IO.Path.Combine(Settings.GetInstance().OutputDirectory, fileName);
+                _logger.Info("Saving data into json file: " + fullPath);
+
+                Exception ex = null;
+                if (!FileHelper.SaveAsJSON(allPageData, fullPath, out ex))
+                {
+                    _logger.Error(ex.StackTrace);
+                    _logger.Error(ex.Message);
+                    errorMessageList.Add(ex.Message);
+                }
             }
+
+            //_comm.SendFinished(); TODO:
         }
     }
 }

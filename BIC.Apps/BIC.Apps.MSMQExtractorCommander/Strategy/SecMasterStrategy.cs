@@ -1,4 +1,5 @@
-﻿using BIC.Scrappers.FinvizScrapper.DataObjects;
+﻿using BIC.Scrappers.FinvizScrapper;
+using BIC.Scrappers.FinvizScrapper.DataObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,14 +12,15 @@ namespace BIC.Apps.MSMQExtractorCommander.Strategy
     {
         private StrategyParameters _strategyParameters;
         private IBridgeComponents _finvizComponent;
-
-        public SecMasterStrategy(StrategyParameters strategyParameters)
+        private IStoppableStatusable _stoppableStatusable;
+        public SecMasterStrategy(StrategyParameters strategyParameters, IStoppableStatusable stoppableStatusable)
         {
             _strategyParameters = strategyParameters;
+            _stoppableStatusable = stoppableStatusable;
         }
         public void Execute()
         {
-            _finvizComponent = new FinvizBridgeComponents(_strategyParameters.Sector);
+            _finvizComponent = new FinvizBridgeComponents(_strategyParameters.Sector, _stoppableStatusable);
             _finvizComponent.Scrap<OverviewData>();
         }
     }

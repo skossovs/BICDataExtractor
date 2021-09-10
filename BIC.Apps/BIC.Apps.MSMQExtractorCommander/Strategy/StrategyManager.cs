@@ -5,12 +5,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BIC.Scrappers.FinvizScrapper;
 
 namespace BIC.Apps.MSMQExtractorCommander.Strategy
 {
     public static class StrategyManager
     {
         private static ILog _logger = LogServiceProvider.Logger;
+        private static IStoppableStatusable _stoppableStatusable;
+
+        static StrategyManager()
+        {
+            _stoppableStatusable = new StoppableStatusable();
+        }
+
         public static IStrategy SetupStrategy(string[] args)
         {
             IStrategy strategy = null;
@@ -52,9 +60,9 @@ namespace BIC.Apps.MSMQExtractorCommander.Strategy
                         if (resource == Constants.FinvizResource)
                         {
                             if (optionFeed.Value() == "secmaster")
-                                strategy = new SecMasterStrategy(strategyParameters) as IStrategy;
+                                strategy = new SecMasterStrategy(strategyParameters, _stoppableStatusable) as IStrategy;
                             else if (optionFeed.Value() == "finance")
-                                strategy = new KeyRatiosStrategy(strategyParameters) as IStrategy;
+                                strategy = new KeyRatiosStrategy(strategyParameters, _stoppableStatusable) as IStrategy;
                         }
                         else if (resource == Constants.YahooResource)
                         {

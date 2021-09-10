@@ -13,15 +13,17 @@ namespace BIC.Apps.MSMQExtractorCommander.Strategy
     {
         private StrategyParameters _strategyParameters;
         private IBridgeComponents _finvizComponent;
+        private IStoppableStatusable _stoppableStatusable;
 
-        public KeyRatiosStrategy(StrategyParameters strategyParameters)
+        public KeyRatiosStrategy(StrategyParameters strategyParameters, IStoppableStatusable stoppableStatusable)
         {
             _strategyParameters = strategyParameters;
+            _stoppableStatusable = stoppableStatusable;
         }
 
         public void Execute()
         {
-            _finvizComponent = new FinvizBridgeComponents(_strategyParameters.Sector);
+            _finvizComponent = new FinvizBridgeComponents(_strategyParameters.Sector, _stoppableStatusable);
             _finvizComponent.Scrap<FinancialData>();
         }
     }
