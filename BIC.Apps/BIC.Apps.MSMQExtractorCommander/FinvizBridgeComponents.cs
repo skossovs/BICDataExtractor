@@ -12,23 +12,30 @@ namespace BIC.Apps.MSMQExtractorCommander
     public class FinvizBridgeComponents : IBridgeComponents
     {
         private ILog _logger = LogServiceProvider.Logger;
-        private static FinvizFilterComboboxes _filters;
+        private FinvizFilterComboboxes _filters;
         private IStoppableStatusable _stoppableStatusable;
         private string _sector;
-
-        static FinvizBridgeComponents()
-        {
-            using (StreamReader rd = new StreamReader("FinvizFilterComboboxes.yaml")) // TODO: hardcoded file location, misplaced initialization responsibility
-            {
-                _filters = Utils.YamlOperations<FinvizFilterComboboxes>.ReadObjectFromStream(rd);
-            }
-        }
 
         public FinvizBridgeComponents(string sector, IStoppableStatusable stoppableStatusable)
         {
             _sector = sector;
             _stoppableStatusable = stoppableStatusable;
             _logger = stoppableStatusable.OverrideLogger(_logger);
+
+            try
+            {
+                string currentPath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+                using (StreamReader rd = new StreamReader(Path.Combine(currentPath, "FinvizFilterComboboxes.yaml"))) // TODO: hardcoded file location, misplaced initialization responsibility
+                {
+                    _filters = Utils.YamlOperations<FinvizFilterComboboxes>.ReadObjectFromStream(rd);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.ReportException(ex);
+                throw;
+            }
+
         }
 
         private class SectorData
@@ -58,7 +65,9 @@ namespace BIC.Apps.MSMQExtractorCommander
 
         public void Scrap<T>() where T : class, new()
         {
-            foreach(var sectorItem in GenerateSectorDataFilter())
+            _logger.Info("#Running");
+
+            foreach (var sectorItem in GenerateSectorDataFilter())
             {
                 if (_stoppableStatusable.IsStopped)
                 {
@@ -95,6 +104,7 @@ namespace BIC.Apps.MSMQExtractorCommander
                 allPageScrapper.Scrap(fp);
                 _logger.Info($"Finished Loading Sector {sectorItem.SectorLabel}.");
             }
+
             _logger.Info("#Finished");
         }
     }

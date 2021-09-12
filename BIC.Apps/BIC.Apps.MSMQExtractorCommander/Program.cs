@@ -24,13 +24,12 @@ namespace BIC.Apps.MSMQExtractorCommander
             try
             {
                 // TODO: Settings
-                using (var mq = new Utils.MSMQ.SenderReciever<CommandMessage, StatusMessage>(".\\Private$\\bic-commands", ".\\Private$\\bic-status-etl", 200))
+                using (var mq = new Utils.MSMQ.SenderReciever<CommandMessage, StatusMessage>(".\\Private$\\bic-commands", ".\\Private$\\bic-status-scrap", 200))
                 {
                     mq.StartWatching();
                     _logger.Info("Start Processing..");
                     var strategy = Strategy.StrategyManager.SetupStrategy(args, mq);
                     strategy.Execute();
-                    _logger.Info("End Processing SUCCESSFULLY..");
                     mq.StopWatching();
                 }
             }
@@ -41,6 +40,7 @@ namespace BIC.Apps.MSMQExtractorCommander
                 return (int)BIC.Foundation.Interfaces.ProcessResult.FATAL;
             }
 
+            _logger.Info("End Processing SUCCESSFULLY..");
             return (int) BIC.Foundation.Interfaces.ProcessResult.SUCCESS;
         }
     }

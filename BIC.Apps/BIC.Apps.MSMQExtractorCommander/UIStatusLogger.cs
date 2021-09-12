@@ -15,42 +15,69 @@ namespace BIC.Apps.MSMQExtractorCommander
     public class UIStatusLogger : ILog
     {
         private ILog _originalLogger;
+        private bool _hasError;
         private SenderReciever<CommandMessage, StatusMessage> _senderReceiver;
         public UIStatusLogger(ILog originalLogger, SenderReciever<CommandMessage, StatusMessage> senderReceiver)
         {
             _originalLogger = originalLogger;
             _senderReceiver = senderReceiver;
+            _hasError = false;
         }
 
         public void Debug(string message, params object[] p)
         {
-            // TODO: if parser found the replica it needs _senderReceiver.Send()
-            throw new NotImplementedException();
             _originalLogger.Debug(message, p);
         }
 
         public void Error(string message, params object[] p)
         {
-            // TODO: once error signaled, don't send anymore statuses, stop the process
-            throw new NotImplementedException();
+            _hasError = true;
+            _senderReceiver.Send(new StatusMessage()
+            {
+                ChannelID = 0, // TODO: set up the proper channel
+                ProcessStatus = Foundation.Interfaces.EProcessStatus.Killed
+            });
             _originalLogger.Error(message, p);
         }
 
         public void Info(string message, params object[] p)
         {
-            throw new NotImplementedException();
+            if (message == "#Finished" && !_hasError)
+                _senderReceiver.Send(new StatusMessage()
+                {
+                    ChannelID = 0, // TODO: set up the proper channel
+                    ProcessStatus = Foundation.Interfaces.EProcessStatus.Finished
+                });
+            else if (message == "#Stopped")
+                _senderReceiver.Send(new StatusMessage()
+                {
+                    ChannelID = 0, // TODO: set up the proper channel
+                    ProcessStatus = Foundation.Interfaces.EProcessStatus.Stopped
+                });
+            else if (message == "#Running")
+                _senderReceiver.Send(new StatusMessage()
+                {
+                    ChannelID = 0, // TODO: set up the proper channel
+                    ProcessStatus = Foundation.Interfaces.EProcessStatus.Running
+                });
+
             _originalLogger.Info(message, p);
         }
 
         public void ReportException(Exception ex)
         {
-            throw new NotImplementedException();
+            _hasError = true;
+            _senderReceiver.Send(new StatusMessage()
+            {
+                ChannelID = 0, // TODO: set up the proper channel
+                ProcessStatus = Foundation.Interfaces.EProcessStatus.Killed
+            });
+
             _originalLogger.ReportException(ex);
         }
 
         public void Warning(string message, params object[] p)
         {
-            throw new NotImplementedException();
             _originalLogger.Warning(message, p);
         }
     }

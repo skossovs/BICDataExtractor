@@ -10,5 +10,6 @@ Solution:
   - replace chromedriver.zip in BIC.ScrapperTests and in BIC.Apps.ExtractorCommander project
   - make sure chromedriver.exe is not hanging in task process otherwise it will be locked by windows file system, check Date Modified in Debug folder.
    taskkill /F /IM chrome.exe
-2. The following MSMQs must be created:
+3. The following MSMQs must be created:
   bic-status-etl, bic-status-scrap, bic-commands, bic-status (for testing purposes only)
+  in order to debug the queues Run compmgmt.msc
