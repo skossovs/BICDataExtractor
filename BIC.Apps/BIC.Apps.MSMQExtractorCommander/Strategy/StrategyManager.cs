@@ -6,20 +6,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BIC.Scrappers.FinvizScrapper;
+using BIC.Apps.MSMQExtractorCommander.MSMQData;
 
 namespace BIC.Apps.MSMQExtractorCommander.Strategy
 {
     public static class StrategyManager
     {
         private static ILog _logger = LogServiceProvider.Logger;
-        private static IStoppableStatusable _stoppableStatusable;
 
-        static StrategyManager()
-        {
-            _stoppableStatusable = new StoppableStatusable();
-        }
-
-        public static IStrategy SetupStrategy(string[] args)
+        public static IStrategy SetupStrategy(string[] args, Utils.MSMQ.SenderReciever<CommandMessage, StatusMessage> mq)
         {
             IStrategy strategy = null;
             StrategyParameters strategyParameters = new StrategyParameters();
@@ -50,7 +45,7 @@ namespace BIC.Apps.MSMQExtractorCommander.Strategy
                 app.OnExecute(() =>
                 {
                     var resource = optionResource.HasValue() ? optionResource.Value() : null;
-
+                    IStoppableStatusable stoppableStatusable = new StoppableStatusable(mq);
                     // process filters first
                     strategyParameters.Sector   = optionSector.HasValue()           ? optionSector.Value()           : null;
                     strategyParameters.TickerAt = optionStartAfterTicker.HasValue() ? optionStartAfterTicker.Value() : null;
@@ -60,9 +55,9 @@ namespace BIC.Apps.MSMQExtractorCommander.Strategy
                         if (resource == Constants.FinvizResource)
                         {
                             if (optionFeed.Value() == "secmaster")
-                                strategy = new SecMasterStrategy(strategyParameters, _stoppableStatusable) as IStrategy;
+                                strategy = new SecMasterStrategy(strategyParameters, stoppableStatusable) as IStrategy;
                             else if (optionFeed.Value() == "finance")
-                                strategy = new KeyRatiosStrategy(strategyParameters, _stoppableStatusable) as IStrategy;
+                                strategy = new KeyRatiosStrategy(strategyParameters, stoppableStatusable) as IStrategy;
                         }
                         else if (resource == Constants.YahooResource)
                         {

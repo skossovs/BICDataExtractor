@@ -14,7 +14,6 @@ namespace BIC.Apps.MSMQExtractorCommander
         private ILog _logger = LogServiceProvider.Logger;
         private static FinvizFilterComboboxes _filters;
         private IStoppableStatusable _stoppableStatusable;
-
         private string _sector;
 
         static FinvizBridgeComponents()
@@ -29,6 +28,7 @@ namespace BIC.Apps.MSMQExtractorCommander
         {
             _sector = sector;
             _stoppableStatusable = stoppableStatusable;
+            _logger = stoppableStatusable.OverrideLogger(_logger);
         }
 
         private class SectorData
@@ -60,7 +60,14 @@ namespace BIC.Apps.MSMQExtractorCommander
         {
             foreach(var sectorItem in GenerateSectorDataFilter())
             {
+                if (_stoppableStatusable.IsStopped)
+                {
+                    _logger.Info("#Stopped");
+                    break;
+                }
+
                 _logger.Info($"Loading Sector {sectorItem.SectorLabel} ..");
+
                 var allPageScrapper = new AllPageScrapperStoppable<T>(_stoppableStatusable);
                 var fp = new FinvizParameters()
                 {
@@ -88,6 +95,7 @@ namespace BIC.Apps.MSMQExtractorCommander
                 allPageScrapper.Scrap(fp);
                 _logger.Info($"Finished Loading Sector {sectorItem.SectorLabel}.");
             }
+            _logger.Info("#Finished");
         }
     }
 }

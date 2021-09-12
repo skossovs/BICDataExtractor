@@ -1,4 +1,5 @@
-﻿using BIC.Utils.Logger;
+﻿using BIC.Apps.MSMQExtractorCommander.MSMQData;
+using BIC.Utils.Logger;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,10 +23,16 @@ namespace BIC.Apps.MSMQExtractorCommander
 
             try
             {
-                _logger.Info("Start Processing..");
-                var strategy = Strategy.StrategyManager.SetupStrategy(args);
-                strategy.Execute();
-                _logger.Info("End Processing SUCCESSFULLY..");
+                // TODO: Settings
+                using (var mq = new Utils.MSMQ.SenderReciever<CommandMessage, StatusMessage>(".\\Private$\\bic-commands", ".\\Private$\\bic-status-etl", 200))
+                {
+                    mq.StartWatching();
+                    _logger.Info("Start Processing..");
+                    var strategy = Strategy.StrategyManager.SetupStrategy(args, mq);
+                    strategy.Execute();
+                    _logger.Info("End Processing SUCCESSFULLY..");
+                    mq.StopWatching();
+                }
             }
             catch(Exception ex)
             {

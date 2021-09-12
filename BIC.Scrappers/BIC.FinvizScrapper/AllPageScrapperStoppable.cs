@@ -70,7 +70,7 @@ namespace BIC.Scrappers.FinvizScrapper
                 if (_comm.IsStopped)
                 {
                     // TODO: just log it
-                    //_comm.SendInterrupted();
+                    _logger.Info("Stopped");
                     return;
                 }
             }
@@ -91,8 +91,6 @@ namespace BIC.Scrappers.FinvizScrapper
                     errorMessageList.Add(ex.Message);
                 }
             }
-
-            //_comm.SendFinished(); TODO:
         }
     }
 }
