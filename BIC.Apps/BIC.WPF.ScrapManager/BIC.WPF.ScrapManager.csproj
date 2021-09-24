@@ -72,12 +72,14 @@
     <Compile Include="Common\ApplicationCommands.cs" />
     <Compile Include="Converters\IntToStringConverter.cs" />
     <Compile Include="Converters\StatusConverter.cs" />
+    <Compile Include="Converters\TextToDocConverter.cs" />
     <Compile Include="Data\CommandCache.cs" />
     <Compile Include="Data\CommandExe.cs" />
     <Compile Include="Data\CommandParameter.cs" />
     <Compile Include="Data\TreeNode.cs" />
     <Compile Include="Data\TreeStructure.cs" />
     <Compile Include="MVVM\Behaviors\BindableSelectedItemBehavior.cs" />
+    <Compile Include="MVVM\LoggerViewModel.cs" />
     <Compile Include="MVVM\Messages\CommandCacheFileMessage.cs" />
     <Compile Include="MVVM\Messages\CommandMessage.cs" />
     <Compile Include="Data\Enums.cs" />
@@ -136,7 +138,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -13,7 +13,8 @@ namespace BIC.Scrappers.FinvizScrapper
         // 2.     Exclude ETFs from fundamentals loading. DONE.
         // 3.     Create WPF UI >>
         // 3.1.   Design is still ugly.
-        // 3.2.   Reflect log in UI.
+        // 3.2.   Reflect log in UI. Only the portion that newly populated >>
+        // 3.3.   Expand tree view dynamically.
         // 4.     Reorganize tests.
 
         // 6.     Errors:

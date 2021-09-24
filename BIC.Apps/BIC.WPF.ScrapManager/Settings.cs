@@ -28,6 +28,11 @@ namespace BIC.WPF.ScrapManager
 
         [Mandatory]
         public string EtlProcessFilePath { get; set; }
+        [Mandatory]
+        public string ScrapperFileLogPath { get; set; }
+
+        [Mandatory]
+        public string EtlProcessFileLogPath { get; set; }
 
         [Mandatory]
         public string MsmqNameStatusEtl { get; set; }

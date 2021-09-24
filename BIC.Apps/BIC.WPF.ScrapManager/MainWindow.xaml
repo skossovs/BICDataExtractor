@@ -17,8 +17,11 @@
         <mvvm:ControlProcessViewModel x:Key="processControlVMScrapper" ProcessType="Scrapper"/>
         <mvvm:ControlProcessViewModel x:Key="processControlVMetl"      ProcessType="ETL"/>
         <mvvm:CommandTreeViewModel    x:Key="commandTreeViewModel">   </mvvm:CommandTreeViewModel>
+        <mvvm:LoggerViewModel         x:Key="loggerViewVMScrapper"     ProcessType="Scrapper" />
+        <mvvm:LoggerViewModel         x:Key="loggerViewVMEtl"          ProcessType="ETL" />
         <conv:StatusConverter         x:Key="ProcessorStatusToString"></conv:StatusConverter>
         <conv:IntToStringConverter    x:Key="IntToString">            </conv:IntToStringConverter>
+        <conv:TextToDocConverter      x:Key="TextToDoc">              </conv:TextToDocConverter>
 
         <ControlTemplate x:Key="ProcessControlTemplate" TargetType="ContentControl">
             <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center">
@@ -89,7 +92,9 @@
                 <StackPanel Grid.Column="0" DataContext="{StaticResource processControlVMScrapper}">
                     <ContentControl Template="{StaticResource ProcessControlTemplate}"></ContentControl>
                     <TreeView Name ="tvCommands"  DataContext="{Binding Source={StaticResource commandTreeViewModel}}"
-                                                  ItemsSource="{Binding TreeData}">
+                              VerticalContentAlignment="Stretch"
+                              Height="400"
+                              ItemsSource="{Binding TreeData}">
                         <TreeView.Resources>
                             <HierarchicalDataTemplate DataType="{x:Type data:Group}" ItemsSource="{Binding Items}">
                                 <TextBlock Text="{Binding Path=Name}" />
@@ -103,6 +108,14 @@
                         </i:Interaction.Behaviors>
                     </TreeView>
                 </StackPanel>
+                <RichTextBox Grid.Column="1"
+                             DataContext="{Binding Source={StaticResource loggerViewVMScrapper}}" >
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run Text="{Binding Text}"/>
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
             </Grid>
         </DockPanel>
         <DockPanel Grid.Row="1">
@@ -114,6 +127,14 @@
                 <StackPanel Grid.Column="0" DataContext="{StaticResource processControlVMetl}">
                     <ContentControl Template="{StaticResource ProcessControlTemplate}"></ContentControl>
                 </StackPanel>
+                <RichTextBox Grid.Column="1"
+                             DataContext="{Binding Source={StaticResource loggerViewVMEtl}}">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run Text="{Binding Text}"/>
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
             </Grid>
         </DockPanel>
     </Grid>
