@@ -68,6 +68,10 @@ namespace BIC.WPF.ScrapManager.MVVM
 
         public void ReadLastIndex()
         {
+            _starting_index = 0;
+            if (!System.IO.File.Exists(_log_path))
+                return;
+
             using (System.IO.FileStream fs = new System.IO.FileStream(_log_path, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.ReadWrite))
             {
                 _starting_index = fs.Length - 1;
@@ -77,6 +81,9 @@ namespace BIC.WPF.ScrapManager.MVVM
         public void ReadLogFile(Object source, ElapsedEventArgs e)
         {
             if (_is_reading)
+                return;
+
+            if (!System.IO.File.Exists(_log_path))
                 return;
 
             _is_reading = true;

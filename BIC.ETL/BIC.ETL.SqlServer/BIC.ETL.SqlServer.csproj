@@ -54,6 +54,7 @@
     <Compile Include="DataLayer\ConnectionStringSettings.cs" />
     <Compile Include="DataLayer\SecurityReader.cs" />
     <Compile Include="FileArchivarius.cs" />
+    <Compile Include="FileProcessorStoppable.cs" />
     <Compile Include="FileReaders\FileReader.cs" />
     <Compile Include="FileReaders\FinvizKeyRatioFileMerger.cs" />
     <Compile Include="FileReaders\MoneyConverterFxMerger.cs" />

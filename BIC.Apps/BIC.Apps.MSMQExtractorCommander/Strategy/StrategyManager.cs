@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BIC.Scrappers.FinvizScrapper;
 using BIC.Apps.MSMQExtractorCommander.MSMQData;
+using BIC.Foundation.Interfaces;
 
 namespace BIC.Apps.MSMQExtractorCommander.Strategy
 {
@@ -45,7 +46,7 @@ namespace BIC.Apps.MSMQExtractorCommander.Strategy
                 app.OnExecute(() =>
                 {
                     var resource = optionResource.HasValue() ? optionResource.Value() : null;
-                    IStoppableStatusable stoppableStatusable = new StoppableStatusable(mq);
+                    IStoppableStatusable<ILog> stoppableStatusable = new StoppableStatusable(mq);
                     // process filters first
                     strategyParameters.Sector   = optionSector.HasValue()           ? optionSector.Value()           : null;
                     strategyParameters.TickerAt = optionStartAfterTicker.HasValue() ? optionStartAfterTicker.Value() : null;

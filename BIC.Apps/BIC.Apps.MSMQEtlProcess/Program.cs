@@ -1,59 +1,66 @@
 ﻿using BIC.Apps.MSMQEtlProcess.Data;
+using BIC.Foundation.Interfaces;
+using BIC.Utils.Logger;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BIC.Apps.MSMQEtlProcess
 {
     class Program
     {
-        private static bool _isInterrupted;
+        private static ILog _logger = LogServiceProvider.Logger;
+        private static CancellationTokenSource _token_source;
+
         static int Main(string[] args)
         {
-            // TODO: Settings
-            using (var mq = new Utils.MSMQ.SenderReciever<CommandMessage, StatusMessage >(".\\Private$\\bic-commands", ".\\Private$\\bic-status-etl", 200))
+            _token_source = new CancellationTokenSource();
+            CancellationToken ct = _token_source.Token;
+            try
             {
-                mq.MessageRecievedEvent += ReceiveCommandMessage;
-                mq.StartWatching();
 
-                // TODO: Fake cycle
-                for (int i = 0; i < 1000; i++)
+                // TODO: Settings
+                using (var mq = new Utils.MSMQ.SenderReciever<CommandMessage, StatusMessage>(".\\Private$\\bic-commands", ".\\Private$\\bic-status-etl", 200))
                 {
-                    System.Threading.Thread.Sleep(1000);
-                    Console.WriteLine("Ticking..");
+                    mq.MessageRecievedEvent += ReceiveCommandMessage;
+                    mq.StartWatching();
+                    _logger.Info("Start Processing..");
 
-                    if(mq.ExceptionLog.Count > 0)
+                    var task = Task.Run(() =>
                     {
-                        var ex = mq.ExceptionLog.First();
-                        Console.WriteLine(ex.Message);
-                        mq.ExceptionLog.Remove(ex);
-                    }
+                        IStoppableStatusable<ILog> stoppableStatusable = new StoppableStatusable(mq);
+                        using (var processor = new ETL.SqlServer.FileProcessorStoppable(stoppableStatusable))
+                        {
+                            processor.Do();
+                        }
+                    }, _token_source.Token);
 
-                    mq.Send(new StatusMessage()
-                    {
-                        ChannelID     = (int) Foundation.Interfaces.EProcessType.ETL,
-                        ProcessStatus = Foundation.Interfaces.EProcessStatus.Running
-                    });
-
-                    if (_isInterrupted)
-                        break;
+                    task.Wait(_token_source.Token);
+                    mq.StopWatching();
                 }
-                mq.Send(new StatusMessage()
-                {
-                    ChannelID = (int)Foundation.Interfaces.EProcessType.ETL,
-                    ProcessStatus = _isInterrupted ? Foundation.Interfaces.EProcessStatus.Stopped : Foundation.Interfaces.EProcessStatus.Finished
-                });
+            }
+            catch (Exception ex)
+            {
+                _logger.Error("End Processing with ERRORS..");
+                _logger.ReportException(ex);
+                return (int)ProcessResult.FATAL;
+            }
+            finally
+            {
+                _token_source.Dispose();
             }
 
-            return (int)BIC.Foundation.Interfaces.ProcessResult.SUCCESS;
+            _logger.Info("End Processing SUCCESSFULLY..");
+            return (int)ProcessResult.SUCCESS;
         }
 
         private static void ReceiveCommandMessage(CommandMessage body)
         {
-            if(body.ProcessCommand == Foundation.Interfaces.EProcessCommand.Stop)
-                _isInterrupted = true;
+            if (body.ProcessCommand == Foundation.Interfaces.EProcessCommand.Stop)
+                _token_source.Cancel();
         }
     }
 }

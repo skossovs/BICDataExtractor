@@ -1,5 +1,7 @@
-﻿using BIC.Scrappers.FinvizScrapper;
+﻿using BIC.Foundation.Interfaces;
+using BIC.Scrappers.FinvizScrapper;
 using BIC.Scrappers.FinvizScrapper.DataObjects;
+using BIC.Utils.Logger;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,9 +15,9 @@ namespace BIC.Apps.MSMQExtractorCommander.Strategy
     {
         private StrategyParameters _strategyParameters;
         private IBridgeComponents _finvizComponent;
-        private IStoppableStatusable _stoppableStatusable;
+        private IStoppableStatusable<ILog> _stoppableStatusable;
 
-        public KeyRatiosStrategy(StrategyParameters strategyParameters, IStoppableStatusable stoppableStatusable)
+        public KeyRatiosStrategy(StrategyParameters strategyParameters, IStoppableStatusable<ILog> stoppableStatusable)
         {
             _strategyParameters = strategyParameters;
             _stoppableStatusable = stoppableStatusable;

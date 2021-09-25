@@ -1,4 +1,4 @@
-﻿using BIC.Apps.MSMQExtractorCommander.MSMQData;
+﻿using BIC.Apps.MSMQEtlProcess.Data;
 using BIC.Utils.Logger;
 using BIC.Utils.MSMQ;
 using System;
@@ -7,10 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BIC.Apps.MSMQExtractorCommander
+namespace BIC.Apps.MSMQEtlProcess
 {
     /// <summary>
-    ///  analyse the log, parse it and notify UI
+    /// TODO: refactor later when the code difference with Extractor can be seen
     /// </summary>
     public class UIStatusLogger : ILog
     {
@@ -34,7 +34,7 @@ namespace BIC.Apps.MSMQExtractorCommander
             _hasError = true;
             _senderReceiver.Send(new StatusMessage()
             {
-                ChannelID = 0, // TODO: set up the proper channel
+                ChannelID = 1, // TODO: set up the proper channel
                 ProcessStatus = Foundation.Interfaces.EProcessStatus.Killed
             });
             _originalLogger.Error(message, p);
@@ -45,19 +45,19 @@ namespace BIC.Apps.MSMQExtractorCommander
             if (message == "#Finished" && !_hasError)
                 _senderReceiver.Send(new StatusMessage()
                 {
-                    ChannelID = 0, // TODO: set up the proper channel
+                    ChannelID = 1, // TODO: set up the proper channel
                     ProcessStatus = Foundation.Interfaces.EProcessStatus.Finished
                 });
             else if (message == "#Stopped")
                 _senderReceiver.Send(new StatusMessage()
                 {
-                    ChannelID = 0, // TODO: set up the proper channel
+                    ChannelID = 1, // TODO: set up the proper channel
                     ProcessStatus = Foundation.Interfaces.EProcessStatus.Stopped
                 });
             else if (message == "#Running")
                 _senderReceiver.Send(new StatusMessage()
                 {
-                    ChannelID = 0, // TODO: set up the proper channel
+                    ChannelID = 1, // TODO: set up the proper channel
                     ProcessStatus = Foundation.Interfaces.EProcessStatus.Running
                 });
 
@@ -69,7 +69,7 @@ namespace BIC.Apps.MSMQExtractorCommander
             _hasError = true;
             _senderReceiver.Send(new StatusMessage()
             {
-                ChannelID = 0, // TODO: set up the proper channel
+                ChannelID = 1, // TODO: set up the proper channel
                 ProcessStatus = Foundation.Interfaces.EProcessStatus.Killed
             });
 

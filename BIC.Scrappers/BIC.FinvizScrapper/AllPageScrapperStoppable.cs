@@ -11,11 +11,6 @@ using System.Threading.Tasks;
 namespace BIC.Scrappers.FinvizScrapper
 {
     public delegate void StopperEventHandler();
-    public interface IStoppableStatusable
-    {
-        ILog OverrideLogger(ILog originalLogger);
-        bool IsStopped { get;  }
-    }
 
     /// <summary>
     /// If interrupted get out immediately
@@ -24,8 +19,8 @@ namespace BIC.Scrappers.FinvizScrapper
     /// <typeparam name="T"></typeparam>
     public class AllPageScrapperStoppable<T> : AllPageScrapper<T> where T : class, new()
     {
-        private IStoppableStatusable _comm;
-        public AllPageScrapperStoppable(IStoppableStatusable comm)
+        private IStoppableStatusable<ILog> _comm;
+        public AllPageScrapperStoppable(IStoppableStatusable<ILog> comm)
         {
             _comm = comm;
             // interfere into logging process in order to send statuses to UI

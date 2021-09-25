@@ -1,4 +1,5 @@
-﻿using BIC.Scrappers.FinvizScrapper;
+﻿using BIC.Foundation.Interfaces;
+using BIC.Scrappers.FinvizScrapper;
 using BIC.Utils.Logger;
 using System;
 using System.Collections.Generic;
@@ -13,10 +14,10 @@ namespace BIC.Apps.MSMQExtractorCommander
     {
         private ILog _logger = LogServiceProvider.Logger;
         private FinvizFilterComboboxes _filters;
-        private IStoppableStatusable _stoppableStatusable;
+        private IStoppableStatusable<ILog> _stoppableStatusable;
         private string _sector;
 
-        public FinvizBridgeComponents(string sector, IStoppableStatusable stoppableStatusable)
+        public FinvizBridgeComponents(string sector, IStoppableStatusable<ILog> stoppableStatusable)
         {
             _sector = sector;
             _stoppableStatusable = stoppableStatusable;

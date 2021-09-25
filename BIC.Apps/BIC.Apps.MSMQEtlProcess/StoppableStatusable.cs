@@ -1,16 +1,16 @@
-﻿using BIC.Scrappers.FinvizScrapper;
+﻿using BIC.Apps.MSMQEtlProcess.Data;
+using BIC.Foundation.Interfaces;
+using BIC.Utils.Logger;
+using BIC.Utils.MSMQ;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BIC.Utils.Logger;
-using BIC.Apps.MSMQExtractorCommander.MSMQData;
-using BIC.Utils.MSMQ;
-using BIC.Foundation.Interfaces;
 
-namespace BIC.Apps.MSMQExtractorCommander
+namespace BIC.Apps.MSMQEtlProcess
 {
+    // TODO: let's see if this class diverge from Extractor's, refactor later if not.
     public class StoppableStatusable : IStoppableStatusable<ILog>
     {
         private bool _isStopped;
