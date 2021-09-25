@@ -17,8 +17,8 @@ namespace BIC.Utils.Logger
         {
             // get calling method & type
             var stackTrace = new StackTrace();
-            var methodName = stackTrace.GetFrame(2).GetMethod().Name;
-            var className = stackTrace.GetFrame(2).GetType().Name;
+            var methodName = stackTrace.GetFrame(4).GetMethod().Name;
+            var className = stackTrace.GetFrame(4).GetMethod().ReflectedType.Name;
             return string.Format("{0} ({1}.{2}) {3}: "
                 , pfxType
                 , className

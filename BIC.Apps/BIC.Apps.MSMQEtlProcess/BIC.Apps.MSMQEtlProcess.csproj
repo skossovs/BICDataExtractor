@@ -46,6 +46,7 @@
     <Compile Include="Data\StatusMessage.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="StoppableStatusable.cs" />
     <Compile Include="UIStatusLogger.cs" />
   </ItemGroup>

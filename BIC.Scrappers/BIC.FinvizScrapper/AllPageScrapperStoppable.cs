@@ -29,8 +29,6 @@ namespace BIC.Scrappers.FinvizScrapper
         public override void Scrap(FinvizParameters requestParameters)
         {
             var errorMessageList = new List<string>();
-            //_comm.SendStarted();
-            //_comm.SendProgress("Finviz Page Metrics", 0);
             var pageMetrics = GetFirstPageMetrics(requestParameters);
             var allPageData = new List<T>();
 
@@ -64,8 +62,7 @@ namespace BIC.Scrappers.FinvizScrapper
 
                 if (_comm.IsStopped)
                 {
-                    // TODO: just log it
-                    _logger.Info("Stopped");
+                    _logger.Info("#Stopped");
                     return;
                 }
             }
@@ -73,7 +70,7 @@ namespace BIC.Scrappers.FinvizScrapper
             // 3. Save List of types into file system as json file
             if (allPageData.Count() > 0)
             {
-                //_comm.SendProgress("Save File", 0);
+                //TODO: _comm.SendProgress("Save File", 0);
                 var fileName = FileHelper.ComposeFileName(typeof(T), true, "json");
                 var fullPath = System.IO.Path.Combine(Settings.GetInstance().OutputDirectory, fileName);
                 _logger.Info("Saving data into json file: " + fullPath);

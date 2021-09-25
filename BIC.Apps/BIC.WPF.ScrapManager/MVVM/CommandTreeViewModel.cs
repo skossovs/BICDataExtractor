@@ -33,7 +33,6 @@ namespace BIC.WPF.ScrapManager.MVVM
             SendLoadFileMessage();
         }
 
-        // TODO: drop it
         private void SendLoadFileMessage()
         {
             var m = new CommandCacheFileMessage("OPEN", "CommandFile.yaml");

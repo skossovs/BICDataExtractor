@@ -18,7 +18,7 @@ namespace BIC.Utils.Logger
             // TODO: is broken GetFrame(2) returns incorrect names
             var stackTrace = new StackTrace();
             var methodName = stackTrace.GetFrame(2).GetMethod().Name;
-            var className = stackTrace.GetFrame(2).GetType().Name;
+            var className = stackTrace.GetFrame(2).GetMethod().ReflectedType.Name;
             return string.Format("{0} ({1}.{2}) {3}: "
                 , pfxType
                 , className

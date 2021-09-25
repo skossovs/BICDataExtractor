@@ -15,15 +15,17 @@ namespace BIC.Apps.MSMQEtlProcess
         private static ILog _logger = LogServiceProvider.Logger;
         private static CancellationTokenSource _token_source;
 
+        private static string COMMAND_QUEUE = Settings.GetInstance().MsmqNameCommands;
+        private static string STATUS_QUEUE  = Settings.GetInstance().MsmqNameStatusEtl;
+        private static int    QUEUE_DELAY   = Settings.GetInstance().SleepTimeMsmqReadMsec;
+
         static int Main(string[] args)
         {
             _token_source = new CancellationTokenSource();
             CancellationToken ct = _token_source.Token;
             try
             {
-
-                // TODO: Settings
-                using (var mq = new Utils.MSMQ.SenderReciever<CommandMessage, StatusMessage>(".\\Private$\\bic-commands", ".\\Private$\\bic-status-etl", 200))
+                using (var mq = new Utils.MSMQ.SenderReciever<CommandMessage, StatusMessage>(COMMAND_QUEUE, STATUS_QUEUE, QUEUE_DELAY))
                 {
                     mq.MessageRecievedEvent += ReceiveCommandMessage;
                     mq.StartWatching();
