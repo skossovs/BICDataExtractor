@@ -1,7 +1,12 @@
 ﻿using BIC.Utils.Attributes;
 using BIC.Utils.SettingProcessors;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace BIC.Apps.MSMQEtlProcess
+namespace BIC.Apps.MSMQExtractorCommander
 {
     [AppSettingsXML]
     public class Settings
@@ -17,20 +22,9 @@ namespace BIC.Apps.MSMQEtlProcess
             }
             return _singletonSetings;
         }
-        // TODO: drop it
-        //[Mandatory]
-        //public string ScrapperFilePath { get; set; }
-
-        //[Mandatory]
-        //public string EtlProcessFilePath { get; set; }
-        //[Mandatory]
-        //public string ScrapperFileLogPath { get; set; }
-
-        //[Mandatory]
-        //public string EtlProcessFileLogPath { get; set; }
 
         [Mandatory]
-        public string MsmqNameStatusEtl { get; set; }
+        public string MsmqNameStatusScrap { get; set; }
 
         [Mandatory]
         public string MsmqNameCommands { get; set; }

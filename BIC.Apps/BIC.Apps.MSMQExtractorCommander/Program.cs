@@ -11,6 +11,10 @@ namespace BIC.Apps.MSMQExtractorCommander
     class Program
     {
         private static ILog _logger = LogServiceProvider.Logger;
+        private static string COMMAND_QUEUE = Settings.GetInstance().MsmqNameCommands;
+        private static string STATUS_QUEUE  = Settings.GetInstance().MsmqNameStatusScrap;
+        private static int    QUEUE_DELAY   = Settings.GetInstance().SleepTimeMsmqReadMsec;
+
         static int Main(string[] args)
         {
             StringBuilder sbCommandLine = new StringBuilder();
@@ -23,8 +27,7 @@ namespace BIC.Apps.MSMQExtractorCommander
 
             try
             {
-                // TODO: Settings
-                using (var mq = new Utils.MSMQ.SenderReciever<CommandMessage, StatusMessage>(".\\Private$\\bic-commands", ".\\Private$\\bic-status-scrap", 200))
+                using (var mq = new Utils.MSMQ.SenderReciever<CommandMessage, StatusMessage>(COMMAND_QUEUE, STATUS_QUEUE, QUEUE_DELAY))
                 {
                     mq.StartWatching();
                     _logger.Info("Start Processing..");
