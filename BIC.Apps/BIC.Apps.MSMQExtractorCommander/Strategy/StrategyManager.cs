@@ -63,7 +63,7 @@ namespace BIC.Apps.MSMQExtractorCommander.Strategy
                         else if (resource == Constants.YahooResource)
                         {
                             if (optionFeed.Value() == "finance")
-                                strategy = new BICStrategy(strategyParameters) as IStrategy;
+                                strategy = new BICStrategy(strategyParameters, stoppableStatusable) as IStrategy;
                         }
                         else if (resource == Constants.FxResource)
                         {

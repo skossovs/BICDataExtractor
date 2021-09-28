@@ -1,4 +1,5 @@
 ﻿using BIC.Foundation.DataObjects;
+using BIC.Foundation.Interfaces;
 using BIC.Scrappers.YahooScrapper;
 using BIC.Utils.Logger;
 using BIC.YahooScrapper;
@@ -16,10 +17,10 @@ namespace BIC.Apps.MSMQExtractorCommander.Strategy
         private YahooBridgeComponents _yahooComponent;
         private static ILog _logger = LogServiceProvider.Logger;
 
-        public BICStrategy(StrategyParameters strategyParameters)
+        public BICStrategy(StrategyParameters strategyParameters, IStoppableStatusable<ILog> stoppableStatusable)
         {
             _strategyParameters = strategyParameters;
-            _yahooComponent = new YahooBridgeComponents(strategyParameters.Sector, strategyParameters.TickerAt);
+            _yahooComponent = new YahooBridgeComponents(strategyParameters.Sector, strategyParameters.TickerAt, stoppableStatusable);
         }
 
         public void Execute()

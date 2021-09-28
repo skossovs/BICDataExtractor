@@ -1,4 +1,5 @@
 ﻿using BIC.Foundation.DataObjects;
+using BIC.Foundation.Interfaces;
 using BIC.Scrappers.YahooScrapper;
 using BIC.Utils.Logger;
 using BIC.YahooScrapper;
@@ -15,10 +16,13 @@ namespace BIC.Apps.MSMQExtractorCommander
         private ILog _logger = LogServiceProvider.Logger;
         private string _sector;
         private string _tickerAfter;
+        IStoppableStatusable<ILog> _stoppableStatusable;
 
-        public YahooBridgeComponents(string sector, string tickerAfter)
+        public YahooBridgeComponents(string sector, string tickerAfter, IStoppableStatusable<ILog> stoppableStatusable)
         {
             _sector = sector;
+            _stoppableStatusable = stoppableStatusable;
+            _logger = _stoppableStatusable.OverrideLogger(_logger);
             _tickerAfter = tickerAfter;
         }
 
@@ -55,12 +59,21 @@ namespace BIC.Apps.MSMQExtractorCommander
         {
             foreach(var security in GenerateDataFilter())
             {
+                _logger.Info("#Running");
                 var oneShot = new OneShotScrapper();
                 var yp = new YahooParameters() { Ticker = security.Ticker, ReportType = "balance-sheet" }; // It doesn't matter whether it is balance sheet, income or cashflow.
                 _logger.Info($"Loading Ticker {security.Ticker} for report type {yp.ReportType} ..");
                 bool result = oneShot.Scrap(yp);
                 _logger.Info($"Finished Loading Ticker {security.Ticker} for report type {yp.ReportType}.");
+
+                if (_stoppableStatusable.IsStopped)
+                {
+                    _logger.Info("#Stopped");
+                    break;
+                }
             }
+
+            _logger.Info("#Finished");
         }
     }
 }
