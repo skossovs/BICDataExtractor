@@ -20,7 +20,7 @@ namespace BIC.Utils.Logger
             {
                 methodCallingLoggerStackFrame = stackFrame;
                 var className = stackFrame.GetMethod().ReflectedType.Name;
-                if (className == "LogDelegator" || className == "FileLogger")
+                if (className == "LogDelegator" || className == "SimpleLogger")
                     continue;
                 else
                     break;
