@@ -13,12 +13,30 @@ namespace BIC.Utils.Logger
     {
         protected static StreamWriter _writer;
         // TODO: copy-paste
+        private Tuple<string, string> _get_calling_type_and_function()
+        {
+            var stackTrace = new StackTrace();
+            StackFrame methodCallingLoggerStackFrame = null;
+            foreach(var stackFrame in stackTrace.GetFrames())
+            {
+                methodCallingLoggerStackFrame = stackFrame;
+                var className = stackFrame.GetMethod().ReflectedType.Name;
+                if (className == "LogDelegator" || className == "FileLogger")
+                    continue;
+                else
+                    break;
+            }
+
+            return new Tuple<string, string>(
+                  methodCallingLoggerStackFrame.GetMethod().ReflectedType.Name
+                , methodCallingLoggerStackFrame.GetMethod().Name);
+        }
         private string _get_prefix(string pfxType)
         {
             // get calling method & type
-            var stackTrace = new StackTrace();
-            var methodName = stackTrace.GetFrame(4).GetMethod().Name;
-            var className = stackTrace.GetFrame(4).GetMethod().ReflectedType.Name;
+            var t = _get_calling_type_and_function();
+            var methodName = t.Item2;
+            var className  = t.Item1;
             return string.Format("{0} ({1}.{2}) {3}: "
                 , pfxType
                 , className
