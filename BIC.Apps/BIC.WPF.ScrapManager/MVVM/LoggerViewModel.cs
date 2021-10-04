@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BIC.WPF.ScrapManager.MVVM.Messages;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -13,22 +14,22 @@ namespace BIC.WPF.ScrapManager.MVVM
     /// </summary>
     public class LoggerViewModel : INotifyPropertyChanged
     {
-        private long _starting_index;
-        private string _processType;
-        private string _sbText;
-        private System.Timers.Timer _timer;
-        private bool _is_reading;
-        // TODO: read from settings
-        private const string LOG_EXTRACTOR_PATH = @"E:\_LOG\BIC.log";
-        private const string LOG_ETL_PATH = @"E:\_LOG\Debug\BIC.log";
-        private string _log_path;
+        private long            _starting_index;
+        private string          _processType;
+        private string          _sbText;
+        private Timer           _timer;
+        private bool            _is_reading;
+        private readonly string LOG_EXTRACTOR_PATH = Settings.GetInstance().ScrapperFileLogPath;
+        private readonly string LOG_ETL_PATH       = Settings.GetInstance().EtlProcessFileLogPath;
+        private string          _log_path;
 
         public LoggerViewModel()
         {
             _sbText = string.Empty;
             _is_reading = false;
+            GalaSoft.MvvmLight.Messaging.Messenger.Default.Register<ProcessStartMessage>(this, ReceiveStartCommand);
             // set timer
-            _timer = new System.Timers.Timer(10000); // TODO: config
+            _timer = new System.Timers.Timer(5000); // TODO: config
             _timer.Elapsed += ReadLogFile;
             _timer.AutoReset = true;
             _timer.Enabled = false;
@@ -106,6 +107,12 @@ namespace BIC.WPF.ScrapManager.MVVM
         {
             _timer.Stop();
             _timer.Dispose();
+        }
+
+        private void ReceiveStartCommand(ProcessStartMessage processStartMessage)
+        {
+            // once new process started it is needed to reset the index.
+            ReadLastIndex();
         }
 
         #region INotifyPropertyChanged

@@ -22,6 +22,7 @@ namespace BIC.Scrappers.FinvizScrapper
         // 3.3.   Before apply FX Rates search for "Currency in CNY.All numbers in thousands" string. Sometimes foreign companies post fundamentals in dollars.
         // 3.4.   fx loading shows no progress.
         // 3.5.   StackFrame.Debug instead of object name in logging. FIXED
+        // 3.6.   stoppable ETL fails to zip files and breaking the archive.
         // 4.     Implement Report for yearly data.
         // 5.     Fix linq2db issue with connection object. Specifically for Merge. Looks like Merge operation happens after connection object is closed.
         // 6.     Block Chrome logs if possible.
