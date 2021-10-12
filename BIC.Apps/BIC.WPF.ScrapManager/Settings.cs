@@ -45,5 +45,8 @@ namespace BIC.WPF.ScrapManager
 
         [Mandatory]
         public int SleepTimeMsmqReadMsec { get; set; }
+
+        [Mandatory]
+        public int LogRefreshIntervalMsec { get; set; }
     }
 }

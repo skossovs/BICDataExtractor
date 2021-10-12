@@ -19,8 +19,9 @@ namespace BIC.WPF.ScrapManager.MVVM
         private string          _sbText;
         private Timer           _timer;
         private bool            _is_reading;
-        private readonly string LOG_EXTRACTOR_PATH = Settings.GetInstance().ScrapperFileLogPath;
-        private readonly string LOG_ETL_PATH       = Settings.GetInstance().EtlProcessFileLogPath;
+        private readonly string LOG_EXTRACTOR_PATH          = Settings.GetInstance().ScrapperFileLogPath;
+        private readonly string LOG_ETL_PATH                = Settings.GetInstance().EtlProcessFileLogPath;
+        private readonly int    LOG_LOGGER_REFERES_INTERVAL = Settings.GetInstance().LogRefreshIntervalMsec;
         private string          _log_path;
 
         public LoggerViewModel()
@@ -29,7 +30,7 @@ namespace BIC.WPF.ScrapManager.MVVM
             _is_reading = false;
             GalaSoft.MvvmLight.Messaging.Messenger.Default.Register<ProcessStartMessage>(this, ReceiveStartCommand);
             // set timer
-            _timer = new System.Timers.Timer(5000); // TODO: config
+            _timer = new Timer(LOG_LOGGER_REFERES_INTERVAL);
             _timer.Elapsed += ReadLogFile;
             _timer.AutoReset = true;
             _timer.Enabled = false;

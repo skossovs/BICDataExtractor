@@ -15,16 +15,29 @@ namespace BIC.ETL.SqlServer
 
         public static BICDB CreateInstance()
         {
+            if (_db != null)
+                return _db;
+
             var connectionString = Settings.GetInstance().SQLConnectionString;
             // create options builder
             var builder = new LinqToDbConnectionOptionsBuilder();
             // configure connection string
             var options = builder.UseSqlServer(connectionString).Build();
-
-            if(_db == null)
-                _db = new DataLayer.BICDB(options);
+            _db = new DataLayer.BICDB(options);
 
             return _db;
+        }
+
+        // TODO: to curcumviene same-connection-usage error. only with using sentence
+        public static BICDB CreateNewInstance()
+        {
+            var connectionString = Settings.GetInstance().SQLConnectionString;
+            // create options builder
+            var builder = new LinqToDbConnectionOptionsBuilder();
+            // configure connection string
+            var options = builder.UseSqlServer(connectionString).Build();
+            var db = new DataLayer.BICDB(options);
+            return db;
         }
 
         #region static destructor
