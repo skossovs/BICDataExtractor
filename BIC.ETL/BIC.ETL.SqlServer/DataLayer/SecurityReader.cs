@@ -46,7 +46,7 @@ namespace BIC.ETL.SqlServer.DataLayer
                     join i  in db.Industries         on s.IndustryID equals i.IndustryID
                     join sc in db.Sectors            on s.SectorID   equals sc.SectorID
                     join chk in db.LoadConsistencies on new CompareCondition() { SecurityID = s.SecurityID, Year = SecurityReader.Year, Quarter = SecurityReader.Quarter } equals new CompareCondition() { SecurityID = chk.SecurityID, Year = chk.Year, Quarter = chk.Quarter }
-                    where s.Type == "SEC"
+                    where s.Type == "SEC" && chk.BalanceSheetQuarterly == 0 // checking BalanceSheetQuarterly is enough so far
                     select new SecurityRecord() {
                         SecurityID = s.SecurityID, Ticker   = s.Ticker
                       , SectorID   = s.SectorID,   Sector   = sc.SectorColumn
@@ -66,7 +66,7 @@ namespace BIC.ETL.SqlServer.DataLayer
                     join i   in db.Industries        on s.IndustryID equals i.IndustryID
                     join sc  in db.Sectors           on s.SectorID   equals sc.SectorID
                     join chk in db.LoadConsistencies on new CompareCondition() { SecurityID = s.SecurityID, Year = SecurityReader.Year, Quarter = SecurityReader.Quarter } equals new CompareCondition() { SecurityID = chk.SecurityID, Year = chk.Year, Quarter = chk.Quarter }
-                    where sc.SectorColumn == sector && s.Type == "SEC"
+                    where sc.SectorColumn == sector && s.Type == "SEC" && chk.BalanceSheetQuarterly == 0 // checking BalanceSheetQuarterly is enough so far
                     select new SecurityRecord() {
                         SecurityID = s.SecurityID, Ticker   = s.Ticker
                       , SectorID   = s.SectorID,   Sector   = sc.SectorColumn
