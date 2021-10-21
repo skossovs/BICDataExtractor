@@ -71,7 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="chromedriver.zip">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config">
       <SubType>Designer</SubType>

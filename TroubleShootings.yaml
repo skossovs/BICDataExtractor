@@ -7,7 +7,11 @@
 Solution:
   - go to chrome driver site: https://sites.google.com/chromium.org/driver/
   - download latest chrome Driver
-  - replace chromedriver.zip in BIC.ScrapperTests and in BIC.Apps.ExtractorCommander project
+  - replace chromedriver.zip in
+    - BIC.ScrapperTests
+    - BIC.Apps.ExtractorCommander
+    - BIC.Apps.MSMQExtractorCommander
+    - BIC.Scrappers.Utils
   - make sure chromedriver.exe is not hanging in task process otherwise it will be locked by windows file system, check Date Modified in Debug folder.
    taskkill /F /IM chrome.exe
 3. The following MSMQs must be created:
