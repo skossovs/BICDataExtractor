@@ -24,6 +24,7 @@ namespace BIC.Apps.MSMQExtractorCommander
             _stoppableStatusable = stoppableStatusable;
             _logger = _stoppableStatusable.OverrideLogger(_logger);
             _tickerAfter = tickerAfter;
+            _logger.Debug("YahooBridgeComponent Sector set as: {0}", _sector);
         }
 
         private IEnumerable<SecurityRecord> GenerateDataFilter()

@@ -26,12 +26,12 @@
   - "-rs yahoo":
     - "-etl finance":
       - "-sec \"Basic Materials\""
-      - "-sec energy"
-      - "-sec industrials"
+      - "-sec Energy"
+      - "-sec Industrials"
       - "-sec \"Communication Services\""
       - "-sec \"Consumer Cyclical\""
       - "-sec \"Consumer Defensive\""
-      - "-sec financial"
-      - "-sec healthcare"
-      - "-sec realestate"
-      - "-sec technology"
+      - "-sec Financial"
+      - "-sec Healthcare"
+      - "-sec \"Real Estate\""
+      - "-sec Technology"
