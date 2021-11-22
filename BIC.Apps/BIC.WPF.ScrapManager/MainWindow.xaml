@@ -7,6 +7,7 @@
         xmlns:conv  ="clr-namespace:BIC.WPF.ScrapManager.Converters"
         xmlns:mvvm  ="clr-namespace:BIC.WPF.ScrapManager.MVVM"
         xmlns:data  ="clr-namespace:BIC.WPF.ScrapManager.Data"
+        xmlns:uc    ="clr-namespace:BIC.WPF.UserControls;assembly=BIC.WPF.UserControls"
         xmlns:behaviours ="clr-namespace:BIC.WPF.ScrapManager.MVVM.Behaviors"
         xmlns:i     ="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
@@ -20,6 +21,7 @@
         <mvvm:LoggerViewModel         x:Key="loggerViewVMScrapper"     ProcessType="Scrapper" />
         <mvvm:LoggerViewModel         x:Key="loggerViewVMEtl"          ProcessType="ETL" />
         <conv:StatusConverter         x:Key="ProcessorStatusToString"></conv:StatusConverter>
+        <conv:StatusToModeConverter   x:Key="ProcessorStatusToMode"></conv:StatusToModeConverter>
         <conv:IntToStringConverter    x:Key="IntToString">            </conv:IntToStringConverter>
         <conv:TextToDocConverter      x:Key="TextToDoc">              </conv:TextToDocConverter>
 
@@ -35,20 +37,21 @@
                         <ImageBrush ImageSource="Resources/stop.png"/>
                     </Button.Background>
                 </Button>
+                <uc:RadialWavesControl Width="30" Height="30">
+                    <uc:RadialWavesControl.Style>
+                        <Style TargetType="{x:Type uc:RadialWavesControl}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Path=Status, Converter={StaticResource ProcessorStatusToMode}}" Value="0">
+                                    <Setter Property="Mode" Value="0"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Path=Status, Converter={StaticResource ProcessorStatusToMode}}" Value="1">
+                                    <Setter Property="Mode" Value="1"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </uc:RadialWavesControl.Style>
+                </uc:RadialWavesControl>
                 <Rectangle Width="30" Height="30">
-                        <!--
-                        <EventTrigger RoutedEvent="Rectangle.Loaded">
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <DoubleAnimation
-                                      Storyboard.TargetProperty="Opacity"
-                                      From="1.0" To="0.0" Duration="0:0:5"
-                                      AutoReverse="True" RepeatBehavior="Forever" />
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
-
-                        -->
                         <Rectangle.Style>
                             <Style TargetType="{x:Type Rectangle}">
                                 <Style.Triggers>

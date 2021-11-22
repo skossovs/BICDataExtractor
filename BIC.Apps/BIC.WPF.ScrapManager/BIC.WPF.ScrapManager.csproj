@@ -72,6 +72,7 @@
     <Compile Include="Common\ApplicationCommands.cs" />
     <Compile Include="Converters\IntToStringConverter.cs" />
     <Compile Include="Converters\StatusConverter.cs" />
+    <Compile Include="Converters\StatusToModeConverter.cs" />
     <Compile Include="Converters\TextToDocConverter.cs" />
     <Compile Include="Data\CommandCache.cs" />
     <Compile Include="Data\CommandExe.cs" />
@@ -151,6 +152,10 @@
     <ProjectReference Include="..\..\BIC.Utils\BIC.Utils.csproj">
       <Project>{1fd4c7b7-7ea9-4f9a-91f6-09ff4aedd208}</Project>
       <Name>BIC.Utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\BIC.WPF.UserControls\BIC.WPF.UserControls.csproj">
+      <Project>{9b81aab4-e6de-46b2-8a0e-b71b974a4e3f}</Project>
+      <Name>BIC.WPF.UserControls</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
