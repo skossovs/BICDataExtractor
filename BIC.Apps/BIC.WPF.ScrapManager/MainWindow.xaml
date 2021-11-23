@@ -21,7 +21,6 @@
         <mvvm:LoggerViewModel         x:Key="loggerViewVMScrapper"     ProcessType="Scrapper" />
         <mvvm:LoggerViewModel         x:Key="loggerViewVMEtl"          ProcessType="ETL" />
         <conv:StatusConverter         x:Key="ProcessorStatusToString"></conv:StatusConverter>
-        <conv:StatusToModeConverter   x:Key="ProcessorStatusToMode"></conv:StatusToModeConverter>
         <conv:IntToStringConverter    x:Key="IntToString">            </conv:IntToStringConverter>
         <conv:TextToDocConverter      x:Key="TextToDoc">              </conv:TextToDocConverter>
 
@@ -41,10 +40,23 @@
                     <uc:RadialWavesControl.Style>
                         <Style TargetType="{x:Type uc:RadialWavesControl}">
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding Path=Status, Converter={StaticResource ProcessorStatusToMode}}" Value="0">
+                                <MultiDataTrigger> <!-- TODO: this is really complicated replacement of context : from original user control to ancestor one. not beatiful -->
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding
+                                            RelativeSource={RelativeSource AncestorType={x:Type StackPanel}},
+                                            Path=DataContext.Status, Converter={StaticResource ProcessorStatusToString}}" Value="Stopped"/>
+                                        <Condition Binding="{Binding
+                                            RelativeSource={RelativeSource AncestorType={x:Type StackPanel}},
+                                            Path=DataContext.Status, Converter={StaticResource ProcessorStatusToString}}" Value="Killed"/>
+                                        <Condition Binding="{Binding
+                                            RelativeSource={RelativeSource AncestorType={x:Type StackPanel}},
+                                            Path=DataContext.Status, Converter={StaticResource ProcessorStatusToString}}" Value="Finished"/>
+                                    </MultiDataTrigger.Conditions>
                                     <Setter Property="Mode" Value="0"/>
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding Path=Status, Converter={StaticResource ProcessorStatusToMode}}" Value="1">
+                                </MultiDataTrigger>
+                                <DataTrigger Binding="{Binding
+                                            RelativeSource={RelativeSource AncestorType={x:Type StackPanel}},
+                                            Path=DataContext.Status, Converter={StaticResource ProcessorStatusToString}}" Value="Running">
                                     <Setter Property="Mode" Value="1"/>
                                 </DataTrigger>
                             </Style.Triggers>
@@ -93,7 +105,8 @@
                     <ColumnDefinition Width="8*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0" DataContext="{StaticResource processControlVMScrapper}">
-                    <ContentControl Template="{StaticResource ProcessControlTemplate}"></ContentControl>
+                    <ContentControl Template="{StaticResource ProcessControlTemplate}"
+                                    DataContext="{StaticResource processControlVMScrapper}"></ContentControl>
                     <TreeView Name ="tvCommands"  DataContext="{Binding Source={StaticResource commandTreeViewModel}}"
                               VerticalContentAlignment="Stretch"
                               Height="400"
@@ -128,10 +141,10 @@
                     <ColumnDefinition Width="8*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0" DataContext="{StaticResource processControlVMetl}">
-                    <ContentControl Template="{StaticResource ProcessControlTemplate}"></ContentControl>
+                    <ContentControl Template="{StaticResource ProcessControlTemplate}"
+                                    DataContext="{StaticResource processControlVMetl}"></ContentControl>
                 </StackPanel>
-                <RichTextBox Grid.Column="1"
-                             DataContext="{Binding Source={StaticResource loggerViewVMEtl}}">
+                <RichTextBox Grid.Column="1" DataContext="{Binding Source={StaticResource loggerViewVMEtl}}">
                     <FlowDocument>
                         <Paragraph>
                             <Run Text="{Binding Text}"/>

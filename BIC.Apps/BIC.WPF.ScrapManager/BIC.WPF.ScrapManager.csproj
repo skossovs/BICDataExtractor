@@ -72,7 +72,6 @@
     <Compile Include="Common\ApplicationCommands.cs" />
     <Compile Include="Converters\IntToStringConverter.cs" />
     <Compile Include="Converters\StatusConverter.cs" />
-    <Compile Include="Converters\StatusToModeConverter.cs" />
     <Compile Include="Converters\TextToDocConverter.cs" />
     <Compile Include="Data\CommandCache.cs" />
     <Compile Include="Data\CommandExe.cs" />
