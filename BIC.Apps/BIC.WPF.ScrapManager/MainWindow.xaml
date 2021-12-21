@@ -45,9 +45,9 @@
                                         <Condition Binding="{Binding
                                             RelativeSource={RelativeSource AncestorType={x:Type StackPanel}},
                                             Path=DataContext.Status, Converter={StaticResource ProcessorStatusToString}}" Value="Stopped"/>
-                                        <Condition Binding="{Binding
+                                <!--        <Condition Binding="{Binding
                                             RelativeSource={RelativeSource AncestorType={x:Type StackPanel}},
-                                            Path=DataContext.Status, Converter={StaticResource ProcessorStatusToString}}" Value="Killed"/>
+                                            Path=DataContext.Status, Converter={StaticResource ProcessorStatusToString}}" Value="Killed"/> -->
                                         <Condition Binding="{Binding
                                             RelativeSource={RelativeSource AncestorType={x:Type StackPanel}},
                                             Path=DataContext.Status, Converter={StaticResource ProcessorStatusToString}}" Value="Finished"/>
