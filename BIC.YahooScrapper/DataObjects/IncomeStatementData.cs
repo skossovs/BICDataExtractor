@@ -28,10 +28,11 @@ namespace BIC.Scrappers.YahooScrapper.DataObjects
         public YahooFinanceNumber totalOperatingExpenses            { get; set; }
         public YahooFinanceNumber costOfRevenue                     { get; set; }
         public YahooFinanceNumber totalOtherIncomeExpenseNet        { get; set; }
-        public int maxAge                                      { get; set; }
+        public int maxAge                                           { get; set; }
         public YahooFinanceNumber discontinuedOperations            { get; set; }
         public YahooFinanceNumber netIncomeFromContinuingOps        { get; set; }
         public YahooFinanceNumber netIncomeApplicableToCommonShares { get; set; }
+        public YahooFinanceNumber trailingEBITDA                    { get; set; }
     }
 
     public class IncomeStatementDataQuarterly : IncomeStatementData
