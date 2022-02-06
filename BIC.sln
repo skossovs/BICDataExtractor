@@ -38,6 +38,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BIC.YahooScrapper", "BIC.Ya
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Reports", "Reports", "{F06070E6-F457-4D65-92B1-10D46F5068D6}"
 	ProjectSection(SolutionItems) = preProject
+		BIC.Apps\Reports\BIC_Data.xlsm = BIC.Apps\Reports\BIC_Data.xlsm
 		BIC.Apps\Reports\TheReport.xlsx = BIC.Apps\Reports\TheReport.xlsx
 	EndProjectSection
 EndProject
