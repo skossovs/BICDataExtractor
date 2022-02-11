@@ -39,5 +39,13 @@ namespace BIC.ETL.SqlServerTest
             var data = merger.Read();
             merger.Merge(data);
         }
+
+        [TestMethod]
+        public void TestMergeErrorOnQuarterlyBalanceSheet()
+        {
+            var merger = new YahooBalanceSheetQuarterlyMerger(@"TestFiles\BIC.YahooScrapper_BalanceSheetData_2-4-2022 1-27-33 PM.json");
+            var data = merger.Read();
+            merger.Merge(data);
+        }
     }
 }

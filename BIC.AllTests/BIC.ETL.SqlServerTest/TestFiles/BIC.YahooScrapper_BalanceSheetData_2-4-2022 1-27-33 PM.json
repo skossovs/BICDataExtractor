@@ -1,0 +1,398 @@
+[
+  {
+    "intangibleAssets": null,
+    "totalLiab": {
+      "raw": "316344054",
+      "fmt": "316.34M",
+      "longFmt": "316,344,054"
+    },
+    "totalStockholderEquity": {
+      "raw": "886969812",
+      "fmt": "886.97M",
+      "longFmt": "886,969,812"
+    },
+    "otherCurrentLiab": {
+      "raw": "5121584",
+      "fmt": "5.12M",
+      "longFmt": "5,121,584"
+    },
+    "totalAssets": {
+      "raw": "1203313866",
+      "fmt": "1.2B",
+      "longFmt": "1,203,313,866"
+    },
+    "endDate": {
+      "raw": "1609372800",
+      "fmt": "2020-12-31",
+      "longFmt": null
+    },
+    "commonStock": {
+      "raw": "754357286",
+      "fmt": "754.36M",
+      "longFmt": "754,357,286"
+    },
+    "otherCurrentAssets": {
+      "raw": "11345565",
+      "fmt": "11.35M",
+      "longFmt": "11,345,565"
+    },
+    "retainedEarnings": {
+      "raw": "132612526",
+      "fmt": "132.61M",
+      "longFmt": "132,612,526"
+    },
+    "otherLiab": {
+      "raw": "4424201",
+      "fmt": "4.42M",
+      "longFmt": "4,424,201"
+    },
+    "goodWill": null,
+    "treasuryStock": null,
+    "otherAssets": null,
+    "cash": {
+      "raw": "1582153",
+      "fmt": "1.58M",
+      "longFmt": "1,582,153"
+    },
+    "totalCurrentLiabilities": {
+      "raw": "311919853",
+      "fmt": "311.92M",
+      "longFmt": "311,919,853"
+    },
+    "shortLongTermDebt": {
+      "raw": "7826472",
+      "fmt": "7.83M",
+      "longFmt": "7,826,472"
+    },
+    "otherStockholderEquity": null,
+    "propertyPlantEquipment": null,
+    "totalCurrentAssets": {
+      "raw": "23907185",
+      "fmt": "23.91M",
+      "longFmt": "23,907,185"
+    },
+    "longTermInvestments": {
+      "raw": "1179406681",
+      "fmt": "1.18B",
+      "longFmt": "1,179,406,681"
+    },
+    "netTangibleAssets": {
+      "raw": "886969812",
+      "fmt": "886.97M",
+      "longFmt": "886,969,812"
+    },
+    "shortTermInvestments": null,
+    "netReceivables": {
+      "raw": "10971184",
+      "fmt": "10.97M",
+      "longFmt": "10,971,184"
+    },
+    "maxAge": 1,
+    "longTermDebt": null,
+    "inventory": null,
+    "accountsPayable": {
+      "raw": "769477",
+      "fmt": "769.48k",
+      "longFmt": "769,477"
+    },
+    "Ticker": "BHK"
+  },
+  {
+    "intangibleAssets": null,
+    "totalLiab": {
+      "raw": "422807772",
+      "fmt": "422.81M",
+      "longFmt": "422,807,772"
+    },
+    "totalStockholderEquity": {
+      "raw": "826348980",
+      "fmt": "826.35M",
+      "longFmt": "826,348,980"
+    },
+    "otherCurrentLiab": {
+      "raw": "4781822",
+      "fmt": "4.78M",
+      "longFmt": "4,781,822"
+    },
+    "totalAssets": {
+      "raw": "1249156752",
+      "fmt": "1.25B",
+      "longFmt": "1,249,156,752"
+    },
+    "endDate": {
+      "raw": "1577750400",
+      "fmt": "2019-12-31",
+      "longFmt": null
+    },
+    "commonStock": {
+      "raw": "754357286",
+      "fmt": "754.36M",
+      "longFmt": "754,357,286"
+    },
+    "otherCurrentAssets": {
+      "raw": "12051021",
+      "fmt": "12.05M",
+      "longFmt": "12,051,021"
+    },
+    "retainedEarnings": {
+      "raw": "71991694",
+      "fmt": "71.99M",
+      "longFmt": "71,991,694"
+    },
+    "otherLiab": {
+      "raw": "28937637",
+      "fmt": "28.94M",
+      "longFmt": "28,937,637"
+    },
+    "goodWill": null,
+    "treasuryStock": null,
+    "otherAssets": null,
+    "cash": {
+      "raw": "996335",
+      "fmt": "996.34k",
+      "longFmt": "996,335"
+    },
+    "totalCurrentLiabilities": {
+      "raw": "393870135",
+      "fmt": "393.87M",
+      "longFmt": "393,870,135"
+    },
+    "shortLongTermDebt": {
+      "raw": "6683034",
+      "fmt": "6.68M",
+      "longFmt": "6,683,034"
+    },
+    "otherStockholderEquity": null,
+    "propertyPlantEquipment": null,
+    "totalCurrentAssets": {
+      "raw": "48423459",
+      "fmt": "48.42M",
+      "longFmt": "48,423,459"
+    },
+    "longTermInvestments": {
+      "raw": "1200733293",
+      "fmt": "1.2B",
+      "longFmt": "1,200,733,293"
+    },
+    "netTangibleAssets": {
+      "raw": "826348980",
+      "fmt": "826.35M",
+      "longFmt": "826,348,980"
+    },
+    "shortTermInvestments": null,
+    "netReceivables": {
+      "raw": "35369738",
+      "fmt": "35.37M",
+      "longFmt": "35,369,738"
+    },
+    "maxAge": 1,
+    "longTermDebt": null,
+    "inventory": null,
+    "accountsPayable": {
+      "raw": "104995543",
+      "fmt": "105M",
+      "longFmt": "104,995,543"
+    },
+    "Ticker": "BHK"
+  },
+  {
+    "intangibleAssets": null,
+    "totalLiab": {
+      "raw": "307057559",
+      "fmt": "307.06M",
+      "longFmt": "307,057,559"
+    },
+    "totalStockholderEquity": {
+      "raw": "851650027",
+      "fmt": "851.65M",
+      "longFmt": "851,650,027"
+    },
+    "otherCurrentLiab": {
+      "raw": "1490896",
+      "fmt": "1.49M",
+      "longFmt": "1,490,896"
+    },
+    "totalAssets": {
+      "raw": "1158707586",
+      "fmt": "1.16B",
+      "longFmt": "1,158,707,586"
+    },
+    "endDate": {
+      "raw": "1567209600",
+      "fmt": "2019-08-31",
+      "longFmt": null
+    },
+    "commonStock": {
+      "raw": "755543973",
+      "fmt": "755.54M",
+      "longFmt": "755,543,973"
+    },
+    "otherCurrentAssets": {
+      "raw": "9959766",
+      "fmt": "9.96M",
+      "longFmt": "9,959,766"
+    },
+    "retainedEarnings": {
+      "raw": "96106054",
+      "fmt": "96.11M",
+      "longFmt": "96,106,054"
+    },
+    "otherLiab": {
+      "raw": "5205795",
+      "fmt": "5.21M",
+      "longFmt": "5,205,795"
+    },
+    "goodWill": null,
+    "treasuryStock": null,
+    "otherAssets": null,
+    "cash": {
+      "raw": "11706662",
+      "fmt": "11.71M",
+      "longFmt": "11,706,662"
+    },
+    "totalCurrentLiabilities": {
+      "raw": "301851764",
+      "fmt": "301.85M",
+      "longFmt": "301,851,764"
+    },
+    "shortLongTermDebt": {
+      "raw": "8654296",
+      "fmt": "8.65M",
+      "longFmt": "8,654,296"
+    },
+    "otherStockholderEquity": null,
+    "propertyPlantEquipment": null,
+    "totalCurrentAssets": {
+      "raw": "33439711",
+      "fmt": "33.44M",
+      "longFmt": "33,439,711"
+    },
+    "longTermInvestments": {
+      "raw": "1125267875",
+      "fmt": "1.13B",
+      "longFmt": "1,125,267,875"
+    },
+    "netTangibleAssets": {
+      "raw": "851650027",
+      "fmt": "851.65M",
+      "longFmt": "851,650,027"
+    },
+    "shortTermInvestments": null,
+    "netReceivables": {
+      "raw": "11763813",
+      "fmt": "11.76M",
+      "longFmt": "11,763,813"
+    },
+    "maxAge": 1,
+    "longTermDebt": null,
+    "inventory": null,
+    "accountsPayable": {
+      "raw": "2087707",
+      "fmt": "2.09M",
+      "longFmt": "2,087,707"
+    },
+    "Ticker": "BHK"
+  },
+  {
+    "intangibleAssets": null,
+    "totalLiab": {
+      "raw": "330941261",
+      "fmt": "330.94M",
+      "longFmt": "330,941,261"
+    },
+    "totalStockholderEquity": {
+      "raw": "759384610",
+      "fmt": "759.38M",
+      "longFmt": "759,384,610"
+    },
+    "otherCurrentLiab": {
+      "raw": "782327",
+      "fmt": "782.33k",
+      "longFmt": "782,327"
+    },
+    "totalAssets": {
+      "raw": "1090325871",
+      "fmt": "1.09B",
+      "longFmt": "1,090,325,871"
+    },
+    "endDate": {
+      "raw": "1535673600",
+      "fmt": "2018-08-31",
+      "longFmt": null
+    },
+    "commonStock": {
+      "raw": "755543973",
+      "fmt": "755.54M",
+      "longFmt": "755,543,973"
+    },
+    "otherCurrentAssets": {
+      "raw": "10077064",
+      "fmt": "10.08M",
+      "longFmt": "10,077,064"
+    },
+    "retainedEarnings": {
+      "raw": "3840637",
+      "fmt": "3.84M",
+      "longFmt": "3,840,637"
+    },
+    "otherLiab": {
+      "raw": "5313048",
+      "fmt": "5.31M",
+      "longFmt": "5,313,048"
+    },
+    "goodWill": null,
+    "treasuryStock": null,
+    "otherAssets": {
+      "raw": "4022",
+      "fmt": "4.02k",
+      "longFmt": "4,022"
+    },
+    "cash": {
+      "raw": "1835789",
+      "fmt": "1.84M",
+      "longFmt": "1,835,789"
+    },
+    "totalCurrentLiabilities": {
+      "raw": "325628213",
+      "fmt": "325.63M",
+      "longFmt": "325,628,213"
+    },
+    "shortLongTermDebt": {
+      "raw": "4953617",
+      "fmt": "4.95M",
+      "longFmt": "4,953,617"
+    },
+    "otherStockholderEquity": null,
+    "propertyPlantEquipment": null,
+    "totalCurrentAssets": {
+      "raw": "24326231",
+      "fmt": "24.33M",
+      "longFmt": "24,326,231"
+    },
+    "longTermInvestments": {
+      "raw": "1065995618",
+      "fmt": "1.07B",
+      "longFmt": "1,065,995,618"
+    },
+    "netTangibleAssets": {
+      "raw": "759384610",
+      "fmt": "759.38M",
+      "longFmt": "759,384,610"
+    },
+    "shortTermInvestments": null,
+    "netReceivables": {
+      "raw": "12400488",
+      "fmt": "12.4M",
+      "longFmt": "12,400,488"
+    },
+    "maxAge": 1,
+    "longTermDebt": null,
+    "inventory": null,
+    "accountsPayable": {
+      "raw": "1901993",
+      "fmt": "1.9M",
+      "longFmt": "1,901,993"
+    },
+    "Ticker": "BHK"
+  }
+]
