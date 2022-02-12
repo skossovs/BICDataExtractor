@@ -84,6 +84,7 @@ namespace BIC.Apps.MSMQExtractorCommander.Strategy
             catch (Exception ex)
             {
                 _logger.Error("FATATL failure while strategy initialization: ");
+                _logger.ReportException(ex);
                 throw;
             }
 
