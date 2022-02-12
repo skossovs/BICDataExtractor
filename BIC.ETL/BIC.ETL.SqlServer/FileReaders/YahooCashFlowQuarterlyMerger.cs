@@ -124,7 +124,7 @@ namespace BIC.ETL.SqlServer.FileReaders
 
             if (result != 24 && listOfFour.Count() == 4)
             {  // correct incorrect quarters
-                var arr = listOfFour.ToArray(); // TODO: not buitiful
+                var arr = listOfFour.ToArray(); // TODO: not beautiful
                 arr[0].Quarter = 4;
                 arr[1].Quarter = 3;
                 arr[2].Quarter = 2;
