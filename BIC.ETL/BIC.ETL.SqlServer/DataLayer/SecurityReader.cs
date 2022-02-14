@@ -65,6 +65,31 @@ namespace BIC.ETL.SqlServer.DataLayer
             return lst.AsEnumerable();
         }
 
+        public static SecurityRecord GetSecurityByTicker(string ticker)
+        {
+            SecurityRecord securityRecord;
+            using (var db = DataConnectionFactory.CreateNewInstance())
+            {
+                var q = from s   in db.Securities
+                        join i in db.Industries on s.IndustryID equals i.IndustryID
+                        join sc in db.Sectors on s.SectorID equals sc.SectorID
+                        join chk in db.LoadConsistencies on new CompareCondition() { SecurityID = s.SecurityID, Year = SecurityReader.Year, Quarter = SecurityReader.Quarter } equals new CompareCondition() { SecurityID = chk.SecurityID, Year = chk.Year, Quarter = chk.Quarter }
+                        where s.Ticker == ticker && s.Type == "SEC" && chk.BalanceSheetQuarterly == 0
+                        select new SecurityRecord()
+                        {
+                             SecurityID = s.SecurityID, Ticker = s.Ticker
+                          ,  SectorID = s.SectorID,     Sector = sc.SectorColumn
+                          ,  IndustryID = i.IndustryID, Industry = i.IndustryColumn
+                          ,  IsBalanceSheetQuarterly = (chk.BalanceSheetQuarterly == 1)
+                          ,  IsCashFlowQuarterly = (chk.CashFlowQuarterly == 1)
+                          ,  IsIncomeStatementQuarterly = (chk.IncomeStatementQuarterly == 1)
+                        };
+                securityRecord = q.AsEnumerable().FirstOrDefault();
+            }
+
+            return securityRecord;
+        }
+
         public static IEnumerable<SecurityRecord> GetSecurities(string sector)
         {
             List<SecurityRecord> lst;

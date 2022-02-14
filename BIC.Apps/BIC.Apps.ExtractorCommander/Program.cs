@@ -24,26 +24,28 @@ namespace BIC.Apps.ExtractorCommander
                 //  -rs finviz -all                                           -- download all sectors
                 //  -rs finviz -etl finance -sec healthcare                   -- download one sector
                 //  -rs yahoo  -etl finance -sec healthcare                   -- download one sector
-                //  -rs yahoo  -etl finance -sec "Consumer Defensive" -at DL    -- download one sector
+                //  -rs yahoo  -etl finance -sec "Consumer Defensive" -at DL  -- download one sector
+                //  -rs yahoo  -etl finance -tkr BAC                          -- download one ticker
                 //  -rs fx
                 #endregion
 
                 #region Option description
                 app.HelpOption("--help");  // TODO: implement help
-                var optionResource         = app.Option("-rs|--resource", "Resource"     , CommandOptionType.SingleValue);
-                //var optionView           = app.Option("-vw|--view"    , "View"         , CommandOptionType.SingleValue); TODO: all views (objects) will be loaded
-                var optionFeed             = app.Option("-etl|--ETL"    , "ETL Feed type", CommandOptionType.SingleValue);
-                var optionNoFilter         = app.Option("-all|--All"    , "All no filter", CommandOptionType.NoValue);
-                var optionSector           = app.Option("-sec|--sector" , "Sector"       , CommandOptionType.SingleValue);
+                var optionResource         = app.Option("-rs|--resource"   , "Resource"          , CommandOptionType.SingleValue);
+                //var optionView           = app.Option("-vw|--view"       , "View"              , CommandOptionType.SingleValue); TODO: all views (objects) will be loaded
+                var optionFeed             = app.Option("-etl|--ETL"       , "ETL Feed type"     , CommandOptionType.SingleValue);
+                var optionNoFilter         = app.Option("-all|--All"       , "All no filter"     , CommandOptionType.NoValue);
+                var optionSector           = app.Option("-sec|--sector"    , "Sector"            , CommandOptionType.SingleValue);
                 var optionStartAfterTicker = app.Option("-at|--afterticker", "Start after ticker", CommandOptionType.SingleValue);
+                var optionSingleTicker     = app.Option("-tkr|--ticker"    , "Load single ticker", CommandOptionType.SingleValue);
                 #endregion
 
                 #region Executing Function definition
                 app.OnExecute(() =>
                 {
-                    var resource = optionResource.HasValue() ? optionResource.Value() : null;
-                    //var view     = optionView    .HasValue() ? optionView    .Value() : null;  TODO:
-                    var sector   = optionSector  .HasValue() ? optionSector  .Value() : null;
+                    var resource = optionResource    .HasValue() ? optionResource    .Value() : null;
+                    var sector   = optionSector      .HasValue() ? optionSector      .Value() : null;
+                    var ticker   = optionSingleTicker.HasValue() ? optionSingleTicker.Value() : null;
                     // TODO: come up with bridge design pattern to properly combine commands, get rid of many-layered ifs
                     if (optionResource.HasValue())
                     {
@@ -80,6 +82,8 @@ namespace BIC.Apps.ExtractorCommander
                                         Commands.Yahoo.ScrapTickers();
                                     else if (optionSector.HasValue())
                                         Commands.Yahoo.ScrapTickers(sector);
+                                    else if (optionSingleTicker.HasValue())
+                                        Commands.Yahoo.ScrapATicker(ticker);
                                     else
                                         throw new Exception("Neither -all nor sector specified command (-sec) was entered");
                                 }

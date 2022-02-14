@@ -29,7 +29,8 @@ namespace BIC.Apps.MSMQExtractorCommander.Strategy
                 //  -rs finviz -all                                           -- download all sectors
                 //  -rs finviz -etl finance -sec healthcare                   -- download one sector
                 //  -rs yahoo  -etl finance -sec healthcare                   -- download one sector
-                //  -rs yahoo  -etl finance -sec "Consumer Defensive" -at DL    -- download one sector
+                //  -rs yahoo  -etl finance -sec "Consumer Defensive" -at DL  -- download one sector
+                //  -rs yahoo  -etl finance -tkr BAC                          -- download one ticker
                 //  -rs fx
                 #endregion
 
@@ -40,6 +41,7 @@ namespace BIC.Apps.MSMQExtractorCommander.Strategy
                 var optionNoFilter = app.Option("-all|--All", "All no filter", CommandOptionType.NoValue); // TODO: drop it
                 var optionSector = app.Option("-sec|--sector", "Sector", CommandOptionType.SingleValue);
                 var optionStartAfterTicker = app.Option("-at|--afterticker", "Start after ticker", CommandOptionType.SingleValue);
+                var optionSingleTicker = app.Option("-tkr|--ticker", "Load single ticker", CommandOptionType.SingleValue);
                 #endregion
 
                 #region Executing Function definition

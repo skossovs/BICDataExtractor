@@ -15,6 +15,11 @@ namespace BIC.Apps.ExtractorCommander.Commands
     {
         private static ILog _logger = LogServiceProvider.Logger;
 
+        public static void ScrapATicker(string ticker)
+        {
+            SecurityRecord sr = ETL.SqlServer.DataLayer.SecurityReader.GetSecurityByTicker(ticker);
+            ScrapOneShot(sr);
+        }
         public static void ScrapTickers()
         {
             foreach (var sector in ETL.SqlServer.DataLayer.SecurityReader.GetSectors())
