@@ -12,6 +12,7 @@
       - "-sec healthcare"
       - "-sec realestate"
       - "-sec technology"
+      - "-sec utilities"
     - "-etl finance":
       - "-sec basicmaterials"
       - "-sec energy"
@@ -23,6 +24,7 @@
       - "-sec healthcare"
       - "-sec realestate"
       - "-sec technology"
+      - "-sec utilities"
   - "-rs yahoo":
     - "-etl finance":
       - "-sec \"Basic Materials\""
@@ -35,3 +37,4 @@
       - "-sec Healthcare"
       - "-sec \"Real Estate\""
       - "-sec Technology"
+      - "-sec Utilities"
