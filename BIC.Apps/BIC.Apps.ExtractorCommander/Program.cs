@@ -11,6 +11,8 @@ namespace BIC.Apps.ExtractorCommander
     class Program
     {
         private static ILog _logger = LogServiceProvider.Logger;
+        private const  int  Success = 0;
+        private const  int  Error   = -1;
 
         static void Main(string[] args)
         {
@@ -97,10 +99,10 @@ namespace BIC.Apps.ExtractorCommander
                     else
                     {
                         _logger.Error("Resource option is not specified: no extract can be done");
-                        return -1; // TODO: constants for results are needed
+                        return Error;
                     }
 
-                    return 0;
+                    return Success;
                 });
                 #endregion
 

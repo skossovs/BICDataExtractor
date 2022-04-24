@@ -17,7 +17,7 @@ namespace BIC.Scrappers.FinvizScrapper
 
         // 2.     Reorganize tests.
         // 3.     Errors: >>
-        // 3.1.   Merge fails on duplicates. The reason is companies late filling. Need to fix quarters.
+        // 3.1.   Merge fails on duplicates. The reason is companies late filling. Need to fix quarters. DONE.
         // 3.2.   Queue doesn't have enough time to process last item, before finished.
         // 3.3.   Before apply FX Rates search for "Currency in CNY.All numbers in thousands" string. Sometimes foreign companies post fundamentals in dollars.
         // 3.4.   fx loading shows no progress.
