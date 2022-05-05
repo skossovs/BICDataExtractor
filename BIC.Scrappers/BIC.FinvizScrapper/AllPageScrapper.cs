@@ -50,6 +50,12 @@ namespace BIC.Scrappers.FinvizScrapper
             _logger.Info("Saving data into json file: " + fullPath);
 
             Exception ex = null;
+            if(allPageData.Count == 0)
+            {
+                _logger.Warning("NO PAGES DATA DOWNLOADED!");
+                return;
+            }
+
             if (!FileHelper.SaveAsJSON(allPageData, fullPath, out ex))
             {
                 _logger.Error(ex.StackTrace);
@@ -87,6 +93,15 @@ namespace BIC.Scrappers.FinvizScrapper
 
             // Find Headers
             var cqHeaders = cq.Find(@"td[class^=""table-top""]");
+            if (cqHeaders.Elements.Count() == 0)
+            {
+                _logger.Warning("Headers responce has no elements");
+                _logger.Warning(currentPagehtmlContent);
+                headers = null; data = null;
+                return false;
+            }
+
+
             var headersList = new List<string>() { "IgnoreIt" };
             // Display headers
             foreach (var h in cqHeaders)
@@ -97,6 +112,12 @@ namespace BIC.Scrappers.FinvizScrapper
                 if (imageEndIndex != -1)
                     headerCaption = headerCaption.Remove(0, imageEndIndex + 1);
                 headersList.Add(headerCaption);
+            }
+
+            if (headersList.Count == 0)
+            {
+                _logger.Warning("Can't retreive the header from finviz page!");
+                _logger.Warning(generatedAddress);
             }
             headers = headersList.Skip(1).ToArray(); // Remove first empty field from the headers
             var headers1 = headersList.ToArray();
@@ -127,6 +148,11 @@ namespace BIC.Scrappers.FinvizScrapper
             }
 
             data = lstCells.AsEnumerable();
+            if(data.Count() == 0)
+            {
+                _logger.Warning("AllPageScrapper scrapped no data!!!");
+                _logger.Warning(generatedAddress);
+            }
             return true;
         }
         protected int? ConvertPageToR(int page)

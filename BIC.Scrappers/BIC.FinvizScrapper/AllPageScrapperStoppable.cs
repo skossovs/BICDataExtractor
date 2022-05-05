@@ -83,6 +83,10 @@ namespace BIC.Scrappers.FinvizScrapper
                     errorMessageList.Add(ex.Message);
                 }
             }
+            else
+            {
+                _logger.Warning("NO PAGES DATA DOWNLOADED!");
+            }
         }
     }
 }
