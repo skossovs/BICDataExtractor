@@ -11,5 +11,6 @@ namespace BIC.Apps.ExtractorCommander.Commands
         public const string FinvizResource = "finviz";
         public const string YahooResource  = "yahoo";
         public const string FxResource     = "fx";
+        public const string NasdaqResource = "nasdaq";
     }
 }

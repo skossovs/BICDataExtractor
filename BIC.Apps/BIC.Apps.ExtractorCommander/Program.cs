@@ -29,6 +29,7 @@ namespace BIC.Apps.ExtractorCommander
                 //  -rs yahoo  -etl finance -sec "Consumer Defensive" -at DL  -- download one sector
                 //  -rs yahoo  -etl finance -tkr BAC                          -- download one ticker
                 //  -rs fx
+                //  -rs nasdaq
                 #endregion
 
                 #region Option description
@@ -94,6 +95,10 @@ namespace BIC.Apps.ExtractorCommander
                         else if (resource == Commands.Constants.FxResource)
                         {
                             Commands.FxRates.Scrap();
+                        }
+                        else if (resource == Commands.Constants.NasdaqResource)
+                        {
+                            Commands.Nasdaq.Scrap();
                         }
                     }
                     else

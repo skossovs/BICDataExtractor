@@ -48,6 +48,7 @@
     <Compile Include="Commands\Constants.cs" />
     <Compile Include="Commands\Finviz.cs" />
     <Compile Include="Commands\FxRates.cs" />
+    <Compile Include="Commands\Nasdaq.cs" />
     <Compile Include="Commands\Yahoo.cs" />
     <Compile Include="Plan.cs" />
     <Compile Include="Program.cs" />
@@ -76,6 +77,10 @@
     <ProjectReference Include="..\..\BIC.Scrappers\BIC.MoneyConverterScrapper\BIC.MoneyConverterScrapper.csproj">
       <Project>{FEDB40F8-130C-4D66-92AA-33053AB023BE}</Project>
       <Name>BIC.MoneyConverterScrapper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\BIC.Scrappers\BIC.NasdaqLiveScrapper\BIC.NasdaqLiveScrapper.csproj">
+      <Project>{2d24480c-0e8f-4d18-9d63-07797bf41641}</Project>
+      <Name>BIC.NasdaqLiveScrapper</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\BIC.Utils\BIC.Utils.csproj">
       <Project>{1fd4c7b7-7ea9-4f9a-91f6-09ff4aedd208}</Project>
