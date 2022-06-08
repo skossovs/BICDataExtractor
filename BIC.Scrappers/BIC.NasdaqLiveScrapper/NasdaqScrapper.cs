@@ -13,18 +13,17 @@ namespace BIC.NasdaqLiveScrapper
     public class NasdaqScrapper<T> where T : NasdaqData
     {
         private ILog _logger = LogServiceProvider.Logger;
-        private string _url = Settings.GetInstance().UrlRoot;
 
         public bool Scrap()
         {
             bool result = false;
 
             var retriever = ContentRetrieverFactory.CreateInstance(ERetrieverType.Yahoo);
-            var currentPagehtmlContent = retriever.GetData(_url);
+            var request = new HttpRequestData();
+            var url = request.GenerateAddressRequest();
+            var currentPagehtmlContent = retriever.GetData(url);
             var cqHelper = new CQHelper();
             var cq = cqHelper.InitiateWithContent(currentPagehtmlContent);
-
-
 
             return result;
         }

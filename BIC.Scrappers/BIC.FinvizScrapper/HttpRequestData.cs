@@ -54,7 +54,7 @@ namespace BIC.Scrappers.FinvizScrapper
             var stacks = Separators.Select(s => new Stack<char>(s.ToCharArray())).ToArray();
             return ProcessAttributes(this, sbAddress, stacks);
         }
-
+        // TODO: get rid of copy-paste
         private string ProcessAttributes(Object o, StringBuilder sbAdressPart, Stack<char>[] stacks)
         {
             var t = o.GetType();
