@@ -11,6 +11,7 @@ namespace BIC.Scrappers.Utils
     {
         private static ChromeRetriever _chromeRetriever;
         private static ChromeRetriever _yahooRetriever;
+        private static SimpleRetriever _simpleRetriever;
         public static IContentRetriever CreateInstance(ERetrieverType retrieverType)
         {
             IContentRetriever result = null;
@@ -26,6 +27,11 @@ namespace BIC.Scrappers.Utils
                     if (_yahooRetriever == null)
                         _yahooRetriever = new ChromeRetriever(new Delayers.VariableDelayer());
                     result = _yahooRetriever as IContentRetriever;
+                    break;
+                case ERetrieverType.Simple:
+                    if (_simpleRetriever == null)
+                        _simpleRetriever = new SimpleRetriever(new Delayers.VariableDelayer());
+                    result = _simpleRetriever as IContentRetriever;
                     break;
             }
 

@@ -18,7 +18,7 @@ namespace BIC.NasdaqLiveScrapper
         public readonly string url = Settings.GetInstance().UrlRoot;
         public string[] Separators = { "/" }; // should be populated in reverse. Attention number of characters in each group should match exactly with Maximum Order
 
-        [AddressAttribute(Order = 0, Group = 0, Template = "api/quote/{0}/realtime-trades?&limit=100")]
+        [AddressAttribute(Order = 0, Group = 0, Template = "api/quote/{0}/realtime-trades")] //?&limit=100
         public string Ticker { get; set; }
 
         public string GenerateAddressRequest()

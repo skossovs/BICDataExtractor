@@ -20,7 +20,6 @@ namespace BIC.NasdaqLiveScrapper
         }
         [Mandatory]
         public string UrlRoot { get; set; }
-        public int? DefaultDocumentsCount { get; set; }
         [Mandatory]
         public string OutputDirectory { get; set; }
     }

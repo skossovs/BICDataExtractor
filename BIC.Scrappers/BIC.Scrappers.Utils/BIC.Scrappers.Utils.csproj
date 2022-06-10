@@ -67,6 +67,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="HeaderScrapper.cs" />
+    <Compile Include="SimpleRetriever.cs" />
     <Compile Include="TableScrapping\TableArrayConverter.cs" />
   </ItemGroup>
   <ItemGroup>

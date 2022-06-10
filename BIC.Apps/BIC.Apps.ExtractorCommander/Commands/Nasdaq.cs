@@ -18,7 +18,7 @@ namespace BIC.Apps.ExtractorCommander.Commands
             _logger.Info($"Start Loading Nasdaq Data...");
 
             var nasdaqScrapper = new NasdaqScrapper<NasdaqData>();
-            nasdaqScrapper.Scrap();
+            nasdaqScrapper.Scrap("AAPL");
 
             _logger.Info($"Finished Loading Nasdaq Data.");
         }
