@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace BIC.Scrappers.Utils
 {
+    // TODO: redo with simple request without google chrome app
     public class SimpleRetriever : IContentRetriever
     {
         private readonly object delayLocker = new object();
@@ -25,8 +26,13 @@ namespace BIC.Scrappers.Utils
                 throw new Exception(string.Format("Chrome application is not found at referenced path: {0}", Settings.GetInstance().ChromeLocation));
 
             _delayer = delayer;
+            var options = new ChromeOptions();
+            //{
+            //    BinaryLocation = Settings.GetInstance().ChromeLocation
+            //};
+            options.AddArguments(new List<string>() { "headless"});//, "disable-gpu", "silent" 
             // Single chrome object is needed, otherwise Chrome.exe will be created at each call
-            _browser = new ChromeDriver(AppDomain.CurrentDomain.BaseDirectory);
+            _browser = new ChromeDriver(AppDomain.CurrentDomain.BaseDirectory);//, options);
         }
 
         ~SimpleRetriever()
