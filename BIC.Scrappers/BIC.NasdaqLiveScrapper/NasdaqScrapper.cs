@@ -2,6 +2,7 @@
 using BIC.NasdaqLiveScrapper.DataObjects;
 using BIC.Scrappers.Utils;
 using BIC.Utils.Logger;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -26,6 +27,23 @@ namespace BIC.NasdaqLiveScrapper
 
 
             var currentPagehtmlContent = HttpGet(url);
+
+
+            var jsonObject = JObject.Parse(currentPagehtmlContent);
+            var jToken = jsonObject.SelectToken("data.rows");
+            if (jToken == null || jToken.Count() == 0)
+            {
+                return false; // can't find the path
+            }
+
+            var lst = new List<T>();
+
+            foreach (var jt in jToken)
+            {
+                var v = jt.ToObject<T>();
+                lst.Add(v);
+            }
+
 
             var path = System.IO.Path.Combine(OutputDirectory, "Nasdaq.json");
             System.IO.File.WriteAllText(path, currentPagehtmlContent, Encoding.ASCII);
