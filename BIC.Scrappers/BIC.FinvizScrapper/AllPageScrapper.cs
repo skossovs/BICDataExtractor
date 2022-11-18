@@ -83,10 +83,18 @@ namespace BIC.Scrappers.FinvizScrapper
                 return false;
             }
 
-            cq = cq.Find(@"table[bgcolor=""#d3d3d3""]");
+            //cq = cq.Find(@"table[bgcolor=""#a4a4a4""]");
+            cq = cq.Find(@"table[class=""table-light""]");
 
             // Find Headers
             var cqHeaders = cq.Find(@"td[class^=""table-top""]");
+            if(cqHeaders.Count() == 0)
+            {
+                _logger.Error("Can't find headers in scrapped page");
+                _logger.Info(currentPagehtmlContent);
+                headers = null; data = null;
+                return false;
+            }
             var headersList = new List<string>() { "IgnoreIt" };
             // Display headers
             foreach (var h in cqHeaders)
@@ -109,7 +117,8 @@ namespace BIC.Scrappers.FinvizScrapper
             var lstCells = new List<string[]>();
             int iCell = 0;
 
-            var cqCellsInLine = cq.Find(@"tr[class$=""-row-cp""]"); // ends with -row-cp
+            // var cqCellsInLine = cq.Find(@"tr[class$=""-row-cp""]"); // ends with -row-cp
+            var cqCellsInLine = cq.Find(@"tr[valign=""top""]");
             foreach (var cell in cqCellsInLine.Contents())
             {
                 // Extract Cells
