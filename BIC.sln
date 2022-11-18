@@ -54,6 +54,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BIC.Apps.MSMQExtractorComma
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BIC.WPF.UserControls", "BIC.WPF.UserControls\BIC.WPF.UserControls.csproj", "{9B81AAB4-E6DE-46B2-8A0E-B71B974A4E3F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1B31C7D1-97CE-4A85-9A7D-5720ECE776C2}"
+	ProjectSection(SolutionItems) = preProject
+		UnpackChrome.cmd = UnpackChrome.cmd
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
