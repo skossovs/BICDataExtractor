@@ -14,7 +14,6 @@ namespace BIC.Scrappers.FinvizScrapper
         // 2.     Create WPF UI
         // 2.1.   Design is still ugly.
         // 2.2.   Expand tree view dynamically.
-
         // 2.     Reorganize tests.
 
         // 3.     Errors: >>
@@ -24,5 +23,10 @@ namespace BIC.Scrappers.FinvizScrapper
         // 3.5.   in WPF & MSMQ exe statuses are not properly signalled.
         // 5.     Fix linq2db issue with connection object. Specifically for Merge. Looks like Merge operation happens after connection object is closed.
         // 6.     Block Chrome logs if possible.
+        // 7.     Switch to httpClient with separate apartments
+        // 8.     Dowload Watched options
+        // 8.1.   Implement UI tab.
+        // 8.2.   Implement Option feed from yahoo
+        // 9.     Get rid of finviz completely and calculate all ratios from yahoo fundamentals
     }
 }
