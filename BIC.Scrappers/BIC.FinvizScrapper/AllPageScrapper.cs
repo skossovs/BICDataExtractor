@@ -19,7 +19,7 @@ namespace BIC.Scrappers.FinvizScrapper
             var pageMetrics = GetFirstPageMetrics(requestParameters);
             var allPageData = new List<T>();
 
-            for (int i = 1; i < pageMetrics.NumberOfPages; i++)
+            for (int i = 1; i <= pageMetrics.NumberOfPages; i++)
             {
                 requestParameters.PageAsR = ConvertPageToR(i);
                 var r = Conversions.FromFinvizParametersToHttpRequestData(requestParameters);
