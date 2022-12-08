@@ -88,5 +88,18 @@ namespace BIC.Utils.Monads
                 return null;
             }
         }
+
+        public static void TryCatch<TInput>(this TInput o, Action<TInput> action, Action<Exception> errAction)
+            where TInput : class
+        {
+            try
+            {
+                action(o);
+            }
+            catch (Exception exception)
+            {
+                errAction(exception);
+            }
+        }
     }
 }
