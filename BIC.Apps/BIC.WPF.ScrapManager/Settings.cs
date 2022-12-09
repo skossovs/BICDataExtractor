@@ -13,12 +13,6 @@ namespace BIC.WPF.ScrapManager
     {
         private static Settings _singletonSetings;
 
-        /// <summary>
-        ///  environment dependent properties here. Storing the template only, release debug will be chosen based on environment.
-        ///  environment key |ENV|
-        /// </summary>
-        private string _scrapperFilePathTemplate;
-        private string _etlProcessFilePathTemplate;
         private Settings() { }
         public static Settings GetInstance()
         {
@@ -30,42 +24,12 @@ namespace BIC.WPF.ScrapManager
             return _singletonSetings;
         }
 
-        [Mandatory]
-        public string ScrapperFilePath {
-            get
-            {
-                string scrapperFilePath = _scrapperFilePathTemplate;
-#if DEBUG
-                scrapperFilePath = _scrapperFilePathTemplate.Replace("|ENV|", "Debug");
-#else
-                scrapperFilePath = _scrapperFilePathTemplate.Replace("|ENV|", "Release");
-#endif
-                return scrapperFilePath;
-            }
-            set
-            {
-                _scrapperFilePathTemplate = value;
-            }
-        }
+        [Mandatory, EnvironmentDependent]
+        public string ScrapperFilePath { get; set; }
 
-        [Mandatory]
-        public string EtlProcessFilePath
-        {
-            get
-            {
-                string etlProcessFilePath = _etlProcessFilePathTemplate;
-#if DEBUG
-                etlProcessFilePath = _etlProcessFilePathTemplate.Replace("|ENV|", "Debug");
-#else
-                etlProcessFilePath = _etlProcessFilePathTemplate.Replace("|ENV|", "Release");
-#endif
-                return etlProcessFilePath;
-            }
-            set
-            {
-                _etlProcessFilePathTemplate = value;
-            }
-        }
+        [Mandatory, EnvironmentDependent]
+        public string EtlProcessFilePath { get; set; }
+
         [Mandatory]
         public string ScrapperFileLogPath { get; set; }
 
