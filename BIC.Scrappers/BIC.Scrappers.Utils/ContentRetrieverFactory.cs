@@ -9,8 +9,9 @@ namespace BIC.Scrappers.Utils
 {
     public class ContentRetrieverFactory
     {
-        private static IContentRetriever _chromeRetriever;
+        private static IContentRetriever _finvizRetriever;
         private static IContentRetriever _yahooRetriever;
+        private static IContentRetriever _moneyConverterRetriever;
         public static IContentRetriever CreateInstance(ERetrieverType retrieverType)
         {
             IContentRetriever result = null;
@@ -18,14 +19,19 @@ namespace BIC.Scrappers.Utils
             switch (retrieverType)
             {
                 case ERetrieverType.Finviz:
-                    if (_chromeRetriever == null)
-                        _chromeRetriever = new HttpClientRetriever(new Delayers.VariableDelayer(), 1);
-                    result = _chromeRetriever as IContentRetriever;
+                    if (_finvizRetriever == null)
+                        _finvizRetriever = new HttpClientRetriever(new Delayers.VariableDelayer(), 1);
+                    result = _finvizRetriever as IContentRetriever;
                     break;
                 case ERetrieverType.Yahoo:
                     if (_yahooRetriever == null)
                         _yahooRetriever = new HttpClientRetriever(new Delayers.VariableDelayer(), 0);
                     result = _yahooRetriever as IContentRetriever;
+                    break;
+                case ERetrieverType.MoneyConverter:
+                    if (_moneyConverterRetriever == null)
+                        _moneyConverterRetriever = new ChromeRetriever(new Delayers.VariableDelayer());
+                    result = _moneyConverterRetriever as IContentRetriever;
                     break;
             }
 

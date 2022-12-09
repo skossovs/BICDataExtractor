@@ -11,8 +11,9 @@ namespace BIC.Scrappers.Utils
 {
     public class HttpClientApartmentProxy : ApartmentProxy<HttpClient>
     {
-        private const int YAHOO_CONFIGURATION  = 0;
-        private const int FINVIZ_CONFIGURATION = 1; // unfortuantely I am not able to transfer Func<> object to Initiate method, since we are operating in different app domain
+        private const int YAHOO_CONFIGURATION          = 0;
+        private const int FINVIZ_CONFIGURATION         = 1; // unfortuantely I am not able to transfer Func<> object to Initiate method, since we are operating in different app domain
+        private const int MONEYCONVERTER_CONFIGURATION = 2;
         private string _url;
         public void Initiate(string url, int configuration)
         {
@@ -30,6 +31,10 @@ namespace BIC.Scrappers.Utils
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Add("user-agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36");
             }
+            else if (configuration == MONEYCONVERTER_CONFIGURATION)
+            {
+                // TODO: FX failing for some reason, don't know what headers need to be provided
+            }
         }
 
         public string RunGetRequest()
@@ -37,7 +42,7 @@ namespace BIC.Scrappers.Utils
             var client = (HttpClient)this._objRef;
 
             var task = Task<HttpResponseMessage>.Run(async () => await client.GetAsync(_url));
-            task.Wait(2000);
+            task.Wait(2000); // TODO: ?? not needed
             client.CancelPendingRequests();
 
             if (task.Status == TaskStatus.Canceled)
