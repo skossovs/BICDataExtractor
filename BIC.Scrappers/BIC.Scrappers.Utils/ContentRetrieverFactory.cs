@@ -19,12 +19,12 @@ namespace BIC.Scrappers.Utils
             {
                 case ERetrieverType.Finviz:
                     if (_chromeRetriever == null)
-                        _chromeRetriever = new ChromeRetriever(new Delayers.VariableDelayer());
+                        _chromeRetriever = new HttpClientRetriever(new Delayers.VariableDelayer(), 1);
                     result = _chromeRetriever as IContentRetriever;
                     break;
                 case ERetrieverType.Yahoo:
                     if (_yahooRetriever == null)
-                        _yahooRetriever = new HttpClientRetriever(new Delayers.VariableDelayer());
+                        _yahooRetriever = new HttpClientRetriever(new Delayers.VariableDelayer(), 0);
                     result = _yahooRetriever as IContentRetriever;
                     break;
             }

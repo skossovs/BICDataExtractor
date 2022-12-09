@@ -12,12 +12,14 @@ namespace BIC.Scrappers.Utils
     public class HttpClientRetriever : IContentRetriever
     {
         private readonly object    _delayLocker = new object();
+        private readonly int       _configuration;
         private readonly ILog      _logger = LogServiceProvider.Logger;
         protected Delayers.Delayer _delayer;
 
-        public HttpClientRetriever(Delayers.Delayer delayer)
+        public HttpClientRetriever(Delayers.Delayer delayer, int configuration)
         {
-            _delayer = delayer;
+            _delayer       = delayer;
+            _configuration = configuration;
         }
         public string GetData(string url)
         {
@@ -29,7 +31,7 @@ namespace BIC.Scrappers.Utils
                 {
                     _delayer.Wait();
                     var proxy = HttpClientApartmentProxy.CreateInstance("HttpClientApartmentProxy");
-                    proxy.Initiate(u);
+                    proxy.Initiate(u, _configuration);
                     string result = proxy.RunGetRequest();
                     HttpClientApartmentProxy.DestroyDomain(proxy);
                     return result;

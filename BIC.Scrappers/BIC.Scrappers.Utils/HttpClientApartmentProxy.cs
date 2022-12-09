@@ -11,15 +11,25 @@ namespace BIC.Scrappers.Utils
 {
     public class HttpClientApartmentProxy : ApartmentProxy<HttpClient>
     {
+        private const int YAHOO_CONFIGURATION  = 0;
+        private const int FINVIZ_CONFIGURATION = 1; // unfortuantely I am not able to transfer Func<> object to Initiate method, since we are operating in different app domain
         private string _url;
-        public void Initiate(string url)
+        public void Initiate(string url, int configuration)
         {
             var client = (HttpClient)this._objRef;
 
             _url = url;
             client.BaseAddress = new Uri(url);
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+            if (configuration == YAHOO_CONFIGURATION)
+            {
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+            }
+            else if (configuration == FINVIZ_CONFIGURATION)
+            {
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Add("user-agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36");
+            }
         }
 
         public string RunGetRequest()
