@@ -30,7 +30,7 @@ namespace BIC.Scrappers.Utils
                     break;
                 case ERetrieverType.MoneyConverter:
                     if (_moneyConverterRetriever == null)
-                        _moneyConverterRetriever = new ChromeRetriever(new Delayers.VariableDelayer());
+                        _moneyConverterRetriever = new HttpClientRetriever(new Delayers.VariableDelayer(), 2);
                     result = _moneyConverterRetriever as IContentRetriever;
                     break;
             }
