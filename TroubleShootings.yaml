@@ -4,7 +4,7 @@
   - FATATL failure with message:
     - session not created:
       This version of ChromeDriver only supports Chrome version 88 Current browser version is 90.0.4430.93 with binary path C:\Program Files (x86)\Google\Chrome\Application\chrome.exe (SessionNotCreated)
-Solution:
+  Solution:
   - go to chrome driver site: https://sites.google.com/chromium.org/driver/
   - download latest chrome Driver
   - replace chromedriver.zip in
@@ -20,3 +20,16 @@ Solution:
 3. The following MSMQs must be created:
   bic-status-etl, bic-status-scrap, bic-commands, bic-status (for testing purposes only)
   in order to debug the queues Run compmgmt.msc
+
+4. Manual Package updating for hier versions
+  Update-Package -Id System.Reactive -IgnoreDependencies -ProjectName BIC.Utils -Version 4.4.1
+  Update-Package -Id System.Reactive.Core -IgnoreDependencies -ProjectName BIC.Utils -Version 4.4.1
+  Update-Package -Id System.Reactive.Interfaces -IgnoreDependencies -ProjectName BIC.Utils -Version 4.4.1
+  Update-Package -Id System.Reactive.Linq -IgnoreDependencies -ProjectName BIC.Utils -Version 4.4.1
+  Update-Package -Id System.Reactive.PlatformServices -IgnoreDependencies -ProjectName BIC.Utils -Version 4.4.1
+  Update-Package -Id System.Reactive.Windows.Threading -IgnoreDependencies -ProjectName BIC.Utils -Version 4.4.1
+
+  INSTRUCTION:
+  Update-Package [-Id] <string> [-IgnoreDependencies] [-ProjectName <string>] [-Version <string>]
+    [-Safe] [-Source <string>] [-IncludePrerelease] [-Reinstall] [-FileConflictAction]
+    [-DependencyVersion] [-ToHighestPatch] [-ToHighestMinor] [-WhatIf] [<CommonParameters>]
