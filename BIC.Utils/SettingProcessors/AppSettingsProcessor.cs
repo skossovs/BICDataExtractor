@@ -60,7 +60,7 @@ namespace BIC.Utils.SettingProcessors
 #if DEBUG
                     propNameInAppConfig = propNameInAppConfig + ".DEBUG";
 #else
-                    configPropName = configPropName + ".RELEASE";
+                    propNameInAppConfig = propNameInAppConfig + ".RELEASE";
 #endif
                 }
 
