@@ -61,6 +61,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApartmentProxy.cs" />
     <Compile Include="Attributes\SettingsAttributes.cs" />
     <Compile Include="Conversions.cs" />
     <Compile Include="EmptyPlacesConversions.cs" />
@@ -69,6 +70,7 @@
     <Compile Include="Logger\LogDelegator.cs" />
     <Compile Include="Logger\LogServiceProvider.cs" />
     <Compile Include="Logger\SimpleLogger.cs" />
+    <Compile Include="Monads\Cyclic.cs" />
     <Compile Include="Monads\Maybe.cs" />
     <Compile Include="Monads\RefAndStructMaybe.cs" />
     <Compile Include="MSMQ\OneToManySenderReceiver.cs" />

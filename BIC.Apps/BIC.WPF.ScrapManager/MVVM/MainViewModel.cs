@@ -102,7 +102,7 @@ namespace BIC.WPF.ScrapManager.MVVM
             }
 
             procDetails.ProcessInfo.UseShellExecute = false;
-            procDetails.ProcessInfo.Arguments = arguments;
+            procDetails.ProcessInfo.Arguments = arguments.Replace(@"\", ""); // after parsing the json an extra slash pops up in  the string, just clean for now
             procDetails.ProcessObject = Process.Start(procDetails.ProcessInfo);
             procDetails.ProcessObject.EnableRaisingEvents = true;
 

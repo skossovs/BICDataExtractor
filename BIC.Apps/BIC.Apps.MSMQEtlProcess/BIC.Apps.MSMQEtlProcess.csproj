@@ -46,11 +46,18 @@
     <Compile Include="Data\StatusMessage.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="StoppableStatusable.cs" />
+    <Compile Include="UIStatusLogger.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\BIC.ETL\BIC.ETL.SqlServer\BIC.ETL.SqlServer.csproj">
+      <Project>{10af3d83-1fb5-41d1-8f15-df70e9d7cfa2}</Project>
+      <Name>BIC.ETL.SqlServer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\BIC.Interfaces\BIC.Foundation.csproj">
       <Project>{5b2c1550-32a6-4fe1-80da-b7f6bce7d366}</Project>
       <Name>BIC.Foundation</Name>

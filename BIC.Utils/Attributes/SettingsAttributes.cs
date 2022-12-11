@@ -14,4 +14,7 @@ namespace BIC.Utils.Attributes
 
     [AttributeUsage(AttributeTargets.Property)]
     public class Mandatory : Attribute {}
+
+    [AttributeUsage(AttributeTargets.Property)]
+    public class EnvironmentDependent : Attribute {}
 }

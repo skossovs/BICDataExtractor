@@ -68,6 +68,9 @@
     <Content Include="TestFiles\BIC.YahooScrapper_IncomeStatementDataQuarterly_4-6-2021 11-55-15 PM.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="TestFiles\BIC.YahooScrapper_BalanceSheetData_2-4-2022 1-27-33 PM.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BIC.ETL\BIC.ETL.SqlServer\BIC.ETL.SqlServer.csproj">

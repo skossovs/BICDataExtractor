@@ -15,6 +15,7 @@ namespace BIC.Utils.MSMQ
         public readonly string SenderQueueName;
         public readonly string RecieverQueueName;
         public readonly int    ReadMessageWaitMSec;
+        private bool _isWatching;
 
         private CancellationTokenSource _tokenSource;
         private object                  _startStopLock;
@@ -36,6 +37,7 @@ namespace BIC.Utils.MSMQ
             _waitHandle       = new AutoResetEvent(false);
             _waitHandle.Set();
 
+            _isWatching = false;
             ExceptionLog = new List<Exception>();
         }
 
@@ -52,6 +54,9 @@ namespace BIC.Utils.MSMQ
 
         public void StartWatching()
         {
+            if (_isWatching == true)
+                return;
+
             lock (_startStopLock)
             {
                 if (_tokenSource == null)
@@ -64,6 +69,9 @@ namespace BIC.Utils.MSMQ
 
         public void StopWatching()
         {
+            if (_isWatching == false)
+                return;
+
             lock (_startStopLock)
             {
                 _tokenSource?.Cancel();

@@ -50,6 +50,9 @@ namespace BIC.ETL.SqlServer.FileReaders
                                CapitalExpenditures                   = y.capitalExpenditures?.raw.StringToDecimal(e => _logger.Error(e.Message)),
                            };
 
+            // Correct quarter datestamp due late filling.
+            qNewData = LateFillingDatesCorrectionPerQuarter(qNewData);
+
             db.CashFlowQuarterlies
                 .Merge()
                 .Using(qNewData)
@@ -107,6 +110,29 @@ namespace BIC.ETL.SqlServer.FileReaders
                     CapitalExpenditures                   = y.CapitalExpenditures,
                 })
                 .Merge();
+        }
+
+        // TODO: unify with T instead of balance, income, cashflow
+        private IEnumerable<CashFlowQuarterly> LateFillingDatesCorrectionPerQuarter(IEnumerable<CashFlowQuarterly> listOfFour)
+        {
+            // check if we have duplicate quarters:
+            int result = 1;
+            foreach (var l in listOfFour)
+            {
+                result *= l.Quarter;
+            }
+
+            if (result != 24 && listOfFour.Count() == 4)
+            {  // correct incorrect quarters
+                var arr = listOfFour.ToArray(); // TODO: not beautiful
+                arr[0].Quarter = 4;
+                arr[1].Quarter = 3;
+                arr[2].Quarter = 2;
+                arr[3].Quarter = 1;
+                return arr;
+            }
+            else
+                return listOfFour;
         }
     }
 }

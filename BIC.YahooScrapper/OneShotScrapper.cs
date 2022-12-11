@@ -12,17 +12,17 @@ namespace BIC.YahooScrapper
     public class OneShotScrapper
     {
         private ILog   _logger = LogServiceProvider.Logger;
-        private static IActor _actor;
+        private static IActor _chain;
 
         public OneShotScrapper()
         {
-            if(_actor == null)
-                _actor = ChainFactory.CreateInstance();
+            if(_chain == null)
+                _chain = ChainFactory.CreateInstance();
         }
         public bool Scrap(YahooParameters requestParameters)
         {
             var ctx = new Context() { Parameters = requestParameters };
-            return _actor.Do(ctx);
+            return _chain.Do(ctx);
         }
     }
 }

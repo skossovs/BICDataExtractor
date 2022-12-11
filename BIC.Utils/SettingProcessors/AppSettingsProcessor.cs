@@ -45,29 +45,38 @@ namespace BIC.Utils.SettingProcessors
             {
                 var propertyAttributes = Attribute.GetCustomAttributes(prop);
 
-                string configPropName;
+                string propNameInAppConfig;
                 bool isGeneric = false;
                 if (propertyAttributes.Where(atr => atr is Generic).FirstOrDefault() is null)
-                    configPropName = a.GetName().Name + "." + prop.Name;
+                    propNameInAppConfig = a.GetName().Name + "." + prop.Name;
                 else
                 {
-                    configPropName = GENERIC_KEY + "." + prop.Name;
+                    propNameInAppConfig = GENERIC_KEY + "." + prop.Name;
                     isGeneric = true;
                 }
 
-                if (ConfigurationManager.AppSettings.AllKeys.Contains(configPropName))
+                if (!(propertyAttributes.Where(atr => atr is EnvironmentDependent).FirstOrDefault() is null))
+                {
+#if DEBUG
+                    propNameInAppConfig = propNameInAppConfig + ".DEBUG";
+#else
+                    configPropName = configPropName + ".RELEASE";
+#endif
+                }
+
+                if (ConfigurationManager.AppSettings.AllKeys.Contains(propNameInAppConfig))
                 {
                     try
                     {
                         // string value assignment
                         if (prop.PropertyType.Name == "String")
-                            prop.SetValue(settingsObject, ConfigurationManager.AppSettings[configPropName]);
+                            prop.SetValue(settingsObject, ConfigurationManager.AppSettings[propNameInAppConfig]);
                         // integer value assignment
                         else if (prop.PropertyType.Name == "Int32")
-                            prop.SetValue(settingsObject, Convert.ToInt32(ConfigurationManager.AppSettings[configPropName]));
+                            prop.SetValue(settingsObject, Convert.ToInt32(ConfigurationManager.AppSettings[propNameInAppConfig]));
                         // datetime value assignment
                         else if (prop.PropertyType.Name == "DateTime")
-                            prop.SetValue(settingsObject, Convert.ToDateTime(ConfigurationManager.AppSettings[configPropName]));
+                            prop.SetValue(settingsObject, Convert.ToDateTime(ConfigurationManager.AppSettings[propNameInAppConfig]));
                         else
                             throw new Exception("Prohibited configuration type. The only accepted types are: string, int32 or DateTime in format YYYYMMDD");
 
@@ -77,7 +86,7 @@ namespace BIC.Utils.SettingProcessors
                             IsSuccessful = true,
                             PropertyAssembly = a.GetName().Name,
                             PropertyName = prop.Name,
-                            PropertyValue = ConfigurationManager.AppSettings[configPropName],
+                            PropertyValue = ConfigurationManager.AppSettings[propNameInAppConfig],
                             ErrorMessage = null
                         });
                     }
@@ -89,13 +98,14 @@ namespace BIC.Utils.SettingProcessors
                             IsSuccessful = false,
                             PropertyAssembly = a.GetName().Name,
                             PropertyName = prop.Name,
-                            PropertyValue = ConfigurationManager.AppSettings[configPropName],
+                            PropertyValue = ConfigurationManager.AppSettings[propNameInAppConfig],
                             ErrorMessage = ex.Message
                         });
                     }
                 }
                 else
                 {
+                    // Here we go if we didn't find property in appSettings file
                     // check if this attribute is mandatory
                     if (!(propertyAttributes.Where(atr => atr is Mandatory).FirstOrDefault() is null))
                     {
@@ -110,7 +120,7 @@ namespace BIC.Utils.SettingProcessors
                             ,
                             PropertyName = prop.Name
                             ,
-                            ErrorMessage = String.Format("Missing mandatory property {0} setting in App Configuration", configPropName)
+                            ErrorMessage = String.Format("Missing mandatory property {0} setting in App Configuration", propNameInAppConfig)
                         });
                     }
                 }

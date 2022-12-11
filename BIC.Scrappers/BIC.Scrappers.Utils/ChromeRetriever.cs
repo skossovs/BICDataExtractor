@@ -28,6 +28,7 @@ namespace BIC.Scrappers.Utils
             if (!CheckChrome())
                 throw new Exception(string.Format("Chrome application is not found at referenced path: {0}", Settings.GetInstance().ChromeLocation));
 
+            _logger.Debug(">>>> About to create Chrome Retriever !!!");
             _delayer = delayer;
             // Single chrome object is needed, otherwise Chrome.exe will be created at each call
             var options = new ChromeOptions()

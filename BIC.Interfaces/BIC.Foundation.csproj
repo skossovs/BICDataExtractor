@@ -54,6 +54,7 @@
     <Compile Include="Interfaces\IParser.cs" />
     <Compile Include="Interfaces\IScrapper.cs" />
     <Compile Include="Interfaces\IStatusMessage.cs" />
+    <Compile Include="Interfaces\IStoppableStatusable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DataObjects\RatioRecord.cs" />
     <Compile Include="DataObjects\SectorRecord.cs" />

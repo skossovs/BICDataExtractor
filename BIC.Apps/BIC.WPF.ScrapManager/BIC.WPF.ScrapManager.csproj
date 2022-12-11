@@ -33,6 +33,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>pump.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="CommonServiceLocator, Version=2.0.2.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>..\..\packages\CommonServiceLocator.2.0.2\lib\net45\CommonServiceLocator.dll</HintPath>
@@ -72,12 +75,14 @@
     <Compile Include="Common\ApplicationCommands.cs" />
     <Compile Include="Converters\IntToStringConverter.cs" />
     <Compile Include="Converters\StatusConverter.cs" />
+    <Compile Include="Converters\TextToDocConverter.cs" />
     <Compile Include="Data\CommandCache.cs" />
     <Compile Include="Data\CommandExe.cs" />
     <Compile Include="Data\CommandParameter.cs" />
     <Compile Include="Data\TreeNode.cs" />
     <Compile Include="Data\TreeStructure.cs" />
     <Compile Include="MVVM\Behaviors\BindableSelectedItemBehavior.cs" />
+    <Compile Include="MVVM\LoggerViewModel.cs" />
     <Compile Include="MVVM\Messages\CommandCacheFileMessage.cs" />
     <Compile Include="MVVM\Messages\CommandMessage.cs" />
     <Compile Include="Data\Enums.cs" />
@@ -122,6 +127,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Resource Include="Resources\pump.ico" />
+    <Resource Include="pump.ico" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -136,7 +143,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -147,6 +156,10 @@
     <ProjectReference Include="..\..\BIC.Utils\BIC.Utils.csproj">
       <Project>{1fd4c7b7-7ea9-4f9a-91f6-09ff4aedd208}</Project>
       <Name>BIC.Utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\BIC.WPF.UserControls\BIC.WPF.UserControls.csproj">
+      <Project>{9b81aab4-e6de-46b2-8a0e-b71b974a4e3f}</Project>
+      <Name>BIC.WPF.UserControls</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

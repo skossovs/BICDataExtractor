@@ -12,6 +12,7 @@ namespace BIC.WPF.ScrapManager
     public class Settings
     {
         private static Settings _singletonSetings;
+
         private Settings() { }
         public static Settings GetInstance()
         {
@@ -23,11 +24,17 @@ namespace BIC.WPF.ScrapManager
             return _singletonSetings;
         }
 
-        [Mandatory]
+        [Mandatory, EnvironmentDependent]
         public string ScrapperFilePath { get; set; }
 
-        [Mandatory]
+        [Mandatory, EnvironmentDependent]
         public string EtlProcessFilePath { get; set; }
+
+        [Mandatory]
+        public string ScrapperFileLogPath { get; set; }
+
+        [Mandatory]
+        public string EtlProcessFileLogPath { get; set; }
 
         [Mandatory]
         public string MsmqNameStatusEtl { get; set; }
@@ -40,5 +47,8 @@ namespace BIC.WPF.ScrapManager
 
         [Mandatory]
         public int SleepTimeMsmqReadMsec { get; set; }
+
+        [Mandatory]
+        public int LogRefreshIntervalMsec { get; set; }
     }
 }

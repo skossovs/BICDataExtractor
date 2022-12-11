@@ -13,13 +13,13 @@ namespace BIC.Scrappers.FinvizScrapper
 {
     public class AllPageScrapper<T> where T : class, new()
     {
-        private ILog _logger = LogServiceProvider.Logger;
-        public void Scrap(FinvizParameters requestParameters)
+        protected ILog _logger = LogServiceProvider.Logger;
+        public virtual void Scrap(FinvizParameters requestParameters)
         {
             var pageMetrics = GetFirstPageMetrics(requestParameters);
             var allPageData = new List<T>();
 
-            for (int i = 1; i < pageMetrics.NumberOfPages; i++)
+            for (int i = 1; i <= pageMetrics.NumberOfPages; i++)
             {
                 requestParameters.PageAsR = ConvertPageToR(i);
                 var r = Conversions.FromFinvizParametersToHttpRequestData(requestParameters);
@@ -57,7 +57,7 @@ namespace BIC.Scrappers.FinvizScrapper
             }
         }
 
-        private PageMetric GetFirstPageMetrics(FinvizParameters requestParameters)
+        protected PageMetric GetFirstPageMetrics(FinvizParameters requestParameters)
         {
             var pager = new FinvizPager<FinvizParameters>();
             int recordsPerPage = 0;
@@ -69,7 +69,7 @@ namespace BIC.Scrappers.FinvizScrapper
 
             return new PageMetric() { NumberOfPages = maxPage };
         }
-        private bool GetStringTableFromCurrentPage(string generatedAddress, out string[] headers, out IEnumerable<string[]> data)
+        protected bool GetStringTableFromCurrentPage(string generatedAddress, out string[] headers, out IEnumerable<string[]> data)
         {
             var retriever = ContentRetrieverFactory.CreateInstance(ERetrieverType.Finviz);
             var currentPagehtmlContent = retriever.GetData(generatedAddress);
@@ -83,10 +83,18 @@ namespace BIC.Scrappers.FinvizScrapper
                 return false;
             }
 
-            cq = cq.Find(@"table[bgcolor=""#d3d3d3""]");
+            //cq = cq.Find(@"table[bgcolor=""#a4a4a4""]");
+            cq = cq.Find(@"table[class=""table-light""]");
 
             // Find Headers
             var cqHeaders = cq.Find(@"td[class^=""table-top""]");
+            if(cqHeaders.Count() == 0)
+            {
+                _logger.Error("Can't find headers in scrapped page");
+                _logger.Info(currentPagehtmlContent);
+                headers = null; data = null;
+                return false;
+            }
             var headersList = new List<string>() { "IgnoreIt" };
             // Display headers
             foreach (var h in cqHeaders)
@@ -109,7 +117,8 @@ namespace BIC.Scrappers.FinvizScrapper
             var lstCells = new List<string[]>();
             int iCell = 0;
 
-            var cqCellsInLine = cq.Find(@"tr[class$=""-row-cp""]"); // ends with -row-cp
+            // var cqCellsInLine = cq.Find(@"tr[class$=""-row-cp""]"); // ends with -row-cp
+            var cqCellsInLine = cq.Find(@"tr[valign=""top""]");
             foreach (var cell in cqCellsInLine.Contents())
             {
                 // Extract Cells
@@ -129,7 +138,7 @@ namespace BIC.Scrappers.FinvizScrapper
             data = lstCells.AsEnumerable();
             return true;
         }
-        private int? ConvertPageToR(int page)
+        protected int? ConvertPageToR(int page)
         {
             if (page == 1)
                 return null;

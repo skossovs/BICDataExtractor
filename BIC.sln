@@ -38,6 +38,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BIC.YahooScrapper", "BIC.Ya
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Reports", "Reports", "{F06070E6-F457-4D65-92B1-10D46F5068D6}"
 	ProjectSection(SolutionItems) = preProject
+		BIC.Apps\Reports\BIC_Data.xlsm = BIC.Apps\Reports\BIC_Data.xlsm
 		BIC.Apps\Reports\TheReport.xlsx = BIC.Apps\Reports\TheReport.xlsx
 	EndProjectSection
 EndProject
@@ -50,6 +51,13 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BIC.Apps.MSMQEtlProcess", "BIC.Apps\BIC.Apps.MSMQEtlProcess\BIC.Apps.MSMQEtlProcess.csproj", "{58AE6260-D64C-4428-B317-CD2A12442512}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BIC.Apps.MSMQExtractorCommander", "BIC.Apps\BIC.Apps.MSMQExtractorCommander\BIC.Apps.MSMQExtractorCommander.csproj", "{72BE2536-5F72-4797-B2B4-806035A8B630}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BIC.WPF.UserControls", "BIC.WPF.UserControls\BIC.WPF.UserControls.csproj", "{9B81AAB4-E6DE-46B2-8A0E-B71B974A4E3F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1B31C7D1-97CE-4A85-9A7D-5720ECE776C2}"
+	ProjectSection(SolutionItems) = preProject
+		UnpackChrome.cmd = UnpackChrome.cmd
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -117,6 +125,10 @@ Global
 		{72BE2536-5F72-4797-B2B4-806035A8B630}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72BE2536-5F72-4797-B2B4-806035A8B630}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72BE2536-5F72-4797-B2B4-806035A8B630}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B81AAB4-E6DE-46B2-8A0E-B71B974A4E3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B81AAB4-E6DE-46B2-8A0E-B71B974A4E3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B81AAB4-E6DE-46B2-8A0E-B71B974A4E3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B81AAB4-E6DE-46B2-8A0E-B71B974A4E3F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -137,5 +149,6 @@ Global
 		{35F2CCF1-B994-49AA-AC48-62BE7509904B} = {99B1A906-C228-4DB2-A339-F810594926E6}
 		{58AE6260-D64C-4428-B317-CD2A12442512} = {99B1A906-C228-4DB2-A339-F810594926E6}
 		{72BE2536-5F72-4797-B2B4-806035A8B630} = {99B1A906-C228-4DB2-A339-F810594926E6}
+		{9B81AAB4-E6DE-46B2-8A0E-B71B974A4E3F} = {99B1A906-C228-4DB2-A339-F810594926E6}
 	EndGlobalSection
 EndGlobal

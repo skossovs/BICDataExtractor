@@ -2,6 +2,7 @@
 using BIC.Utils.Logger;
 using System.IO;
 using System.IO.Compression;
+using BIC.Utils.Monads;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,7 +56,8 @@ namespace BIC.ETL.SqlServer
                 }
 
                 _logger.Debug("dropping file {0}..", _fileName);
-                File.Delete(_fileName);
+
+                _fileName.TryCatch(fileName => File.Delete(fileName), _logger.ReportException); // sometimes file is locked
 
                 _logger.Debug("file {0} added to archive", _fileName);
                 // If archive reached certain size => enclose it

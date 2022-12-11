@@ -11,7 +11,7 @@ namespace BIC.ETL.SqlServer
 {
     public class FileProcessor :IDisposable
     {
-        private ILog _logger = LogServiceProvider.Logger;
+        protected ILog _logger = LogServiceProvider.Logger;
         private FileArchivarius _archivarius;
 
         public FileProcessor()
@@ -35,6 +35,7 @@ namespace BIC.ETL.SqlServer
 
         public void Do(CancellationToken ct)
         {
+            _logger.Info("#Running");
             var path = Settings.GetInstance().InputDirectory;
 
             var lstFiles = new List<FileType>();
@@ -67,9 +68,13 @@ namespace BIC.ETL.SqlServer
                     _logger.Warning("file {0} has been left for inspection", ft.FilePath);
 
                 if (ct.IsCancellationRequested)
+                {
+                    _logger.Info("#Stopped");
                     ct.ThrowIfCancellationRequested();
+                }
             }
             _logger.Info("************************ All files in directory have been processed ************************ ");
+            _logger.Info("#Finished");
         }
         private FileType Recognize(string fullFilePath)
         {

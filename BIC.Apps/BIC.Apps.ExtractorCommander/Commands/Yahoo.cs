@@ -15,6 +15,11 @@ namespace BIC.Apps.ExtractorCommander.Commands
     {
         private static ILog _logger = LogServiceProvider.Logger;
 
+        public static void ScrapATicker(string ticker)
+        {
+            SecurityRecord sr = ETL.SqlServer.DataLayer.SecurityReader.GetSecurityByTicker(ticker);
+            ScrapOneShot(sr);
+        }
         public static void ScrapTickers()
         {
             foreach (var sector in ETL.SqlServer.DataLayer.SecurityReader.GetSectors())
@@ -75,53 +80,5 @@ namespace BIC.Apps.ExtractorCommander.Commands
             bool result = oneShot.Scrap(yp);
             _logger.Info($"Finished Loading Ticker {security.Ticker} for report type {yp.ReportType}.");
         }
-// TODO: Drop it
-        //private static void ScrapTrio(SecurityRecord security)
-        //{
-        //    if (!security.IsIncomeStatementQuarterly)
-        //        Scrap<IncomeStatementDataQuarterly>(security.Ticker, true);
-        //    if (!security.IsBalanceSheetQuarterly)
-        //        Scrap<BalanceSheetDataQuarterly>(security.Ticker, true);
-        //    if (!security.IsCashFlowQuarterly)
-        //        Scrap<CashFlowDataQuarterly>(security.Ticker, true);
-        //}
-
-        //private static void Scrap<T>(string ticker, bool isQuarterly) where T : class, new()
-        //{
-        //    try
-        //    {
-        //        var yp = new YahooParameters()
-        //        {
-        //            IsQuarterly = isQuarterly,
-        //            Ticker      = ticker
-        //        };
-
-        //        var typeName = typeof(T).Name;
-        //        switch (typeName)
-        //        {
-        //            case "IncomeStatementDataQuarterly":
-        //                yp.ReportType = "financials";
-        //                break;
-        //            case "BalanceSheetDataQuarterly":
-        //                yp.ReportType = "balance-sheet";
-        //                break;
-        //            case "CashFlowDataQuarterly":
-        //                yp.ReportType = "cash-flow";
-        //                break;
-        //            default:
-        //                _logger.Error($"Unsupported type {typeName}");
-        //                throw new Exception($"Unsupported type {typeName}");
-        //        }
-
-        //        _logger.Info($"Loading Ticker {ticker} for report type {yp.ReportType} ..");
-        //        var pageScrapper = new PageScrapper<T>();
-        //        var result = pageScrapper.Scrap(yp);
-        //        _logger.Info($"Finished Loading Ticker {ticker} for report type {yp.ReportType}.");
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.ReportException(ex);
-        //    }
-        //}
     }
 }

@@ -9,23 +9,25 @@ namespace BIC.Scrappers.FinvizScrapper
     // This class is for planning only doesn't do anything, just thoughts in here
     class Plan
     {
-        // 1.     Implement already loaded tickers exclusion
-        // 2.     Exclude ETFs from fundamentals loading.
-        // 3.     Create WPF UI
-        // 3.1.   Design is still ugly.
-        // 3.2.   Reflect log in UI.
-        // 4.     Reorganize tests.
+        // 1.     Use postman to update google chrome.exe component. Instead of dragging crome.exe with every project REFER TO IT:
+        //        C:\Program Files (x86)\Google\Chrome\Application. DISMISSED.
+        // 2.     Create WPF UI
+        // 2.1.   Design is still ugly.
+        // 2.2.   Expand tree view dynamically.
+        // 2.     Reorganize tests.
 
-        // 6.     Errors:
-        // 6.1.   Merge fails on duplicates. The reason is companies late filling. Need to fix quarters.
-        //        sometimes yearly data came instead of quarterly.
-        // 6.1.2. Queue doesn't have enough time to process last item, before finished.
-        // 6.1.3. Financial Sector cannot be scrapped. Need to debug
-        // 6.2.   Populate field Earnings Date in Finviz extract. There is a dirt in Date field.
-
-        // 7.     Implement Reports for different strategies. Next Levels.
-        // 9.     Fix linq2db issue with connection object. Specifically for Merge. Looks like Merge operation happens after connection object is closed.
-        // 10.    StackFrame.Debug instead of object name in logging
-        // 11.    Block Chrome logs if possible.
+        // 3.     Errors: >>
+        // 3.2.   Queue doesn't have enough time to process last item, before finished. DONE.
+        // 3.3.   Before apply FX Rates search for "Currency in CNY.All numbers in thousands" string. Sometimes foreign companies post fundamentals in dollars.
+        // 3.4.   fx loading shows no progress.
+        // 3.5.   in WPF & MSMQ exe statuses are not properly signalled when error happened the running status changes.
+        // 5.     Fix linq2db issue with connection object. Specifically for Merge. Looks like Merge operation happens after connection object is closed.
+        // 6.     Block Chrome logs if possible. DISMISSED.
+        // 7.1.   Switch to httpClient with separate apartments. DONE.
+        // 7.2.   FX is not working with httpClient 4.6.1 version is needed for .NET >>
+        // 8.     Dowload Watched options
+        // 8.1.   Implement UI tab.
+        // 8.2.   Implement Option feed from yahoo
+        // 9.     Get rid of finviz completely and calculate all ratios from yahoo fundamentals
     }
 }

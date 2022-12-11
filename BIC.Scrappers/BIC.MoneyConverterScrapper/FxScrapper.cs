@@ -65,8 +65,13 @@ namespace BIC.MoneyConverterScrapper
 
         private bool ProcessData(string tableSection, string[] headers, ref IEnumerable<string[]> data)
         {
-            var retriever = ContentRetrieverFactory.CreateInstance(ERetrieverType.Yahoo);
+            var retriever = ContentRetrieverFactory.CreateInstance(ERetrieverType.MoneyConverter);
             var currentPagehtmlContent = retriever.GetData(_url);
+            if(String.IsNullOrEmpty(currentPagehtmlContent))
+            {
+                _logger.Error("Failed to retrieve FX data - empty page in the output");
+                return false;
+            }
             var cqHelper = new CQHelper();
             var cq = cqHelper.InitiateWithContent(currentPagehtmlContent);
 

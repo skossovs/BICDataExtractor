@@ -45,23 +45,63 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants.cs" />
     <Compile Include="FinvizBridgeComponents.cs" />
-    <Compile Include="FxRatesBridgeComponents.cs" />
     <Compile Include="IBridgeComponents.cs" />
+    <Compile Include="MSMQData\CommandMessage.cs" />
+    <Compile Include="MSMQData\StatusMessage.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ScrapCommand.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="StoppableStatusable.cs" />
+    <Compile Include="Strategy\BICStrategy.cs" />
+    <Compile Include="Strategy\Context.cs" />
+    <Compile Include="Strategy\FXRatesStrategy.cs" />
+    <Compile Include="Strategy\KeyRatiosStrategy.cs" />
+    <Compile Include="Strategy\SecMasterStrategy.cs" />
+    <Compile Include="Strategy\Strategy.cs" />
+    <Compile Include="Strategy\StrategyManager.cs" />
+    <Compile Include="Strategy\StrategyParameters.cs" />
+    <Compile Include="UIStatusLogger.cs" />
     <Compile Include="YahooBridgeComponents.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <Content Include="chromedriver.zip">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\BIC.ETL\BIC.ETL.SqlServer\BIC.ETL.SqlServer.csproj">
+      <Project>{10af3d83-1fb5-41d1-8f15-df70e9d7cfa2}</Project>
+      <Name>BIC.ETL.SqlServer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\BIC.Interfaces\BIC.Foundation.csproj">
       <Project>{5b2c1550-32a6-4fe1-80da-b7f6bce7d366}</Project>
       <Name>BIC.Foundation</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\BIC.Scrappers\BIC.FinvizScrapper\BIC.FinvizScrapper.csproj">
+      <Project>{e7ea4eb2-ffea-4a80-9369-5ef7576c628c}</Project>
+      <Name>BIC.FinvizScrapper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\BIC.Scrappers\BIC.MoneyConverterScrapper\BIC.MoneyConverterScrapper.csproj">
+      <Project>{fedb40f8-130c-4d66-92aa-33053ab023be}</Project>
+      <Name>BIC.MoneyConverterScrapper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\BIC.Utils\BIC.Utils.csproj">
+      <Project>{1FD4C7B7-7EA9-4F9A-91F6-09FF4AEDD208}</Project>
+      <Name>BIC.Utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\BIC.YahooScrapper\BIC.YahooScrapper.csproj">
+      <Project>{56109268-3256-49de-8269-7b6d526c366b}</Project>
+      <Name>BIC.YahooScrapper</Name>
+    </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
 </Project>

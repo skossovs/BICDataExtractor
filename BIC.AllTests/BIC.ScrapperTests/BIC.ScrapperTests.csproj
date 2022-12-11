@@ -106,7 +106,7 @@
   </Target>
   <Import Project="..\..\packages\MSTest.TestAdapter.1.1.11\build\net45\MSTest.TestAdapter.targets" Condition="Exists('..\..\packages\MSTest.TestAdapter.1.1.11\build\net45\MSTest.TestAdapter.targets')" />
   <PropertyGroup>
-    <PostBuildEvent>tar -xf chromedriver.zip
-del chromedriver.zip</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
 </Project>

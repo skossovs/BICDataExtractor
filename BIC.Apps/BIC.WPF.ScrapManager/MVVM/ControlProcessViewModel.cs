@@ -12,11 +12,10 @@ using BIC.Foundation.Interfaces;
 namespace BIC.WPF.ScrapManager.MVVM
 {
     /// <summary>
-    /// TODO:
-    /// 1. Start/Stop windows process. Done
+    /// 1. Start/Stop windows process
     /// 2. Accept process parameters
     /// 3. Provide result of process ending
-    /// 4. Transfer statuses from running process. DONE
+    /// 4. Transfer statuses from running process
     /// </summary>
     public class ControlProcessViewModel : INotifyPropertyChanged
     {

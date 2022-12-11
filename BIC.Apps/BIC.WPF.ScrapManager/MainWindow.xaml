@@ -7,6 +7,7 @@
         xmlns:conv  ="clr-namespace:BIC.WPF.ScrapManager.Converters"
         xmlns:mvvm  ="clr-namespace:BIC.WPF.ScrapManager.MVVM"
         xmlns:data  ="clr-namespace:BIC.WPF.ScrapManager.Data"
+        xmlns:uc    ="clr-namespace:BIC.WPF.UserControls;assembly=BIC.WPF.UserControls"
         xmlns:behaviours ="clr-namespace:BIC.WPF.ScrapManager.MVVM.Behaviors"
         xmlns:i     ="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
@@ -17,8 +18,11 @@
         <mvvm:ControlProcessViewModel x:Key="processControlVMScrapper" ProcessType="Scrapper"/>
         <mvvm:ControlProcessViewModel x:Key="processControlVMetl"      ProcessType="ETL"/>
         <mvvm:CommandTreeViewModel    x:Key="commandTreeViewModel">   </mvvm:CommandTreeViewModel>
+        <mvvm:LoggerViewModel         x:Key="loggerViewVMScrapper"     ProcessType="Scrapper" />
+        <mvvm:LoggerViewModel         x:Key="loggerViewVMEtl"          ProcessType="ETL" />
         <conv:StatusConverter         x:Key="ProcessorStatusToString"></conv:StatusConverter>
         <conv:IntToStringConverter    x:Key="IntToString">            </conv:IntToStringConverter>
+        <conv:TextToDocConverter      x:Key="TextToDoc">              </conv:TextToDocConverter>
 
         <ControlTemplate x:Key="ProcessControlTemplate" TargetType="ContentControl">
             <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center">
@@ -32,20 +36,34 @@
                         <ImageBrush ImageSource="Resources/stop.png"/>
                     </Button.Background>
                 </Button>
+                <uc:RadialWavesControl Width="30" Height="30">
+                    <uc:RadialWavesControl.Style>
+                        <Style TargetType="{x:Type uc:RadialWavesControl}">
+                            <Style.Triggers>
+                                <MultiDataTrigger> <!-- TODO: this is really complicated replacement of context : from original user control to ancestor one. not beatiful -->
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding
+                                            RelativeSource={RelativeSource AncestorType={x:Type StackPanel}},
+                                            Path=DataContext.Status, Converter={StaticResource ProcessorStatusToString}}" Value="Stopped"/>
+                                        <Condition Binding="{Binding
+                                            RelativeSource={RelativeSource AncestorType={x:Type StackPanel}},
+                                            Path=DataContext.Status, Converter={StaticResource ProcessorStatusToString}}" Value="Killed"/>
+                                        <Condition Binding="{Binding
+                                            RelativeSource={RelativeSource AncestorType={x:Type StackPanel}},
+                                            Path=DataContext.Status, Converter={StaticResource ProcessorStatusToString}}" Value="Finished"/>
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="Mode" Value="0"/>
+                                </MultiDataTrigger>
+                                <DataTrigger Binding="{Binding
+                                            RelativeSource={RelativeSource AncestorType={x:Type StackPanel}},
+                                            Path=DataContext.Status, Converter={StaticResource ProcessorStatusToString}}" Value="Running">
+                                    <Setter Property="Mode" Value="1"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </uc:RadialWavesControl.Style>
+                </uc:RadialWavesControl>
                 <Rectangle Width="30" Height="30">
-                        <!--
-                        <EventTrigger RoutedEvent="Rectangle.Loaded">
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <DoubleAnimation
-                                      Storyboard.TargetProperty="Opacity"
-                                      From="1.0" To="0.0" Duration="0:0:5"
-                                      AutoReverse="True" RepeatBehavior="Forever" />
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
-
-                        -->
                         <Rectangle.Style>
                             <Style TargetType="{x:Type Rectangle}">
                                 <Style.Triggers>
@@ -87,9 +105,12 @@
                     <ColumnDefinition Width="8*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0" DataContext="{StaticResource processControlVMScrapper}">
-                    <ContentControl Template="{StaticResource ProcessControlTemplate}"></ContentControl>
+                    <ContentControl Template="{StaticResource ProcessControlTemplate}"
+                                    DataContext="{StaticResource processControlVMScrapper}"></ContentControl>
                     <TreeView Name ="tvCommands"  DataContext="{Binding Source={StaticResource commandTreeViewModel}}"
-                                                  ItemsSource="{Binding TreeData}">
+                              VerticalContentAlignment="Stretch"
+                              Height="400"
+                              ItemsSource="{Binding TreeData}">
                         <TreeView.Resources>
                             <HierarchicalDataTemplate DataType="{x:Type data:Group}" ItemsSource="{Binding Items}">
                                 <TextBlock Text="{Binding Path=Name}" />
@@ -103,6 +124,14 @@
                         </i:Interaction.Behaviors>
                     </TreeView>
                 </StackPanel>
+                <RichTextBox Grid.Column="1"
+                             DataContext="{Binding Source={StaticResource loggerViewVMScrapper}}" >
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run Text="{Binding Text}"/>
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
             </Grid>
         </DockPanel>
         <DockPanel Grid.Row="1">
@@ -112,8 +141,16 @@
                     <ColumnDefinition Width="8*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0" DataContext="{StaticResource processControlVMetl}">
-                    <ContentControl Template="{StaticResource ProcessControlTemplate}"></ContentControl>
+                    <ContentControl Template="{StaticResource ProcessControlTemplate}"
+                                    DataContext="{StaticResource processControlVMetl}"></ContentControl>
                 </StackPanel>
+                <RichTextBox Grid.Column="1" DataContext="{Binding Source={StaticResource loggerViewVMEtl}}">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run Text="{Binding Text}"/>
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
             </Grid>
         </DockPanel>
     </Grid>

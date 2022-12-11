@@ -42,7 +42,8 @@ namespace BIC.ETL.SqlServer.FileReaders
                     .Merge()
                     .Using(qNewSectors)
                     .OnTargetKey()
-                    .InsertWhenNotMatched(f => new DataLayer.Sector() { SectorColumn = f.SectorColumn });
+                    .InsertWhenNotMatched(f => new DataLayer.Sector() { SectorColumn = f.SectorColumn })
+                    .Merge();
 
                 // 2. Merge Industry information
                 var qNewIndustries = (from fvz in newData
@@ -53,7 +54,8 @@ namespace BIC.ETL.SqlServer.FileReaders
                     .Merge()
                     .Using(qNewIndustries)
                     .OnTargetKey()
-                    .InsertWhenNotMatched(f => new DataLayer.Industry() { SectorID = f.SectorID, IndustryColumn = f.IndustryColumn });
+                    .InsertWhenNotMatched(f => new DataLayer.Industry() { SectorID = f.SectorID, IndustryColumn = f.IndustryColumn })
+                    .Merge();
 
                 // 3. Merge Security information
                 var qnewSecurity = from data        in newData
@@ -66,7 +68,7 @@ namespace BIC.ETL.SqlServer.FileReaders
                                     Company    = data.FullName,
                                     Country    = data.Country,
                                     SectorID   = industry.SectorID,
-                                    IndustryID = industry.IndustryID };
+                                    IndustryID = industry.IndustryID};
 
                 db.Securities
                     .Merge()
@@ -78,8 +80,10 @@ namespace BIC.ETL.SqlServer.FileReaders
                         Company    = s.Company,
                         Country    = s.Country,
                         SectorID   = s.SectorID,
-                        IndustryID = s.IndustryID
-                    });
+                        IndustryID = s.IndustryID,
+                        Type       = "SEC"
+                    })
+                    .Merge(); // one more merge call is needed
             }
         }
 
