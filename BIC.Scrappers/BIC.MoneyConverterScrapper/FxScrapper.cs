@@ -3,6 +3,7 @@ using BIC.MoneyConverterScrapper.DataObjects;
 using BIC.Scrappers.Utils;
 using BIC.Scrappers.Utils.TableScrapping;
 using BIC.Utils.Logger;
+using BIC.Utils.Monads;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,18 +25,26 @@ namespace BIC.MoneyConverterScrapper
             string[] header = new string[] { "Picture", "Currency", "Rate" };
             IEnumerable<string[]> data = new List<string[]>();
 
+            var retriever = ContentRetrieverFactory.CreateInstance(ERetrieverType.MoneyConverter);
+            var currentPagehtmlContent = _url.TryCatch(
+                u => retriever.GetData(u)
+                , _logger.ReportException);
+
+            if (currentPagehtmlContent == "ERROR")
+                return false;
+
             _logger.Debug("** Major-Currency-Table **");
-            result = ProcessData(@"table[id=""major-currency-table""]",  header, ref data);
+            result = ProcessData(currentPagehtmlContent, @"table[id=""major-currency-table""]",  header, ref data);
             if (!result)
                 _logger.Error("Major Currency table failed to load");
 
             _logger.Debug("** Minor-Currency-Table **");
-            result = ProcessData(@"table[id=""minor-currency-table""]",  header, ref data);
+            result = ProcessData(currentPagehtmlContent, @"table[id=""minor-currency-table""]",  header, ref data);
             if (!result)
                 _logger.Error("Minor Currency table failed to load");
 
             _logger.Debug("** Exotic-Currency-Table **");
-            result = ProcessData(@"table[id=""exotic-currency-table""]", header, ref data);
+            result = ProcessData(currentPagehtmlContent, @"table[id=""exotic-currency-table""]", header, ref data);
             if (!result)
                 _logger.Error("Exotic Currency table failed to load");
 
@@ -63,10 +72,8 @@ namespace BIC.MoneyConverterScrapper
             return result;
         }
 
-        private bool ProcessData(string tableSection, string[] headers, ref IEnumerable<string[]> data)
+        private bool ProcessData(string currentPagehtmlContent,string tableSection, string[] headers, ref IEnumerable<string[]> data)
         {
-            var retriever = ContentRetrieverFactory.CreateInstance(ERetrieverType.MoneyConverter);
-            var currentPagehtmlContent = retriever.GetData(_url);
             if(String.IsNullOrEmpty(currentPagehtmlContent))
             {
                 _logger.Error("Failed to retrieve FX data - empty page in the output");
