@@ -28,6 +28,7 @@ namespace BIC.Apps.ExtractorCommander
                 //  -rs yahoo  -etl finance -sec healthcare                   -- download one sector
                 //  -rs yahoo  -etl finance -sec "Consumer Defensive" -at DL  -- download one sector
                 //  -rs yahoo  -etl finance -tkr BAC                          -- download one ticker
+                //  -rs yahoo  -etl market  -tkr BAC                          -- download ticker's current price, option (if any)
                 //  -rs fx
                 #endregion
 
